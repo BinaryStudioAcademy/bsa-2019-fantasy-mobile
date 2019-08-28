@@ -4,28 +4,26 @@ import {useSelector} from 'react-redux';
 import {createAppContainer} from 'react-navigation';
 
 import {createRootNavigator} from '../containers/Routing/router';
-import {isSignedIn} from '../auth';
+import {isSignedIn} from '../helpers/storageHelper';
 
 const App = () => {
   const [signedIn, setSignedIn] = useState<boolean>(false);
-  const [checkedSignIn, setcheckedSignIn] = useState<boolean>(false);
+ 
   const {isLoading, user, isAuthorized} = useSelector(
     (state: any) => state.profile,
   );
-  console.log(isLoading, user, isAuthorized);
 
-  console.log('hello');
   useEffect(() => {
-    isSignedIn().then((res: any) => {
-      setcheckedSignIn(true);
-    });
-  }, []);
+    isSignedIn().then((res: any) => setSignedIn(res));
+  });
 
-  if (!checkedSignIn) {
-    return null;
-  }
+  useEffect(() => {
+    if (isAuthorized) {
+      setSignedIn(isAuthorized);
+    }
+  }, [isAuthorized]);
 
-  const Navigartor = createRootNavigator(isAuthorized);
+  const Navigartor = createRootNavigator(signedIn);
   const Routing = createAppContainer(Navigartor);
 
   return <Routing />;

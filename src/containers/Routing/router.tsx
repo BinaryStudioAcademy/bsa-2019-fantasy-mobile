@@ -6,6 +6,8 @@ import {
   createSwitchNavigator,
 } from 'react-navigation';
 
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 import Registration from '../../components/Registration';
 import Login from '../../components/Login';
 import Home from '../../components/Home';
@@ -16,17 +18,17 @@ const headerStyle = {
 };
 
 export const SignedOut = createStackNavigator({
-  SignUp: {
-    screen: Registration,
-    navigationOptions: {
-      title: 'Sign Up',
-      headerStyle,
-    },
-  },
   SignIn: {
     screen: Login,
     navigationOptions: {
       title: 'Sign In',
+      headerStyle,
+    },
+  },
+  SignUp: {
+    screen: Registration,
+    navigationOptions: {
+      title: 'Sign Up',
       headerStyle,
     },
   },
@@ -38,12 +40,18 @@ export const SignedIn = createBottomTabNavigator(
       screen: Home,
       navigationOptions: {
         tabBarLabel: 'Home',
+        tabBarIcon: ({tintColor}: any) => (
+          <Icon name="home" size={20} color={tintColor} />
+        ),
       },
     },
     Profile: {
       screen: Profile,
       navigationOptions: {
         tabBarLabel: 'Profile',
+        tabBarIcon: ({tintColor}: any) => (
+          <Icon name="users" size={15} color={tintColor} />
+        ),
       },
     },
   },

@@ -3,7 +3,6 @@ import {useSelector, useDispatch} from 'react-redux';
 import {View} from 'react-native';
 
 import {Card, Button, Input} from 'react-native-elements';
-import {onSignIn} from '../auth';
 import {login} from '../containers/Auth/action';
 
 const Login = ({navigation}: any) => {
@@ -38,6 +37,12 @@ const Login = ({navigation}: any) => {
           buttonStyle={{marginTop: 20, backgroundColor: '#03A9F4'}}
           title="SIGN IN"
           onPress={e => handleLogin(e)}
+        />
+        <Button
+          buttonStyle={{marginTop: 20, backgroundColor: 'transparent'}}
+          titleStyle={{color: '#bcbec1'}}
+          title="Sign up"
+          onPress={() => navigation.navigate('SignUp')}
         />
       </Card>
     </View>
