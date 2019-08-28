@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import {View} from 'react-native';
+import {useSelector} from 'react-redux';
+
 import {createAppContainer} from 'react-navigation';
 
 import {createRootNavigator} from '../containers/Routing/router';
@@ -8,7 +9,12 @@ import {isSignedIn} from '../auth';
 const App = () => {
   const [signedIn, setSignedIn] = useState<boolean>(false);
   const [checkedSignIn, setcheckedSignIn] = useState<boolean>(false);
+  const {isLoading, user, isAuthorized} = useSelector(
+    (state: any) => state.profile,
+  );
+  console.log(isLoading, user, isAuthorized);
 
+  console.log('hello');
   useEffect(() => {
     isSignedIn().then((res: any) => {
       setcheckedSignIn(true);
@@ -19,10 +25,10 @@ const App = () => {
     return null;
   }
 
-  const Navigartor = createRootNavigator(signedIn);
-  const Asa = createAppContainer(Navigartor);
+  const Navigartor = createRootNavigator(isAuthorized);
+  const Routing = createAppContainer(Navigartor);
 
-  return <Asa />;
+  return <Routing />;
 };
 
 export default App;
