@@ -13,7 +13,7 @@ type FetchArgs = {
 
 function getFetchUrl(args: FetchArgs) {
   return (
-    'http://192.168.0.102:5001' +args.endpoint + (args.query ? `?${queryString.stringify(args.query)}` : '')
+    process.env.API_HOST + args.endpoint + (args.query ? `?${queryString.stringify(args.query)}` : '')
   );
 }
 
