@@ -13,7 +13,7 @@ import Registration from '../../components/Registration';
 import Login from '../../components/Login';
 import Home from '../../components/Home';
 import Profile from '../../components/Profile';
-import Fixtures from '../../components/Fixtures';
+import Fixtures from '../../containers/FixturesContainers';
 
 import Sidebar from '../../components/Sidebar';
 
