@@ -17,8 +17,16 @@ const Fixtures = ({games}: any) => {
       const messageDate = moment(match.start).format('dddd D MMMM YYYY');
       if (currentDate !== messageDate) {
         res.unshift(
-          <View key={`daystamp-${messageDate}`}>
-            <Text>{messageDate}</Text>
+          <View
+            key={`daystamp-${messageDate}`}
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: '#eee',
+              padding: 5,
+              marginBottom: 10,
+            }}>
+            <Text style={{fontSize: 14}}>{messageDate}</Text>
           </View>,
         );
         currentDate = messageDate;
@@ -27,11 +35,7 @@ const Fixtures = ({games}: any) => {
       return res;
     });
   };
-  return (
-    <View style={{flex: 1}}>
-      {renderMessages()}
-    </View>
-  );
+  return <View>{renderMessages()}</View>;
 };
 
 export default Fixtures;
