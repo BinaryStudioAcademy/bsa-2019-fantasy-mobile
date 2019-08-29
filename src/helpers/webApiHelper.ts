@@ -12,8 +12,15 @@ type FetchArgs = {
 };
 
 function getFetchUrl(args: FetchArgs) {
+  console.log(
+    'http://192.168.0.102:5001' +
+      args.endpoint +
+      (args.query ? `?${queryString.stringify(args.query)}` : ''),
+  );
   return (
-    process.env.API_HOST + args.endpoint + (args.query ? `?${queryString.stringify(args.query)}` : '')
+    'http://192.168.1.179:5001' +
+    args.endpoint +
+    (args.query ? `?${queryString.stringify(args.query)}` : '')
   );
 }
 
@@ -66,7 +73,7 @@ export async function throwIfResponseFailed(res: Response) {
 export default async function callWebApi(args: FetchArgs) {
   try {
     const res = await fetch(getFetchUrl(args), getFetchArgs(args));
-    console.log(res)
+    console.log(res);
     await throwIfResponseFailed(res);
     return res;
   } catch (err) {
