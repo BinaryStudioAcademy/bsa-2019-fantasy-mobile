@@ -13,6 +13,7 @@ import Registration from '../../components/Registration';
 import Login from '../../components/Login';
 import Home from '../../components/Home';
 import Profile from '../../components/Profile';
+import Fixtures from '../../components/Fixtures';
 
 import Sidebar from '../../components/Sidebar';
 
@@ -39,8 +40,9 @@ export const SignedOut = createStackNavigator({
 
 export const SignedIn = createDrawerNavigator(
   {
-    Home: Home,
-    Profile: Profile,
+    Home,
+    Profile,
+    Fixtures,
   },
   {
     contentComponent: Sidebar,
