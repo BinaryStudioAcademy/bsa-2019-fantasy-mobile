@@ -8,7 +8,7 @@ import {isSignedIn} from '../helpers/storageHelper';
 
 const App = () => {
   const [signedIn, setSignedIn] = useState<boolean>(false);
- 
+
   const {isLoading, user, isAuthorized} = useSelector(
     (state: any) => state.profile,
   );
@@ -22,7 +22,6 @@ const App = () => {
       setSignedIn(isAuthorized);
     }
   }, [isAuthorized]);
-
   const Navigartor = createRootNavigator(signedIn);
   const Routing = createAppContainer(Navigartor);
 

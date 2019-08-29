@@ -1,9 +1,10 @@
 import React from 'react';
 import {Platform, StatusBar} from 'react-native';
 import {
-  createBottomTabNavigator,
   createStackNavigator,
   createSwitchNavigator,
+  createDrawerNavigator,
+  DrawerItems,
 } from 'react-navigation';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -12,6 +13,8 @@ import Registration from '../../components/Registration';
 import Login from '../../components/Login';
 import Home from '../../components/Home';
 import Profile from '../../components/Profile';
+
+import Sidebar from '../../components/Sidebar';
 
 const headerStyle = {
   marginTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
@@ -34,33 +37,13 @@ export const SignedOut = createStackNavigator({
   },
 });
 
-export const SignedIn = createBottomTabNavigator(
+export const SignedIn = createDrawerNavigator(
   {
-    Home: {
-      screen: Home,
-      navigationOptions: {
-        tabBarLabel: 'Home',
-        tabBarIcon: ({tintColor}: any) => (
-          <Icon name="home" size={20} color={tintColor} />
-        ),
-      },
-    },
-    Profile: {
-      screen: Profile,
-      navigationOptions: {
-        tabBarLabel: 'Profile',
-        tabBarIcon: ({tintColor}: any) => (
-          <Icon name="users" size={15} color={tintColor} />
-        ),
-      },
-    },
+    Home: Home,
+    Profile: Profile,
   },
   {
-    tabBarOptions: {
-      style: {
-        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
-      },
-    },
+    contentComponent: Sidebar,
   },
 );
 
