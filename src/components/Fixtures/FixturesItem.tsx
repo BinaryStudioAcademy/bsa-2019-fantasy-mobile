@@ -4,13 +4,15 @@ import {Text, View, Image} from 'react-native';
 import {Card} from 'react-native-elements';
 
 import {FixturesItemType} from '../../types/fixtures.types';
+import {images} from '../../images/club-logos/index';
 
 type Props = {
   match: FixturesItemType;
 };
-
 const FixturesItem = ({match}: Props) => {
-  let label = <Text>{moment(match.start).format('HH:mm')}</Text>;
+  let label = (
+    <Text style={{fontSize: 18}}>{moment(match.start).format('HH:mm')}</Text>
+  );
 
   if (match.started) {
     label = (
@@ -21,9 +23,9 @@ const FixturesItem = ({match}: Props) => {
           justifyContent: 'center',
           alignItems: 'center',
         }}>
-        <Text>{match.hometeam_score}</Text>
-        <Text> : </Text>
-        <Text>{match.awayteam_score}</Text>
+        <Text style={{fontSize: 18}}>{match.hometeam_score}</Text>
+        <Text style={{fontSize: 18}}> : </Text>
+        <Text style={{fontSize: 18}}>{match.awayteam_score}</Text>
       </View>
     );
   }
@@ -39,11 +41,14 @@ const FixturesItem = ({match}: Props) => {
         borderBottomColor: '#999',
         borderBottomWidth: 2,
         borderStyle: 'solid',
-        paddingBottom: 10
+        paddingBottom: 10,
       }}>
       <View
         style={{width: '35%', alignItems: 'center', justifyContent: 'center'}}>
-        <Image source={require(`../../images/club-logos/badge_1_40.png`)} />
+        <Image
+          source={images[`badge_${match.hometeam.code}_40`]}
+          style={{marginBottom: 5}}
+        />
         <Text style={{fontSize: 16}}>{match.hometeam.name}</Text>
       </View>
       <View
@@ -61,7 +66,10 @@ const FixturesItem = ({match}: Props) => {
       </View>
       <View
         style={{width: '35%', alignItems: 'center', justifyContent: 'center'}}>
-        <Image source={{uri: 'asset:/badge_6_40.png'}} />
+        <Image
+          source={images[`badge_${match.awayteam.code}_40`]}
+          style={{marginBottom: 5}}
+        />
         <Text style={{fontSize: 16}}>{match.awayteam.name}</Text>
       </View>
     </View>
