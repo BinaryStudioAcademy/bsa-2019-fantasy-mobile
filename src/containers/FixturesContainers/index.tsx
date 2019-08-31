@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Text, View, ScrollView} from 'react-native';
+import {Text, View, ScrollView, ActivityIndicator} from 'react-native';
 import {Text as CustomText, Button, Header} from 'react-native-elements';
 import {connect} from 'react-redux';
 import {bindActionCreators, Dispatch} from 'redux';
@@ -11,6 +11,7 @@ import {FixturesItemType} from '../../types/fixtures.types';
 import {GameweekType} from '../../types/gameweek.type';
 
 import Fixtures from '../../components/Fixtures/Fixtures';
+import Spinner from '../../components/Spinner'
 
 type Props = {
   gameweeks: GameweekType[];
@@ -54,7 +55,7 @@ const FixturesContainer = ({
   }, [currentGameweek, gameweeks, loadGamesAction]);
 
   if (!games || !gameweeks) {
-    return <Text>Spinner</Text>;
+    return <ActivityIndicator size="large" color="#0000ff" />;
   }
   return (
     <View>
