@@ -8,7 +8,7 @@ import {isSignedIn} from '../helpers/storageHelper';
 
 const App = () => {
   const [signedIn, setSignedIn] = useState<boolean>(false);
-
+  console.disableYellowBox = true;
   const {isLoading, user, isAuthorized} = useSelector(
     (state: any) => state.profile,
   );

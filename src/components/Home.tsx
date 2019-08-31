@@ -12,6 +12,7 @@ const Home = (props: any) => (
         size: 30,
         onPress: () => props.navigation.openDrawer(),
       }}
+      centerComponent={{text: 'Home', style: {color: '#fff', fontSize: 20}}}
       backgroundColor={'#122737'}
     />
     <Text>Home page</Text>
