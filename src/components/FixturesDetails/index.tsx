@@ -182,8 +182,9 @@ import moment from 'moment';
 
 // export default FixtureDetails;
 
-const FixtureDetails = () => {
-  return <Text>Hello</Text>;
+const FixtureDetails = ({navigation}: any) => {
+  const matchId = navigation.getParam('matchId', 'NO-ID');
+  return <Text>{matchId}</Text>;
 };
 
 export default FixtureDetails;

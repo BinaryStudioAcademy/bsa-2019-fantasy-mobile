@@ -9,8 +9,9 @@ import {images} from '../../images/club-logos/index';
 
 type Props = {
   match: FixturesItemType;
+  navigation: any;
 };
-const FixturesItem = ({match}: Props) => {
+const FixturesItem = ({match, navigation}: Props) => {
   let label = (
     <Text style={{fontSize: 18}}>{moment(match.start).format('HH:mm')}</Text>
   );
@@ -79,6 +80,11 @@ const FixturesItem = ({match}: Props) => {
           icon={<Icon name="arrow-right" size={15} color="green" />}
           iconRight
           type="outline"
+          onPress={() =>
+            navigation.navigate('FixturesDetails', {
+              matchId: match.id,
+            })
+          }
         />
       )}
     </View>
