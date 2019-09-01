@@ -11,7 +11,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 import Registration from '../../components/Registration';
 import Login from '../../components/Login';
-import Home from '../../components/Home';
+import HomeContainer from '../../containers/HomeContainer';
 import Profile from '../../components/Profile';
 import Fixtures from '../../containers/FixturesContainers';
 
@@ -40,7 +40,7 @@ export const SignedOut = createStackNavigator({
 
 export const SignedIn = createDrawerNavigator(
   {
-    Home,
+    HomeContainer,
     Profile,
     Fixtures,
   },
