@@ -1,7 +1,8 @@
 import React from 'react';
 import moment from 'moment';
 import {Text, View, Image} from 'react-native';
-import {Card} from 'react-native-elements';
+import {Card, Button} from 'react-native-elements';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 import {FixturesItemType} from '../../types/fixtures.types';
 import {images} from '../../images/club-logos/index';
@@ -72,6 +73,14 @@ const FixturesItem = ({match}: Props) => {
         />
         <Text style={{fontSize: 16}}>{match.awayteam.name}</Text>
       </View>
+      {match.started && (
+        <Button
+          containerStyle={{alignItems: 'center', justifyContent: 'center'}}
+          icon={<Icon name="arrow-right" size={15} color="green" />}
+          iconRight
+          type="outline"
+        />
+      )}
     </View>
   );
 };
