@@ -6,7 +6,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import moment from 'moment';
 import MatchStats from '../MatchStats';
 
-import {FixturesItemType} from '../../types/fixtures.types';
+import {FixturesItemType, GameDetailsType} from '../../types/fixtures.types';
 import {RootState} from '../../store/types';
 import {loadGameDetailsAction} from '../../containers/FixturesContainers/action';
 
@@ -18,7 +18,19 @@ type Props = {
   >;
   navigation: any;
 };
-const names = {
+
+type TeamStats = {
+  player: string;
+  count: number;
+};
+
+type Stats = {
+  title: string;
+  hometeam_stats: TeamStats[];
+  awayteam_stats: TeamStats[];
+};
+
+const names: {[s: string]: string} = {
   attack: 'Attack',
   shot: 'Shots',
   foul: 'Fouls',
@@ -35,7 +47,7 @@ const names = {
   trauma: 'Traumas',
   redCard: 'Red cards',
   nothing: 'Nothing',
-};
+} as const;
 
 const FixtureDetails = ({currentMatchStats, match, navigation}: Props) => {
   const matchId = navigation.getParam('matchId', 'NO-ID');
@@ -50,23 +62,23 @@ const FixtureDetails = ({currentMatchStats, match, navigation}: Props) => {
 
   useEffect(() => {
     if (gameDetails) {
-      gameDetails.forEach(g => {
+      gameDetails.forEach((g: GameDetailsType) => {
         if (!g.player) return;
-        setStats(stats => {
-          let team;
-          if (g.player) {
-            team =
-              g.player.player.club_id === match.hometeam_id
-                ? 'hometeam_stats'
-                : 'awayteam_stats';
-          } else {
-            team = 'common_stats';
-          }
+        setStats((stats: Stats[]) => {
+          let team: keyof Stats;
+          // if (g.player) {
+          team =
+            g.player.player.club_id === match.hometeam_id
+              ? 'hometeam_stats'
+              : 'awayteam_stats';
+          // }
 
-          const statsItem = stats.find(st => st.title === names[g.event_type]);
+          const statsItem = stats.find(
+            (st: Stats) => st.title === names[g.event_type],
+          );
           if (statsItem) {
             const index = statsItem[team].findIndex(
-              item => item.player === g.player.player.second_name,
+              (item: TeamStats) => item.player === g.player.player.second_name,
             );
             if (index !== -1) {
               statsItem[team][index].count = statsItem[team][index].count + 1;
@@ -77,7 +89,7 @@ const FixtureDetails = ({currentMatchStats, match, navigation}: Props) => {
               });
             }
             const statsItemIndex = stats.findIndex(
-              st => st.title === names[g.event_type],
+              (st: Stats) => st.title === names[g.event_type],
             );
             return [
               ...stats.slice(0, statsItemIndex),
@@ -107,7 +119,7 @@ const FixtureDetails = ({currentMatchStats, match, navigation}: Props) => {
 
   const displayStats = () =>
     stats
-      .sort((a, b) => {
+      .sort((a: Stats, b: Stats) => {
         if (a.title > b.title) {
           return 1;
         }
@@ -116,7 +128,7 @@ const FixtureDetails = ({currentMatchStats, match, navigation}: Props) => {
         }
         return 0;
       })
-      .map(({title, awayteam_stats, hometeam_stats}) => (
+      .map(({title, awayteam_stats, hometeam_stats}: Stats) => (
         <MatchStats
           title={title}
           awayteam_stats={awayteam_stats}
