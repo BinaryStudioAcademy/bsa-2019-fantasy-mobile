@@ -7,3 +7,15 @@ export const getGameweeksHistoryByUser = async (userId: string) => {
   });
   return response.json();
 };
+
+export const getTeamHistoryForUserById = async (
+  userId: string,
+  gameweekId: string,
+  currentGameweek: string,
+) => {
+  const response = await callWebApi({
+    endpoint: `/api/gameweek-history/history-team/${userId}/${gameweekId}/${currentGameweek}`,
+    type: 'GET',
+  });
+  return response.json();
+};

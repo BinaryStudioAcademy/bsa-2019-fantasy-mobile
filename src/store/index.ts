@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 
 import profileReducer from '../containers/Auth/reducer';
 import fixtureReducer from '../containers/FixturesContainers/reducer';
-import homePageReducer from '../containers/HomeContainer/reducer';
+import gameweekHistoryReducer from '../containers/HomeContainer/reducer';
 import gameweeksReducer from '../containers/Routing/fetchGameweeks/reducer';
 
 const initialState = {};
@@ -15,7 +15,7 @@ const composedEnhancers = applyMiddleware(...middlewares);
 const reducers = {
   profile: profileReducer,
   fixtures: fixtureReducer,
-  homePage: homePageReducer,
+  gameweekHistory: gameweekHistoryReducer,
   gameweeks: gameweeksReducer,
 };
 
