@@ -2,7 +2,7 @@ import {
   SET_GAMEWEEKS_HISTORY,
   SET_IS_LOADING,
   setGameweekHistoryAction,
-} from './action.type';
+} from './action.types';
 
 import {LOCAL_GameweekHistoryType} from './types';
 

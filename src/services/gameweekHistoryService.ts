@@ -1,4 +1,4 @@
-import callWebApi from 'helpers/webApiHelper';
+import callWebApi from '../helpers/webApiHelper';
 
 export const getGameweeksHistoryByUser = async (userId: string) => {
   const response = await callWebApi({

@@ -1,10 +1,19 @@
 import React from 'react';
-import {View, Text} from 'react-native';
-import {Header} from 'react-native-elements';
+import { connect } from 'react-redux';
+import { bindActionCreators, Dispatch } from 'redux';
+import { View, Text } from 'react-native';
+import { Header } from 'react-native-elements';
 
-const HomeContainer = (props: any) => {
+import { RootState } from '../../store/types';
+import { loadGameweeksHistoryAction } from './actions';
+
+import Spinner from '../../components/Spinner'
+
+const HomeContainer = ({ gameweeks }) => {
+  if (!gameweeks) {
+    return <Spinner />;
+  }
   
-
   return (
     <View style={{flex: 1}}>
       <Header
@@ -23,4 +32,18 @@ const HomeContainer = (props: any) => {
   );
 };
 
-export default HomeContainer;
+const mapStateToProps = (rootState: RootState) => ({
+  gameweeks: rootState.gameweeks.gameweeks,
+});
+
+
+const actions = {
+  loadGameweeksHistoryAction,
+}
+
+const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(actions, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(HomeContainer);

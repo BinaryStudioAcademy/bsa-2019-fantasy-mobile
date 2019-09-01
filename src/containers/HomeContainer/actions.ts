@@ -3,9 +3,9 @@ import * as gameweekHistoryService from '../../services/gameweekHistoryService';
 import {
   SET_GAMEWEEKS_HISTORY,
   SET_IS_LOADING,
-  setGameweekHistoryAction,,
+  setGameweekHistoryAction,
   AsyncSetGameweekHistoryAction,
-} from './action.type';
+} from './action.types';
 
 const setGameweeksHistory = (
   gameweeksHistory: any,
