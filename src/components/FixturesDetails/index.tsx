@@ -1,8 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text} from 'react-native';
-import {Text as CustomText} from 'react-native-elements';
+import {Text as CustomText, Button, Header} from 'react-native-elements';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import {useSelector, useDispatch} from 'react-redux';
 import moment from 'moment';
+import MatchStats from '../MatchStats';
 
 // import MatchStats from '../MatchStats';
 // import {FixturesItemType} from '../../types/fixtures.types';
@@ -184,7 +186,40 @@ import moment from 'moment';
 
 const FixtureDetails = ({navigation}: any) => {
   const matchId = navigation.getParam('matchId', 'NO-ID');
-  return <Text>{matchId}</Text>;
+  return (
+    <View>
+      <Header
+        containerStyle={{height: 60, paddingTop: 0}}
+        leftComponent={
+          <Icon
+            name="caret-left"
+            size={30}
+            color="#fff"
+            onPress={() => navigation.navigate('Fixtures')}
+          />
+        }
+        centerComponent={{
+          text: 'Match Details',
+          style: {color: '#fff', fontSize: 20},
+        }}
+        backgroundColor={'#122737'}
+      />
+ 
+        <MatchStats
+          title="Goals"
+          hometeam_stats={[
+            {player: 'anima', count: 3},
+            {player: 'sadads', count: 4},
+          ]}
+          awayteam_stats={[
+            {player: 'anisadasdma', count: 5},
+            {player: 'sadads', count: 4},
+            {player: 'sadadasdasds', count: 4},
+          ]}
+        />
+      
+    </View>
+  );
 };
 
 export default FixtureDetails;
