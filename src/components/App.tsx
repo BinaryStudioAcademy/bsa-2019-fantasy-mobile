@@ -14,6 +14,7 @@ import {
   fetchGameweekHistoryResults,
   fetchUserRankingForGameweek,
 } from '../containers/Routing/fetchGameweeks/actions';
+import { fetchClubs } from '../containers/Routing/fetchClubs/actions';
 
 import { currentGameweekSelector } from '../store/selectors/current-gameweek.selector';
 
@@ -37,11 +38,12 @@ const App = () => {
   }, [isAuthorized]);
 
   useEffect(() => {
+    dispatch(fetchClubs());
     dispatch(fetchGameweeks());
   }, [dispatch])
 
   const currentGameweek = useSelector(currentGameweekSelector);
-  console.log(currentGameweek);
+  const clubs = useSelector((state: RootState) => state.clubs.clubs);
 
   useEffect(() => {
     if (user && currentGameweek) {

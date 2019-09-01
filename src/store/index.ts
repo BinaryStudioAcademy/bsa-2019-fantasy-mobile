@@ -5,6 +5,7 @@ import profileReducer from '../containers/Auth/reducer';
 import fixtureReducer from '../containers/FixturesContainers/reducer';
 import gameweekHistoryReducer from '../containers/HomeContainer/reducer';
 import gameweeksReducer from '../containers/Routing/fetchGameweeks/reducer';
+import clubReducer from '../containers/Routing/fetchClubs/reducer';
 
 const initialState = {};
 
@@ -17,6 +18,7 @@ const reducers = {
   fixtures: fixtureReducer,
   gameweekHistory: gameweekHistoryReducer,
   gameweeks: gameweeksReducer,
+  clubs: clubReducer,
 };
 
 const rootReducer = combineReducers({
