@@ -6,6 +6,7 @@ import fixtureReducer from '../containers/FixturesContainers/reducer';
 import gameweekHistoryReducer from '../containers/HomeContainer/reducer';
 import gameweeksReducer from '../containers/Routing/fetchGameweeks/reducer';
 import clubReducer from '../containers/Routing/fetchClubs/reducer';
+import leagueReducer from '../containers/LeaguesContainer/reducer';
 
 const initialState = {};
 
@@ -19,6 +20,7 @@ const reducers = {
   gameweekHistory: gameweekHistoryReducer,
   gameweeks: gameweeksReducer,
   clubs: clubReducer,
+  league: leagueReducer
 };
 
 const rootReducer = combineReducers({

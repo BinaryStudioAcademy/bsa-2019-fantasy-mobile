@@ -8,10 +8,12 @@ import { Header } from 'react-native-elements';
 
 import { RootState } from '../../store/types';
 import { loadGameweeksHistoryAction, loadTeamHistoryAction } from './actions';
+import { loadUserLeagues } from '../LeaguesContainer/actions';
 
-import Spinner from '../../components/Spinner'
+import Leagues from './components/Leagues';
+import Spinner from '../../components/Spinner';
 
-const HomeContainer = ({ gameweeks, gameweeksHistory, teamHistory }) => {
+const HomeContainer = ({ gameweeks, gameweeksHistory, teamHistory, leagues }) => {
   const dispatch = useDispatch();
 
   const userId = useSelector(
@@ -22,6 +24,7 @@ const HomeContainer = ({ gameweeks, gameweeksHistory, teamHistory }) => {
 
   useEffect(() => {
     if (userId) {
+      dispatch(loadUserLeagues(userId));
       dispatch(loadGameweeksHistoryAction(userId));
     }
   }, [dispatch, userId]);
@@ -43,12 +46,13 @@ const HomeContainer = ({ gameweeks, gameweeksHistory, teamHistory }) => {
       }
     }
   }, [currentGameweek, gameweeksHistory.length]);
+  console.log(leagues);
 
-  if (!gameweeksHistory) {
+
+  if (!gameweeksHistory && !leagues) {
     return <Spinner />;
   }
 
-  console.log(gameweeksHistory, teamHistory);
   return (
     <View style={{flex: 1}}>
       <Header
@@ -66,6 +70,7 @@ const HomeContainer = ({ gameweeks, gameweeksHistory, teamHistory }) => {
       <View>
         {/* list team view */}
       </View>
+      <Leagues data={leagues} />
     </View>
   );
 };
@@ -77,12 +82,14 @@ const mapStateToProps = (rootState: RootState) => ({
   gameweeksHistory: rootState.gameweekHistory.gameweeksHistory,
   teamHistory: rootState.gameweekHistory.teamHistory,
   isLoading: rootState.gameweekHistory.isLoading,
+  leagues: rootState.league.leagues,
 });
 
 
 const actions = {
   loadGameweeksHistoryAction,
-  loadTeamHistoryAction
+  loadTeamHistoryAction,
+  loadUserLeagues
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(actions, dispatch);
