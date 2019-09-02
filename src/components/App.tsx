@@ -1,29 +1,29 @@
 import React, {useState, useEffect} from 'react';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
+import {ActivityIndicator} from 'react-native';
 
 import {createAppContainer} from 'react-navigation';
 
 import {createRootNavigator} from '../containers/Routing/router';
-import {isSignedIn} from '../helpers/storageHelper';
+
+import {loadCurrentUser} from '../containers/Auth/action';
+import {RootState} from '../store/types';
 
 const App = () => {
-  const [signedIn, setSignedIn] = useState<boolean>(false);
-  console.disableYellowBox = true;
+  const dispatch = useDispatch();
   const {isLoading, user, isAuthorized} = useSelector(
-    (state: any) => state.profile,
+    (state: RootState) => state.profile,
   );
 
   useEffect(() => {
-    isSignedIn().then((res: any) => setSignedIn(res));
-  });
+    dispatch(loadCurrentUser());
+  }, [dispatch]);
 
-  useEffect(() => {
-    if (isAuthorized) {
-      setSignedIn(isAuthorized);
-    }
-  }, [isAuthorized]);
-  const Navigartor = createRootNavigator(signedIn);
+  const Navigartor = createRootNavigator(isAuthorized);
   const Routing = createAppContainer(Navigartor);
+  if (isLoading) {
+    return <ActivityIndicator size="large" color="#0000ff" />;
+  }
 
   return <Routing />;
 };

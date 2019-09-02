@@ -19,15 +19,15 @@ function getFetchUrl(args: FetchArgs) {
   );
 }
 
-function getFetchArgs(
+async function getFetchArgs(
   args: FetchArgs,
-): Pick<RequestInit, 'method' | 'headers' | 'credentials' | 'body'> {
+): Promise<Pick<RequestInit, 'method' | 'headers' | 'credentials' | 'body'>> {
   const headers: {[header: string]: string} = {};
   if (!args.attachment) {
     headers['Content-Type'] = 'application/json';
     headers.Accept = 'application/json';
   }
-  const token = AsyncStorage.getItem('token');
+  const token = await AsyncStorage.getItem('token');
   if (token && !args.skipAuthorization) {
     headers.Authorization = `Bearer ${token}`;
   }
@@ -67,8 +67,7 @@ export async function throwIfResponseFailed(res: Response) {
 
 export default async function callWebApi(args: FetchArgs) {
   try {
-    const res = await fetch(getFetchUrl(args), getFetchArgs(args));
-    console.log(res);
+    const res = await fetch(getFetchUrl(args), await getFetchArgs(args));
     await throwIfResponseFailed(res);
     return res;
   } catch (err) {

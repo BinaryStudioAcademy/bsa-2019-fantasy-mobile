@@ -44,7 +44,6 @@ const handleAuthResponse = (
     const {user, token} = await authResponsePromise;
     setAuthData(user, token)(dispatch, getRootState);
   } finally {
-    console.log('hello');
   }
 };
 
@@ -58,6 +57,7 @@ export const logout = (): AsyncUserAction => dispatch => {
   clearToken();
   dispatch(setUser(null));
 };
+
 export const loadCurrentUser = (
   soft = false,
 ): AsyncUserAction => async dispatch => {
@@ -76,4 +76,3 @@ export const loadCurrentUser = (
     }
   }
 };
-
