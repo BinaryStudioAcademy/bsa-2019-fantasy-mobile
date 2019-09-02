@@ -50,8 +50,7 @@ export const MatchStats = createStackNavigator({
   FixturesDetails: {
     screen: FixturesDetails,
     navigationOptions: {
-      title: 'Match Details',
-      headerStyle,
+      header: null,
     },
   },
 });

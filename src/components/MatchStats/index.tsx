@@ -11,7 +11,15 @@ type Props = {
 const MatchStats = ({title, hometeam_stats, awayteam_stats}: Props) => {
   const mapArray = (array: any) =>
     array.map((item: any) => (
-      <View style={{width: 150, height: 30}} key={`stats-item-${item.player}`}>
+      <View
+        style={{
+          height: 30,
+          borderBottomColor: '#eee',
+          borderBottomWidth: 1,
+          borderStyle: 'solid',
+          padding: 5,
+        }}
+        key={`stats-item-${item.player}`}>
         <Text>
           {item.player} <Text>( {item.count} )</Text>
         </Text>
@@ -19,10 +27,14 @@ const MatchStats = ({title, hometeam_stats, awayteam_stats}: Props) => {
     ));
 
   return (
-    <View style={{justifyContent: 'center', alignItems: 'center'}}>
+    <View
+      style={{
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}>
       <View
         style={{
-          backgroundColor: 'green',
+          backgroundColor: '#2a683a',
           width: '100%',
           justifyContent: 'center',
           alignItems: 'center',
@@ -35,19 +47,21 @@ const MatchStats = ({title, hometeam_stats, awayteam_stats}: Props) => {
         style={{
           flex: 1,
           flexDirection: 'row',
+          height: Math.max(hometeam_stats.length, awayteam_stats.length) * 45,
         }}>
         <View
           style={{
             width: '50%',
-            alignItems: 'flex-end',
+            alignContent: 'flex-end',
+            marginLeft: 'auto',
             borderRightColor: 'black',
-            borderRightWidth: 2,
-            borderStyle: 'solid',
-            backgroundColor: 'red',
+            borderStyle: 'dotted',
+            borderRightWidth: 1,
+            padding: 10,
           }}>
           {mapArray(hometeam_stats)}
         </View>
-        <View style={{width: '50%', backgroundColor: 'red'}}>
+        <View style={{padding: 10, width: '50%'}}>
           {mapArray(awayteam_stats)}
         </View>
       </View>
