@@ -4,6 +4,7 @@ import {
   SET_GAMES,
   SET_GAME_DETAILS,
   SET_IS_LOADING,
+  SET_IS_DETAIL_LOADING,
   setGameweekAction,
   setGamesAction,
   setGameDetailsAction,
@@ -37,6 +38,13 @@ const setIsLoading = (isLoading: boolean): setGamesAction => ({
   payload: isLoading,
 });
 
+const setIsDetailLoading = (
+  isDetailLoading: boolean,
+): setGameDetailsAction => ({
+  type: SET_IS_DETAIL_LOADING,
+  payload: isDetailLoading,
+});
+
 export const loadGameweeksAction = (): AsyncSetGameweekAction => async dispatch => {
   const result = await gameweekService.getGameweeks();
   dispatch(setGameweeks(result));
@@ -54,6 +62,8 @@ export const loadGamesAction = (
 export const loadGameDetailsAction = (
   id: string,
 ): AsyncSetGameDetailsAction => async dispatch => {
+  dispatch(setIsDetailLoading(true));
   const result = await gameweekService.getGameDetailsById(id);
   dispatch(setGameDetails(result));
+  dispatch(setIsDetailLoading(false));
 };

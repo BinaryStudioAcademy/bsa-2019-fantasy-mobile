@@ -3,6 +3,7 @@ import {
   SET_GAMES,
   SET_GAME_DETAILS,
   SET_IS_LOADING,
+  SET_IS_DETAIL_LOADING,
   setGamesAction,
   setGameDetailsAction,
   setGameweekAction,
@@ -16,9 +17,10 @@ type State = {
   games?: FixturesItemType[];
   gameDetails?: GamesDetailsType;
   isLoading: boolean;
+  isDetailLoading: boolean;
 };
 
-const initialState: State = {isLoading: true};
+const initialState: State = {isLoading: true, isDetailLoading: true};
 
 export default (
   state = initialState,
@@ -35,6 +37,11 @@ export default (
       return {
         ...state,
         isLoading: action.payload,
+      };
+    case SET_IS_DETAIL_LOADING:
+      return {
+        ...state,
+        isDetailLoading: action.payload,
       };
     default:
       return state;

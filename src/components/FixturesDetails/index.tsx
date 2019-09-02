@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, ScrollView} from 'react-native';
+import {View, Text, ScrollView, ActivityIndicator} from 'react-native';
 import {Text as CustomText, Button, Header} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useSelector, useDispatch} from 'react-redux';
@@ -51,8 +51,8 @@ const names: {[s: string]: string} = {
 const FixtureDetails = ({currentMatchStats, navigation}: Props) => {
   const match = navigation.getParam('match', {});
   const [stats, setStats] = useState<any>([]);
-  const gameDetails = useSelector(
-    (state: RootState) => state.fixtures.gameDetails,
+  const {isDetailLoading, gameDetails} = useSelector(
+    (state: RootState) => state.fixtures,
   );
   const dispatch = useDispatch();
   useEffect(() => {
@@ -137,6 +137,9 @@ const FixtureDetails = ({currentMatchStats, navigation}: Props) => {
           key={`stats-${title}-${match.id}`}
         />
       ));
+  if (isDetailLoading) {
+    return <ActivityIndicator size="large" color="#0000ff" />;
+  }
 
   return (
     <View style={{paddingBottom: 70}}>
