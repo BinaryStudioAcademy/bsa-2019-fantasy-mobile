@@ -4,16 +4,14 @@ import {StyleSheet, View, Text} from 'react-native';
 import {Table, Row, Rows} from 'react-native-table-component';
 
 const LeagueTable = ({columns, data, title}: any) => {
-  console.log(columns, data);
 
   const tableData = [];
+
   if (data && data.length) {
-    console.log('aga');
-    map(data, item => {
-      return tableData.push([item.current_rank, item.league_name]);
+    data.map(item => {
+      return tableData.push([item.current_rank, item.league.name, item.total_points]);
     });
   }
-  console.log(tableData);
 
   return (
     <View>
@@ -21,7 +19,7 @@ const LeagueTable = ({columns, data, title}: any) => {
       <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
         <Row data={columns} style={styles.head} textStyle={styles.text} />
         {!tableData.length ? (
-          <Text>Nothing to show</Text>
+          <Text style={styles.empty} >Nothing to show</Text>
         ) : (
           <Rows data={tableData} textStyle={styles.text} />
         )}
@@ -34,6 +32,7 @@ const styles = StyleSheet.create({
   container: {flex: 1, padding: 16, marginBottom: 100, backgroundColor: '#fff'},
   head: {height: 40, backgroundColor: '#f1f8ff'},
   text: {margin: 6},
+  empty: { textAlign: 'center', marginTop: 10, marginBottom: 10 }
 });
 
 export default LeagueTable;

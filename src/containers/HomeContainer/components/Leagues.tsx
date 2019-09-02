@@ -5,9 +5,7 @@ import { StyleSheet, View, Text } from 'react-native';
 import LeagueTable from '../../../components/LeagueTable';
 
 const Leagues = ({data}: any) => {
-  const columns = [
-    ['Rank', 'Title', 'Total Points']
-  ];
+  const columns = ['Rank', 'Title', 'Total Points'];
 
   const titles = [
     {
