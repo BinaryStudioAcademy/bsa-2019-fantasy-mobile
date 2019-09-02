@@ -25,7 +25,6 @@ const App = () => {
   const {isLoading, user, isAuthorized} = useSelector(
     (state: any) => state.profile,
   );
-  console.log('isAuth', isAuthorized)
 
   // useEffect(() => {
   //   isSignedIn().then((res: any) => setSignedIn(res));
