@@ -12,13 +12,8 @@ type FetchArgs = {
 };
 
 function getFetchUrl(args: FetchArgs) {
-  console.log(
-    'http://192.168.0.102:5001' +
-      args.endpoint +
-      (args.query ? `?${queryString.stringify(args.query)}` : ''),
-  );
   return (
-    'http://192.168.1.179:5001' +
+    'http://ec2-18-224-246-75.us-east-2.compute.amazonaws.com:5001' +
     args.endpoint +
     (args.query ? `?${queryString.stringify(args.query)}` : '')
   );

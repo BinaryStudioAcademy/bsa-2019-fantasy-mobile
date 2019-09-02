@@ -7,12 +7,18 @@ import moment from 'moment';
 import FixturesItem from './FixturesItem';
 import {FixturesType, FixturesItemType} from '../../types/fixtures.types';
 
-const Fixtures = ({games}: any) => {
+const Fixtures = ({games, navigation}: any) => {
   const renderMessages = () => {
     let currentDate = '';
 
     return games.map((match: FixturesItemType) => {
-      const res = [<FixturesItem match={match} key={`fixtures-${match.id}`} />];
+      const res = [
+        <FixturesItem
+          match={match}
+          navigation={navigation}
+          key={`fixtures-${match.id}`}
+        />,
+      ];
 
       const messageDate = moment(match.start).format('dddd D MMMM YYYY');
       if (currentDate !== messageDate) {

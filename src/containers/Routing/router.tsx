@@ -13,6 +13,7 @@ import Registration from '../../components/Registration';
 import Login from '../../components/Login';
 import Home from '../../components/Home';
 import Profile from '../../components/Profile';
+import FixturesDetails from '../../components/FixturesDetails';
 import Fixtures from '../../containers/FixturesContainers';
 
 import Sidebar from '../../components/Sidebar';
@@ -38,11 +39,27 @@ export const SignedOut = createStackNavigator({
   },
 });
 
+export const MatchStats = createStackNavigator({
+  Fixtures: {
+    screen: Fixtures,
+    headerMode: 'none',
+    navigationOptions: {
+      header: null,
+    },
+  },
+  FixturesDetails: {
+    screen: FixturesDetails,
+    navigationOptions: {
+      header: null,
+    },
+  },
+});
+
 export const SignedIn = createDrawerNavigator(
   {
     Home,
     Profile,
-    Fixtures,
+    Fixtures: MatchStats,
   },
   {
     contentComponent: Sidebar,
