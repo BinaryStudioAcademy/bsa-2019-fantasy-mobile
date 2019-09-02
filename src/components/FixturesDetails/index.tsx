@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, ScrollView} from 'react-native';
 import {Text as CustomText, Button, Header} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useSelector, useDispatch} from 'react-redux';
@@ -11,7 +11,6 @@ import {RootState} from '../../store/types';
 import {loadGameDetailsAction} from '../../containers/FixturesContainers/action';
 
 type Props = {
-  match: FixturesItemType;
   currentMatchStats: FixturesItemType | undefined;
   setCurrentMatchStats: React.Dispatch<
     React.SetStateAction<FixturesItemType | undefined>
@@ -49,16 +48,16 @@ const names: {[s: string]: string} = {
   nothing: 'Nothing',
 } as const;
 
-const FixtureDetails = ({currentMatchStats, match, navigation}: Props) => {
-  const matchId = navigation.getParam('matchId', 'NO-ID');
+const FixtureDetails = ({currentMatchStats, navigation}: Props) => {
+  const match = navigation.getParam('match', {});
   const [stats, setStats] = useState<any>([]);
   const gameDetails = useSelector(
     (state: RootState) => state.fixtures.gameDetails,
   );
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(loadGameDetailsAction(matchId));
-  }, [matchId]);
+    dispatch(loadGameDetailsAction(match.id));
+  }, [match.id]);
 
   useEffect(() => {
     if (gameDetails) {
@@ -114,9 +113,11 @@ const FixtureDetails = ({currentMatchStats, match, navigation}: Props) => {
           }
         });
       });
+      return () => {
+        setStats([]);
+      };
     }
   }, [gameDetails]);
-
   const displayStats = () =>
     stats
       .sort((a: Stats, b: Stats) => {
@@ -138,9 +139,9 @@ const FixtureDetails = ({currentMatchStats, match, navigation}: Props) => {
       ));
 
   return (
-    <View>
+    <View style={{paddingBottom: 70}}>
       <Header
-        containerStyle={{height: 60, paddingTop: 0}}
+        containerStyle={{height: 60, paddingTop: 0, borderWidth: 0}}
         leftComponent={
           <Icon
             name="caret-left"
@@ -150,24 +151,12 @@ const FixtureDetails = ({currentMatchStats, match, navigation}: Props) => {
           />
         }
         centerComponent={{
-          text: 'Match Details',
+          text: `${match.hometeam.name} vs ${match.awayteam.name}`,
           style: {color: '#fff', fontSize: 20},
         }}
         backgroundColor={'#122737'}
       />
-
-      <MatchStats
-        title="Goals"
-        hometeam_stats={[
-          {player: 'anima', count: 3},
-          {player: 'sadads', count: 4},
-        ]}
-        awayteam_stats={[
-          {player: 'anisadasdma', count: 5},
-          {player: 'sadads', count: 4},
-          {player: 'sadadasdasds', count: 4},
-        ]}
-      />
+      <ScrollView>{displayStats()}</ScrollView>
     </View>
   );
 };

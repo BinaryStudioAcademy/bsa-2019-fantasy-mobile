@@ -82,7 +82,7 @@ const FixturesItem = ({match, navigation}: Props) => {
           type="outline"
           onPress={() =>
             navigation.navigate('FixturesDetails', {
-              matchId: match.id,
+              match,
             })
           }
         />
