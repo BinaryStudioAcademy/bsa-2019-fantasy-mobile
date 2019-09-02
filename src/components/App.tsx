@@ -19,8 +19,8 @@ const App = () => {
     dispatch(loadCurrentUser());
   }, [dispatch]);
 
-  const Navigartor = createRootNavigator(isAuthorized);
-  const Routing = createAppContainer(Navigartor);
+  const Navigator = createRootNavigator(isAuthorized);
+  const Routing = createAppContainer(Navigator);
   if (isLoading) {
     return <ActivityIndicator size="large" color="#0000ff" />;
   }

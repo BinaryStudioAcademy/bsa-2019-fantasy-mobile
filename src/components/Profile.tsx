@@ -1,22 +1,22 @@
 import React from 'react';
-import {useDispatch, useSelector} from 'react-redux';
 import {View, Text} from 'react-native';
-import {Button} from 'react-native-elements';
+import {Header} from 'react-native-elements';
 
-import {logout} from '../containers/Auth/action';
-
-const Profile = () => {
-  const dispatch = useDispatch();
-  return (
-    <View style={{flex: 1}}>
-      <Text>Profile page</Text>
-      <Button
-        buttonStyle={{marginTop: 20, backgroundColor: '#03A9F4'}}
-        title="LOG OUT"
-        onPress={() => dispatch(logout())}
-      />
-    </View>
-  );
-};
+const Profile = (props: any) => (
+  <View style={{flex: 1}}>
+    <Header
+      containerStyle={{height: 60, paddingTop: 0}}
+      leftComponent={{
+        icon: 'menu',
+        color: '#fff',
+        size: 30,
+        onPress: () => props.navigation.openDrawer(),
+      }}
+      centerComponent={{text: 'Profile', style: {color: '#fff', fontSize: 20}}}
+      backgroundColor={'#122737'}
+    />
+    <Text>Profile page</Text>
+  </View>
+);
 
 export default Profile;

@@ -1,9 +1,13 @@
 import React from 'react';
 import {Text, View, Image, SafeAreaView, ScrollView} from 'react-native';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {DrawerItems} from 'react-navigation';
+import {Button} from 'react-native-elements';
+
+import {logout} from '../containers/Auth/action';
 
 const Sidebar = (props: any) => {
+  const dispatch = useDispatch();
   const {user} = useSelector((state: any) => state.profile);
   let src =
     'https://i2.wp.com/www.ahfirstaid.org/wp-content/uploads/2014/07/avatar-placeholder.png';
@@ -27,11 +31,16 @@ const Sidebar = (props: any) => {
         />
         {user && user.name && (
           <View style={{alignItems: 'center', justifyContent: 'center'}}>
-            <Text style={{fontSize: 23, marginTop: 7, marginBottom: 3}}>
+            <Text style={{fontSize: 23, marginTop: 8, marginBottom: 3}}>
               {user.name}
             </Text>
             <Text style={{fontSize: 16}}>Money: {user.money}</Text>
             <Text style={{fontSize: 16}}>Score: {user.score}</Text>
+            <Button
+              buttonStyle={{marginTop: 4, backgroundColor: '#03A9F4'}}
+              title="Sign Out"
+              onPress={() => dispatch(logout())}
+            />
           </View>
         )}
       </View>
