@@ -1,5 +1,5 @@
 import queryString from 'query-string';
-import {AsyncStorage} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 type FetchArgs = {
   endpoint: string;
