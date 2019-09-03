@@ -38,12 +38,6 @@ const Login = ({navigation}: any) => {
           title="SIGN IN"
           onPress={e => handleLogin(e)}
         />
-        <Button
-          buttonStyle={{marginTop: 20, backgroundColor: 'transparent'}}
-          titleStyle={{color: '#bcbec1'}}
-          title="Sign up"
-          onPress={() => navigation.navigate('SignUp')}
-        />
       </Card>
     </View>
   );

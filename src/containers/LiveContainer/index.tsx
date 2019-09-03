@@ -1,8 +1,24 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text} from 'react-native';
 import {Header} from 'react-native-elements';
 
+import io from 'socket.io-client';
+
+const socket = io(
+  'http://ec2-18-224-246-75.us-east-2.compute.amazonaws.com:5002',
+);
+
 const LiveContainer = (props: any) => {
+  const [eventCount, setEventCount] = useState(0);
+
+  useEffect(() => {
+    socket.on('event', (status: any) => {
+      console.log('[SOCKET.IO]: Recieved event');
+      console.log(status);
+      setEventCount(eventCount + 1);
+    });
+  }, [eventCount]);
+
   return (
     <View style={{flex: 1}}>
       <Header
@@ -16,7 +32,7 @@ const LiveContainer = (props: any) => {
         centerComponent={{text: 'Live', style: {color: '#fff', fontSize: 20}}}
         backgroundColor={'#122737'}
       />
-      <Text>Live page</Text>
+      <Text>{eventCount} events have been emitted</Text>
     </View>
   );
 };

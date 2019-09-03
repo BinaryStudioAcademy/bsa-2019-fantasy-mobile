@@ -9,7 +9,6 @@ import {
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-import Registration from '../../components/Registration';
 import Login from '../../components/Login';
 import Home from '../Home';
 import Profile from '../Profile';
@@ -28,13 +27,6 @@ export const SignedOut = createStackNavigator({
     screen: Login,
     navigationOptions: {
       title: 'Sign In',
-      headerStyle,
-    },
-  },
-  SignUp: {
-    screen: Registration,
-    navigationOptions: {
-      title: 'Sign Up',
       headerStyle,
     },
   },
