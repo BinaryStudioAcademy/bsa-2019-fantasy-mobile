@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {ActivityIndicator} from 'react-native';
-
+import {createAppContainer} from 'react-navigation';
 import Spinner from './Spinner';
 
 import {createRootNavigator} from '../containers/Routing/router';

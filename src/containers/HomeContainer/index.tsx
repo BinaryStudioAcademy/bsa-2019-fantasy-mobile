@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import {ActivityIndicator} from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { useSelector, useDispatch } from 'react-redux';
@@ -50,8 +51,8 @@ const HomeContainer = ({ gameweeks, gameweeksHistory, teamHistory, leagues }) =>
   console.log(leagues);
 
 
-  if (!gameweeksHistory && !leagues) {
-    return <Spinner />;
+  if (!gameweeksHistory && !leagues && !teamHistory.length) {
+    return <ActivityIndicator />;
   }
 
   console.log('teamHistory', teamHistory);
