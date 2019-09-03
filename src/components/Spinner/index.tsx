@@ -11,32 +11,56 @@ import {
 
 const Spinner = () => {
   const [spinValue] = useState(new Animated.Value(0));
+  const [bounceValue] = useState(new Animated.Value(1));
 
-  const spin = () => {
-    spinValue.setValue(0);
-    Animated.timing(spinValue, {
-      toValue: 1,
-      duration: 4000,
-      easing: Easing.linear,
-    }).start(() => spin());
+  const bounce = (isStop?: boolean) => {
+    if (!isStop) {
+      bounceValue.setValue(1);
+      Animated.timing(bounceValue, {
+        toValue: 2,
+        duration: 2000,
+        easing: Easing.linear,
+      }).start(() => bounce(isStop));
+    }
+  };
+
+  const spin = (isStop?: boolean) => {
+    if (!isStop) {
+      spinValue.setValue(0);
+      Animated.timing(spinValue, {
+        toValue: 1,
+        duration: 2000,
+        easing: Easing.linear,
+      }).start(() => spin(isStop));
+    }
   };
 
   React.useEffect(() => {
+    bounce();
     spin();
+    return () => {
+      bounce(true);
+      spin(true);
+    };
   }, []);
 
-  const spin1 = spinValue.interpolate({
-    inputRange: [0, 1],
-    outputRange: ['0deg', '360deg'],
+  const bounceRange = bounceValue.interpolate({
+    inputRange: [1, 1.25, 1.5, 1.75, 2],
+    outputRange: [0, -75, -150, -75, 0],
+  });
+
+  const spinRange = spinValue.interpolate({
+    inputRange: [0, 0.25, 0.5, 0.75, 1],
+    outputRange: ['0deg', '90deg', '180deg', '270deg', '360deg'],
   });
 
   return (
     <View style={{alignItems: 'center'}}>
       <Animated.Image
         style={{
-          width: 100,
-          height: 100,
-          transform: [{rotate: spin1}],
+          width: 90,
+          height: 90,
+          transform: [{translateY: bounceRange}, {rotate: spinRange}],
         }}
         source={require('../../images/ball.png')}
       />
