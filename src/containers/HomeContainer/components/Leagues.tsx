@@ -1,6 +1,14 @@
 import React from 'react';
-import { map } from 'lodash';
-import { StyleSheet, View, Text } from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  ScrollView,
+  ActivityIndicator,
+} from 'react-native';
+import {Text as CustomText, Button, Header} from 'react-native-elements';
+
+import {map} from 'lodash';
 
 import LeagueTable from '../../../components/LeagueTable';
 
@@ -27,14 +35,25 @@ const Leagues = ({data}: any) => {
 
   return (
     <View>
+      <View
+        style={{
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginBottom: 20,
+        }}>
+        <CustomText h4>Users Leagues</CustomText>
+      </View>
       {map(titles, item => {
         return (
-          <LeagueTable
-            columns={columns}
-            data={data[item.accessor]}
-            title={item}
-            key={item.id}
-          />
+          <View>
+            <LeagueTable
+              columns={columns}
+              data={data[item.accessor]}
+              title={item}
+              key={item.id}
+            />
+          </View>
         );
       })}
     </View>

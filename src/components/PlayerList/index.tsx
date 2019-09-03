@@ -1,8 +1,10 @@
 import React, {useMemo} from 'react';
+import {View, StyleSheet, ImageBackground, Text} from 'react-native';
+import {Text as CustomText, Button} from 'react-native-elements';
+
 import {useSelector} from 'react-redux';
 import {RootState} from '../../store/types';
 
-import {View, StyleSheet, ImageBackground, Text} from 'react-native';
 import {Table, Row, Rows} from 'react-native-table-component';
 
 import {Position, PlayerType} from '../../types/player.types';
@@ -26,7 +28,6 @@ const PlayerList = ({players: givenPlayers}) => {
         : [],
     [clubs.length, givenPlayers],
   );
-  console.log('players', players);
 
   const {GKP, DEF, MID, FWD} = Position;
 
@@ -43,8 +44,6 @@ const PlayerList = ({players: givenPlayers}) => {
     return player_stats.player_stats.position === FWD ? true : false;
   });
 
-  console.log(forwards, midfielders, defenders);
-
   const column1 = ['', 'Goalkeepers', '£', '**'];
   const column2 = ['', 'Defenders', '£', '**'];
   const column3 = ['', 'Midfielders', '£', '**'];
@@ -53,7 +52,6 @@ const PlayerList = ({players: givenPlayers}) => {
   const getData = players => {
     const result = [];
     players.map(player => {
-      console.log('player', player);
       const {player_stats} = player.player_stats;
       return result.push([
         '',
@@ -63,24 +61,48 @@ const PlayerList = ({players: givenPlayers}) => {
       ]);
     });
 
-    console.log('res', result);
-
     return result;
   };
 
   return (
     <View>
-      <Text>Players List</Text>
-      <Table>
-        <Row data={column1} style={styles.head} textStyle={styles.text} />
-        <Rows data={getData(goalkeepers)} style={styles.row} textStyle={styles.textRow} />
-        <Row data={column2} style={styles.head} textStyle={styles.text} />
-        <Rows data={getData(defenders)} style={styles.row} textStyle={styles.textRow} />
-        <Row data={column3} style={styles.head} textStyle={styles.text} />
-        <Rows data={getData(midfielders)} style={styles.row} textStyle={styles.textRow} />
-        <Row data={column4} style={styles.head} textStyle={styles.text} />
-        <Rows data={getData(forwards)} style={styles.row} textStyle={styles.textRow} />
-      </Table>
+      <View
+        style={{
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginBottom: 20
+        }}>
+        <CustomText h4>Players List</CustomText>
+      </View>
+      <View>
+        <Table style={{flex: 1}}>
+          <Row data={column1} style={styles.head} textStyle={styles.text} />
+          <Rows
+            data={getData(goalkeepers)}
+            style={styles.row}
+            textStyle={styles.textRow}
+          />
+          <Row data={column2} style={styles.head} textStyle={styles.text} />
+          <Rows
+            data={getData(defenders)}
+            style={styles.row}
+            textStyle={styles.textRow}
+          />
+          <Row data={column3} style={styles.head} textStyle={styles.text} />
+          <Rows
+            data={getData(midfielders)}
+            style={styles.row}
+            textStyle={styles.textRow}
+          />
+          <Row data={column4} style={styles.head} textStyle={styles.text} />
+          <Rows
+            data={getData(forwards)}
+            style={styles.row}
+            textStyle={styles.textRow}
+          />
+        </Table>
+      </View>
     </View>
   );
 };
@@ -94,8 +116,8 @@ const styles = StyleSheet.create({
     paddingLeft: 3,
     textTransform: 'uppercase',
   },
-  row : {padding: 10, paddingLeft: 3, paddingRight: 3 },
-  textRow: {color: '#666666'}
+  row: {padding: 10, paddingLeft: 3, paddingRight: 3},
+  textRow: {color: '#666666'},
 });
 
 export default PlayerList;

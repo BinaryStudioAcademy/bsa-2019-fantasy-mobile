@@ -1,28 +1,36 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {ActivityIndicator} from 'react-native';
-import { connect } from 'react-redux';
-import { bindActionCreators, Dispatch } from 'redux';
-import { useSelector, useDispatch } from 'react-redux';
+import {View, Text, ScrollView} from 'react-native';
+import {Text as CustomText, Button, Header} from 'react-native-elements';
+import {connect} from 'react-redux';
+import {bindActionCreators, Dispatch} from 'redux';
+import {useSelector, useDispatch} from 'react-redux';
 
-import { View, Text, ScrollView } from 'react-native';
-import { Header } from 'react-native-elements';
-
-import { RootState } from '../../store/types';
-import { loadGameweeksHistoryAction, loadTeamHistoryAction } from './actions';
-import { loadUserLeagues } from '../LeaguesContainer/actions';
+import {RootState} from '../../store/types';
+import {
+  loadGameweeksHistoryAction,
+  loadTeamHistoryAction,
+  setCurrentGameweekAction,
+} from './actions';
+import {loadUserLeagues} from '../LeaguesContainer/actions';
 
 import Leagues from './components/Leagues';
 import PlayerList from '../../components/PlayerList';
 import Spinner from '../../components/Spinner';
 
-const HomeContainer = ({ gameweeks, gameweeksHistory, teamHistory, leagues }) => {
+const HomeContainer = ({
+  gameweeks,
+  gameweeksHistory,
+  teamHistory,
+  leagues,
+  isLoading,
+  currentGameweek,
+}) => {
   const dispatch = useDispatch();
 
   const userId = useSelector(
     (state: RootState) => state.profile.user && state.profile.user.id,
   );
-
-  const [currentGameweek, setCurrentGameweek] = useState<number>(1);
 
   useEffect(() => {
     if (userId) {
@@ -33,13 +41,7 @@ const HomeContainer = ({ gameweeks, gameweeksHistory, teamHistory, leagues }) =>
 
   useEffect(() => {
     if (gameweeksHistory && gameweeksHistory.length) {
-      setCurrentGameweek(gameweeksHistory[0].gameweek.number);
-    }
-  }, [gameweeksHistory]);
-
-  useEffect(() => {
-    if (gameweeksHistory && gameweeksHistory.length) {
-      const idx = gameweeksHistory.findIndex((gw) => {
+      const idx = gameweeksHistory.findIndex(gw => {
         return gw.gameweek.number === currentGameweek;
       });
       if (idx !== -1) {
@@ -48,17 +50,16 @@ const HomeContainer = ({ gameweeks, gameweeksHistory, teamHistory, leagues }) =>
       }
     }
   }, [currentGameweek, gameweeksHistory.length]);
-  console.log(leagues);
-
+  console.log(currentGameweek);
 
   if (!gameweeksHistory && !leagues && !teamHistory.length) {
-    return <ActivityIndicator />;
+    return <ActivityIndicator size="large" color="#0000ff" />;
   }
 
-  console.log('teamHistory', teamHistory);
+  console.log('history', gameweeksHistory);
 
   return (
-    <View style={{flex: 1}}>
+    <View>
       <Header
         containerStyle={{height: 60, paddingTop: 0}}
         leftComponent={{
@@ -71,8 +72,49 @@ const HomeContainer = ({ gameweeks, gameweeksHistory, teamHistory, leagues }) =>
         backgroundColor={'#122737'}
       />
       <ScrollView>
-        <Text>{`Gameweek ${currentGameweek}`}</Text>
-        <PlayerList players={teamHistory} />
+        <View
+          style={{
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginTop: 30,
+            marginBottom: 30,
+          }}>
+          <CustomText h3>{`Gameweek ${currentGameweek}`}</CustomText>
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              width: '100%',
+            }}>
+            <View style={{width: '30%', marginLeft: 20, marginTop: 10}}>
+              <Button
+                buttonStyle={{backgroundColor: 'green'}}
+                title="Previous"
+                onPress={() =>
+                  dispatch(setCurrentGameweekAction(currentGameweek - 1))
+                }
+                disabled={currentGameweek <= 1}
+              />
+            </View>
+            <View style={{width: '30%', marginRight: 20, marginTop: 10}}>
+              <Button
+                buttonStyle={{backgroundColor: 'green'}}
+                title="Next"
+                onPress={() =>
+                  dispatch(setCurrentGameweekAction(currentGameweek + 1))
+                }
+                disabled={currentGameweek >= gameweeksHistory.length}
+              />
+            </View>
+          </View>
+        </View>
+        {isLoading ? (
+          <ActivityIndicator />
+        ) : (
+          <PlayerList players={teamHistory} />
+        )}
         <Leagues data={leagues} />
       </ScrollView>
     </View>
@@ -81,22 +123,22 @@ const HomeContainer = ({ gameweeks, gameweeksHistory, teamHistory, leagues }) =>
 
 const mapStateToProps = (rootState: RootState) => ({
   gameweeks: rootState.gameweeks.gameweeks,
-  userRank: rootState.gameweeks.user_rank,
-  gameweeksResult: rootState.gameweeks.gameweeks_result,
   gameweeksHistory: rootState.gameweekHistory.gameweeksHistory,
+  currentGameweek: rootState.gameweekHistory.currentGameweek,
   teamHistory: rootState.gameweekHistory.teamHistory,
   isLoading: rootState.gameweekHistory.isLoading,
   leagues: rootState.league.leagues,
 });
 
-
 const actions = {
   loadGameweeksHistoryAction,
   loadTeamHistoryAction,
-  loadUserLeagues
-}
+  loadUserLeagues,
+  setCurrentGameweekAction,
+};
 
-const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(actions, dispatch);
+const mapDispatchToProps = (dispatch: Dispatch) =>
+  bindActionCreators(actions, dispatch);
 
 export default connect(
   mapStateToProps,
