@@ -12,8 +12,10 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Registration from '../../components/Registration';
 import Login from '../../components/Login';
 import HomeContainer from '../../containers/HomeContainer';
-import Profile from '../../components/Profile';
+import Profile from '../Profile';
+import FixturesDetails from '../../components/FixturesDetails';
 import Fixtures from '../../containers/FixturesContainers';
+import Live from '../../containers/LiveContainer/index';
 
 import Sidebar from '../../components/Sidebar';
 
@@ -38,11 +40,28 @@ export const SignedOut = createStackNavigator({
   },
 });
 
+export const MatchStats = createStackNavigator({
+  Fixtures: {
+    screen: Fixtures,
+    headerMode: 'none',
+    navigationOptions: {
+      header: null,
+    },
+  },
+  FixturesDetails: {
+    screen: FixturesDetails,
+    navigationOptions: {
+      header: null,
+    },
+  },
+});
+
 export const SignedIn = createDrawerNavigator(
   {
     HomeContainer,
     Profile,
-    Fixtures,
+    Fixtures: MatchStats,
+    Live,
   },
   {
     contentComponent: Sidebar,

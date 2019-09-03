@@ -1,5 +1,5 @@
 import queryString from 'query-string';
-import {AsyncStorage} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 type FetchArgs = {
   endpoint: string;
@@ -12,27 +12,22 @@ type FetchArgs = {
 };
 
 function getFetchUrl(args: FetchArgs) {
-  console.log(
-    'http://192.168.0.102:5001' +
-      args.endpoint +
-      (args.query ? `?${queryString.stringify(args.query)}` : ''),
-  );
   return (
-    'http://192.168.1.179:5001' +
+    'http://ec2-18-224-246-75.us-east-2.compute.amazonaws.com:5001' +
     args.endpoint +
     (args.query ? `?${queryString.stringify(args.query)}` : '')
   );
 }
 
-function getFetchArgs(
+async function getFetchArgs(
   args: FetchArgs,
-): Pick<RequestInit, 'method' | 'headers' | 'credentials' | 'body'> {
+): Promise<Pick<RequestInit, 'method' | 'headers' | 'credentials' | 'body'>> {
   const headers: {[header: string]: string} = {};
   if (!args.attachment) {
     headers['Content-Type'] = 'application/json';
     headers.Accept = 'application/json';
   }
-  const token = AsyncStorage.getItem('token');
+  const token = await AsyncStorage.getItem('token');
   if (token && !args.skipAuthorization) {
     headers.Authorization = `Bearer ${token}`;
   }
@@ -72,8 +67,7 @@ export async function throwIfResponseFailed(res: Response) {
 
 export default async function callWebApi(args: FetchArgs) {
   try {
-    const res = await fetch(getFetchUrl(args), getFetchArgs(args));
-    console.log(res);
+    const res = await fetch(getFetchUrl(args), await getFetchArgs(args));
     await throwIfResponseFailed(res);
     return res;
   } catch (err) {

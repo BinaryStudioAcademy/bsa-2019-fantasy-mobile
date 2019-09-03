@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, {useState, useEffect} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
+import {ActivityIndicator} from 'react-native';
 
 import Spinner from './Spinner';
 
-import { createAppContainer } from 'react-navigation';
-
-import { createRootNavigator } from '../containers/Routing/router';
-import { isSignedIn } from '../helpers/storageHelper';
+import {createRootNavigator} from '../containers/Routing/router';
 
 import {
   fetchGameweeks,
@@ -18,28 +16,20 @@ import { fetchClubs } from '../containers/Routing/fetchClubs/actions';
 
 import { currentGameweekSelector } from '../store/selectors/current-gameweek.selector';
 
+import {loadCurrentUser} from '../containers/Auth/action';
+import {RootState} from '../store/types';
+
 const App = () => {
-  const [signedIn, setSignedIn] = useState<boolean>(false);
-  console.disableYellowBox = true;
   const dispatch = useDispatch();
   const {isLoading, user, isAuthorized} = useSelector(
-    (state: any) => state.profile,
+    (state: RootState) => state.profile,
   );
 
-  // useEffect(() => {
-  //   isSignedIn().then((res: any) => setSignedIn(res));
-  // });
-
   useEffect(() => {
-    if (isAuthorized) {
-      setSignedIn(isAuthorized);
-    }
-  }, [isAuthorized]);
-
-  useEffect(() => {
+    dispatch(loadCurrentUser());
     dispatch(fetchClubs());
     dispatch(fetchGameweeks());
-  }, [dispatch])
+  }, [dispatch]);
 
   const currentGameweek = useSelector(currentGameweekSelector);
   const clubs = useSelector((state: RootState) => state.clubs.clubs);
@@ -52,8 +42,11 @@ const App = () => {
     }
   }, [dispatch, user, currentGameweek]);
 
-  const Navigartor = createRootNavigator(signedIn);
-  const Routing = createAppContainer(Navigartor);
+  const Navigator = createRootNavigator(isAuthorized);
+  const Routing = createAppContainer(Navigator);
+  if (isLoading) {
+    return <ActivityIndicator size="large" color="#0000ff" />;
+  }
 
   return <Routing />;
 };

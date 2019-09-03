@@ -11,7 +11,7 @@ import {FixturesItemType} from '../../types/fixtures.types';
 import {GameweekType} from '../../types/gameweek.type';
 
 import Fixtures from '../../components/Fixtures/Fixtures';
-import Spinner from '../../components/Spinner'
+import Spinner from '../../components/Spinner';
 
 type Props = {
   gameweeks: GameweekType[];
@@ -116,7 +116,7 @@ const FixturesContainer = ({
               </View>
             )}
           </View>
-          {!isLoading && <Fixtures games={games} />}
+          {!isLoading && <Fixtures navigation={navigation} games={games} />}
         </View>
       </ScrollView>
     </View>
