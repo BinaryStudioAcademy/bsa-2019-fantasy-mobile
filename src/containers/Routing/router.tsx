@@ -11,8 +11,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 import Registration from '../../components/Registration';
 import Login from '../../components/Login';
-import Home from '../../components/Home';
-import Profile from '../../components/Profile';
+import Home from '../Home';
+import Profile from '../Profile';
 import FixturesDetails from '../../components/FixturesDetails';
 import Fixtures from '../../containers/FixturesContainers';
 import Live from '../../containers/LiveContainer/index';
