@@ -1,9 +1,12 @@
 import React, {useState} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {View} from 'react-native';
 
-import {Card, Button, Input} from 'react-native-elements';
+import {Button, Input, Text} from 'react-native-elements';
 import {login} from '../containers/Auth/action';
+import {primaryColor} from '../styles/common';
+
+import GeneralStatusBarColor from './GeneralStatusBarColor';
 
 const Login = ({navigation}: any) => {
   const [email, setEmail] = useState<string>('');
@@ -19,10 +22,14 @@ const Login = ({navigation}: any) => {
   };
 
   return (
-    <View style={{paddingVertical: 20}}>
-      <Card>
+    <View style={{flex: 1, justifyContent: 'center', padding: 20}}>
+      <GeneralStatusBarColor
+        backgroundColor="#fff"
+        barStyle="dark-content"
+      />
+      <View>
         <Input
-          placeholder="Email address"
+          placeholder="Email"
           value={email}
           onChangeText={text => setEmail(text)}
         />
@@ -34,11 +41,14 @@ const Login = ({navigation}: any) => {
         />
 
         <Button
-          buttonStyle={{marginTop: 20, backgroundColor: '#03A9F4'}}
+          buttonStyle={{marginTop: 20, backgroundColor: primaryColor}}
           title="SIGN IN"
           onPress={e => handleLogin(e)}
         />
-      </Card>
+      </View>
+      <Text style={{alignSelf: 'center', color: 'gray', marginTop: 40}}>
+        BSA 2019 Fantasy Football | v0.0.1
+      </Text>
     </View>
   );
 };

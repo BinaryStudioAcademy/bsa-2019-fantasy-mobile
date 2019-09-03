@@ -18,16 +18,11 @@ import Live from '../../containers/LiveContainer/index';
 
 import Sidebar from '../../components/Sidebar';
 
-const headerStyle = {
-  marginTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
-};
-
 export const SignedOut = createStackNavigator({
   SignIn: {
     screen: Login,
     navigationOptions: {
-      title: 'Sign In',
-      headerStyle,
+      header: null,
     },
   },
 });
