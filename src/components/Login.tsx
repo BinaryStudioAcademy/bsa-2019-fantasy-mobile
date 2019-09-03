@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {View} from 'react-native';
 
-import {Card, Button, Input} from 'react-native-elements';
+import {Card, Button, Input, Text} from 'react-native-elements';
 import {login} from '../containers/Auth/action';
 
 const Login = ({navigation}: any) => {
@@ -17,7 +17,6 @@ const Login = ({navigation}: any) => {
       dispatch(login({email, password}));
     }
   };
-
   return (
     <View style={{paddingVertical: 20}}>
       <Card>
@@ -25,6 +24,7 @@ const Login = ({navigation}: any) => {
           placeholder="Email address"
           value={email}
           onChangeText={text => setEmail(text)}
+          onBlur={() => setEmail(email)}
         />
         <Input
           secureTextEntry
@@ -37,12 +37,6 @@ const Login = ({navigation}: any) => {
           buttonStyle={{marginTop: 20, backgroundColor: '#03A9F4'}}
           title="SIGN IN"
           onPress={e => handleLogin(e)}
-        />
-        <Button
-          buttonStyle={{marginTop: 20, backgroundColor: 'transparent'}}
-          titleStyle={{color: '#bcbec1'}}
-          title="Sign up"
-          onPress={() => navigation.navigate('SignUp')}
         />
       </Card>
     </View>

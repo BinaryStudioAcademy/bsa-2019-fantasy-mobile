@@ -1,4 +1,6 @@
 import AsyncStorage from '@react-native-community/async-storage';
+import {showMessage, hideMessage} from 'react-native-flash-message';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 import {User} from '../../types/user.type';
 
@@ -43,7 +45,12 @@ const handleAuthResponse = (
   try {
     const {user, token} = await authResponsePromise;
     setAuthData(user, token)(dispatch, getRootState);
-  } finally {
+  } catch (err) {
+    showMessage({
+      icon: 'danger',
+      message: err && err.message ? err.message : err,
+      type: 'danger',
+    });
   }
 };
 
