@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { View, Text } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 import { Header } from 'react-native-elements';
 
 import { RootState } from '../../store/types';
@@ -11,6 +11,7 @@ import { loadGameweeksHistoryAction, loadTeamHistoryAction } from './actions';
 import { loadUserLeagues } from '../LeaguesContainer/actions';
 
 import Leagues from './components/Leagues';
+import PlayerList from '../../components/PlayerList';
 import Spinner from '../../components/Spinner';
 
 const HomeContainer = ({ gameweeks, gameweeksHistory, teamHistory, leagues }) => {
@@ -53,6 +54,8 @@ const HomeContainer = ({ gameweeks, gameweeksHistory, teamHistory, leagues }) =>
     return <Spinner />;
   }
 
+  console.log('teamHistory', teamHistory);
+
   return (
     <View style={{flex: 1}}>
       <Header
@@ -66,11 +69,11 @@ const HomeContainer = ({ gameweeks, gameweeksHistory, teamHistory, leagues }) =>
         centerComponent={{text: 'Home', style: {color: '#fff', fontSize: 20}}}
         backgroundColor={'#122737'}
       />
-      <Text>{`Gameweek ${currentGameweek}`}</Text>
-      <View>
-        {/* list team view */}
-      </View>
-      <Leagues data={leagues} />
+      <ScrollView>
+        <Text>{`Gameweek ${currentGameweek}`}</Text>
+        <PlayerList players={teamHistory} />
+        <Leagues data={leagues} />
+      </ScrollView>
     </View>
   );
 };
