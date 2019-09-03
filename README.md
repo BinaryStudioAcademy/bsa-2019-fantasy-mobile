@@ -1,4 +1,4 @@
-# BSA 2019 Fantasy Football project (React Native)
+,# BSA 2019 Fantasy Football project (React Native)
 
 This project was inspired by the English Premier League Fantasy Football application (http://fantasy.premierleague.com). Fantasy football is an online game where participants select a team of real players and all the results of the players totally depend on the statistics of those players in real games.
 
@@ -43,14 +43,14 @@ source ~/.config/fish/config.fish
 4. Error: spawnSync ./gradlew EACCES.
 
 ```bash
-chmod 755 android/gradlew 
+chmod 755 android/gradlew
 ```
 
 5. Keystore file '/Project-Folder/android/app/debug.keystore' not found for signing config 'debug'.
 
 ```bash
-cd /android/app
-keytool -genkey
+cd android/app
+keytool -genkey -v -keystore debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000
 ```
 
 6. If your device does not show the RSA dialog in debug mode.
