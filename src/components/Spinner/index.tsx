@@ -1,16 +1,45 @@
-import React from 'react';
-import {View, StyleSheet, ImageBackground} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {
+  View,
+  StyleSheet,
+  ImageBackground,
+  Image,
+  Text,
+  Animated,
+  Easing,
+} from 'react-native';
 
 const Spinner = () => {
+  const [spinValue] = useState(new Animated.Value(0));
+
+  const spin = () => {
+    spinValue.setValue(0);
+    Animated.timing(spinValue, {
+      toValue: 1,
+      duration: 4000,
+      easing: Easing.linear,
+    }).start(() => spin());
+  };
+
+  React.useEffect(() => {
+    spin();
+  }, []);
+
+  const spin1 = spinValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0deg', '360deg'],
+  });
+
   return (
-    <View style={styles.box}>
-      <View style={styles.shadow} />
-      <View style={styles.gravity}>
-        <ImageBackground
-          source={{uri: 'https://image.flaticon.com/icons/svg/33/33736.svg'}}
-          style={styles.ball}
-        />
-      </View>
+    <View style={{alignItems: 'center'}}>
+      <Animated.Image
+        style={{
+          width: 100,
+          height: 100,
+          transform: [{rotate: spin1}],
+        }}
+        source={require('../../images/ball.png')}
+      />
     </View>
   );
 };
