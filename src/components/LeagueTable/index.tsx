@@ -1,27 +1,38 @@
 import React from 'react';
 import {map} from 'lodash/map';
 import {StyleSheet, View, Text} from 'react-native';
+import {Text as CustomText, Button, Header} from 'react-native-elements';
 import {Table, Row, Rows} from 'react-native-table-component';
 
 const LeagueTable = ({columns, data, title}: any) => {
-
   const tableData = [];
 
   if (data && data.length) {
     data.map(item => {
-      return tableData.push([item.current_rank, item.league.name, item.total_points]);
+      return tableData.push([
+        item.current_rank,
+        item.league.name,
+        item.total_points,
+      ]);
     });
+
+
   }
 
   return (
-    <View>
-      <Text>{title.title}</Text>
-      <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
+    <View style={styles.container}>
+      <CustomText
+        h4
+        style={{paddingHorizontal: 15, fontSize: 15, marginBottom: 10}}
+        h4Style={{fontSize: 20}}>
+        {title.title}
+      </CustomText>
+      <Table>
         <Row data={columns} style={styles.head} textStyle={styles.text} />
         {!tableData.length ? (
-          <Text style={styles.empty} >Nothing to show</Text>
+          <Text style={styles.empty}>Nothing to show</Text>
         ) : (
-          <Rows data={tableData} textStyle={styles.text} />
+          <Rows data={tableData} textStyle={styles.rows} style={{paddingLeft: 14, paddingVertical: 5}} />
         )}
       </Table>
     </View>
@@ -29,10 +40,17 @@ const LeagueTable = ({columns, data, title}: any) => {
 };
 
 const styles = StyleSheet.create({
-  container: {flex: 1, padding: 16, marginBottom: 100, backgroundColor: '#fff'},
-  head: {height: 40, backgroundColor: '#f1f8ff'},
-  text: {margin: 6},
-  empty: { textAlign: 'center', marginTop: 10, marginBottom: 10 }
+  container: {flex: 1, marginBottom: 10, backgroundColor: '#fff'},
+  head: {backgroundColor: '#666', padding: 14},
+  text: {
+    color: '#fff',
+    fontSize: 10,
+    fontWeight: 'bold',
+    paddingLeft: 3,
+    textTransform: 'uppercase',
+  },
+  empty: {textAlign: 'center', marginVertical: 20, textTransform: 'uppercase', fontSize: 10},
+  rows: {}
 });
 
 export default LeagueTable;

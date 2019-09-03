@@ -1,6 +1,6 @@
 import React, {useMemo} from 'react';
 import {View, StyleSheet, ImageBackground, Text} from 'react-native';
-import {Text as CustomText, Button} from 'react-native-elements';
+import {Text as CustomText, Button, Card} from 'react-native-elements';
 
 import {useSelector} from 'react-redux';
 import {RootState} from '../../store/types';
@@ -69,11 +69,12 @@ const PlayerList = ({players: givenPlayers}) => {
       <View
         style={{
           flex: 1,
-          alignItems: 'center',
+          alignItems: 'flex-start',
           justifyContent: 'center',
           marginBottom: 20
         }}>
         <CustomText h4>Players List</CustomText>
+        <CustomText h5>Your current gameweek team</CustomText>
       </View>
       <View>
         <Table style={{flex: 1}}>

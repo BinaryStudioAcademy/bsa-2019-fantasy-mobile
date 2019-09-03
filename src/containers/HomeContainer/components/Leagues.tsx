@@ -6,9 +6,11 @@ import {
   ScrollView,
   ActivityIndicator,
 } from 'react-native';
-import {Text as CustomText, Button, Header} from 'react-native-elements';
+import {Text as CustomText, Button, Header, Card} from 'react-native-elements';
 
 import {map} from 'lodash';
+
+import Icon from 'react-native-vector-icons/Entypo';
 
 import LeagueTable from '../../../components/LeagueTable';
 
@@ -33,35 +35,38 @@ const Leagues = ({data}: any) => {
     },
   ];
 
-  return (
-    <View>
-      <View
-        style={{
-          flex: 1,
-          alignItems: 'center',
-          justifyContent: 'center',
-          marginBottom: 20,
-        }}>
-        <CustomText h4>Users Leagues</CustomText>
+  const LeagueComponentTitle = () => {
+    return (
+      <View style={{padding: 15, marginBottom: 5}}>
+        <CustomText h3>User Leagues</CustomText>
+        <Icon name="medal" size={40} color="#900" style={styles.icon} />
       </View>
+    );
+  };
+
+  return (
+    <Card
+      title={LeagueComponentTitle()}
+      titleStyle={{textAlign: 'left', color: '#1a1a1a'}}
+      containerStyle={styles.card}>
       {map(titles, item => {
         return (
-          <View>
-            <LeagueTable
-              columns={columns}
-              data={data[item.accessor]}
-              title={item}
-              key={item.id}
-            />
-          </View>
+          <LeagueTable
+            columns={columns}
+            data={data[item.accessor]}
+            title={item}
+            key={item.id}
+          />
         );
       })}
-    </View>
+    </Card>
   );
 };
 
 const styles = StyleSheet.create({
   container: {flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff'},
+  icon: { position: 'absolute', top: -12, right: -12, backgroundColor: '#eacccc', padding: 25, borderRadius: 999, zIndex: 100 },
+  card: {borderRadius: 5, marginBottom: 300, position: 'relative', padding: 0, overflow: 'hidden', borderColor: 'transparent'}
 });
 
 export default Leagues;
