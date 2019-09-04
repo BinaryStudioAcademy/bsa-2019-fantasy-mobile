@@ -1,13 +1,11 @@
 import React from 'react';
 import {View, Text} from 'react-native';
 import {Header} from 'react-native-elements';
-import GeneralStatusBarColor from '../../components/GeneralStatusBarColor';
 
 import { primaryColor, primaryDarkColor } from '../../styles/common';
 
 const Home = (props: any) => (
   <View style={{flex: 1}}>
-    <GeneralStatusBarColor backgroundColor={primaryDarkColor} barStyle="light-content" />
     <Header
       containerStyle={{height: 60, paddingTop: 0}}
       leftComponent={{

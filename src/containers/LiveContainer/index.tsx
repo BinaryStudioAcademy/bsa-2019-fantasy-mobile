@@ -1,43 +1,30 @@
-import React, {useEffect, useState} from 'react';
-import {View, Text, YellowBox, ScrollView} from 'react-native';
+import React from 'react';
+import {View, Text, ScrollView} from 'react-native';
 import {Header} from 'react-native-elements';
+import {RootState} from '../../store/types';
+import {useSelector} from 'react-redux';
 
-import io from 'socket.io-client';
-import GeneralStatusBarColor from '../../components/GeneralStatusBarColor';
-
-import {primaryColor, primaryDarkColor} from '../../styles/common';
-
-const socket = io(
-  'http://ec2-18-224-246-75.us-east-2.compute.amazonaws.com:5002',
-);
-
-YellowBox.ignoreWarnings([
-  'Unrecognized WebSocket connection option(s) `agent`, `perMessageDeflate`, `pfx`, `key`, `passphrase`, `cert`, `ca`, `ciphers`, `rejectUnauthorized`. Did you mean to put these under `headers`?',
-]);
+import {primaryColor} from '../../styles/common';
+import {createComment} from './createComment';
 
 const LiveContainer = (props: any) => {
-  const [eventCount, setEventCount] = useState(0); // counter
-  const [eventsList, setEventToList] = useState([] as string[]); // live-events
-  const [matchDescription, setMatchDescription] = useState('');
+  const live = useSelector((state: RootState) => state.live);
+  const clubs = useSelector((state: RootState) => state.clubs.clubs);
 
-  useEffect(() => {
-    socket.on('status', (status: any) => {
-      if (status.gameStarted) {
-        setMatchDescription(`${status.homeClubId} : ${status.awayClubId}`);
-      }
-    });
-    socket.on('event', (data: any) => {
-      setEventCount(eventCount + 1);
-      setEventToList([...eventsList, data.text]);
-    });
-  }, [eventCount]);
+  const getClubById = (id: number) => {
+    return clubs.find(club => club.id === Number(id));
+  };
+
+  /* to avoid line break */
+  const commentsFilteredEvents = live.events.filter((event: any) => event.name !== 'nothing');
+  const commentsLiveStats = {
+    homeClub: getClubById(live.homeClubId),
+    awayClub: getClubById(live.awayClubId),
+    score: live.score,
+  };
 
   return (
     <View style={{flex: 1}}>
-      <GeneralStatusBarColor
-        backgroundColor={primaryDarkColor}
-        barStyle="light-content"
-      />
       <Header
         containerStyle={{height: 60, paddingTop: 0}}
         leftComponent={{
@@ -51,15 +38,27 @@ const LiveContainer = (props: any) => {
       />
       <View style={{flex: 1, padding: 20}}>
         <Text style={{fontWeight: 'bold'}}>
-          {eventCount} events have been emitted
+          Current match:{' '}
+          {commentsLiveStats.homeClub && commentsLiveStats.awayClub
+            ? commentsLiveStats.homeClub.name +
+              ' - ' +
+              commentsLiveStats.awayClub.name
+            : '-'}
         </Text>
         <Text style={{fontWeight: 'bold'}}>
-          Current match (club ids): {matchDescription}
+          Current score:{' '}
+          {commentsLiveStats.score
+            ? commentsLiveStats.score[0] + ' : ' + commentsLiveStats.score[1]
+            : '-'}
         </Text>
         <ScrollView>
-          {eventsList.map((element: string) => (
-            <Text key={element}>{element}</Text>
-          ))}
+          {commentsFilteredEvents.map((event: any) => {
+              return (
+                <Text key={event.text}>
+                  {createComment(event, commentsLiveStats)}
+                </Text>
+              );
+          })}
         </ScrollView>
       </View>
     </View>

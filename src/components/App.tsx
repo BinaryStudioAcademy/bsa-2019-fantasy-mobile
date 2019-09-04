@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {ActivityIndicator, View} from 'react-native';
+import {ActivityIndicator, View, StatusBar} from 'react-native';
 import FlashMessage from 'react-native-flash-message';
 
 import {createAppContainer} from 'react-navigation';
@@ -14,14 +14,16 @@ import {
   fetchGameweekHistoryResults,
   fetchUserRankingForGameweek,
 } from '../containers/Routing/fetchGameweeks/actions';
-import { fetchClubs } from '../containers/Routing/fetchClubs/actions';
+import {fetchClubs} from '../containers/Routing/fetchClubs/actions';
 
-import { currentGameweekSelector } from '../store/selectors/current-gameweek.selector';
+import {currentGameweekSelector} from '../store/selectors/current-gameweek.selector';
 
 import {loadCurrentUser} from '../containers/Auth/action';
 import {RootState} from '../store/types';
+import * as socket from '../helpers/socket';
 
 const App = () => {
+  socket.startSocket();
   const dispatch = useDispatch();
   const {isLoading, user, isAuthorized} = useSelector(
     (state: RootState) => state.profile,
@@ -34,7 +36,6 @@ const App = () => {
   }, [dispatch]);
 
   const currentGameweek = useSelector(currentGameweekSelector);
-  const clubs = useSelector((state: RootState) => state.clubs.clubs);
 
   useEffect(() => {
     if (user && currentGameweek) {
@@ -53,7 +54,7 @@ const App = () => {
   return (
     <View style={{flex: 1, justifyContent: 'center'}}>
       <Routing />
-      <FlashMessage position="top" style={{marginTop:20}} />
+      <FlashMessage position="top" />
     </View>
   );
 };

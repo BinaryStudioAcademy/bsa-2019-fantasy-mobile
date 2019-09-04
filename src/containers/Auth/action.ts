@@ -51,6 +51,8 @@ const handleAuthResponse = (
       message: err && err.message ? err.message : err,
       type: 'danger',
     });
+    loadCurrentUser(true)(dispatch, getRootState); // to fix
+  } finally {
   }
 };
 
