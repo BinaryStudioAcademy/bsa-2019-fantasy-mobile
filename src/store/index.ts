@@ -3,6 +3,10 @@ import thunk from 'redux-thunk';
 
 import profileReducer from '../containers/Auth/reducer';
 import fixtureReducer from '../containers/FixturesContainers/reducer';
+import gameweekHistoryReducer from '../containers/HomeContainer/reducer';
+import gameweeksReducer from '../containers/Routing/fetchGameweeks/reducer';
+import clubReducer from '../containers/Routing/fetchClubs/reducer';
+import leagueReducer from '../containers/LeaguesContainer/reducer';
 
 const initialState = {};
 
@@ -13,6 +17,10 @@ const composedEnhancers = applyMiddleware(...middlewares);
 const reducers = {
   profile: profileReducer,
   fixtures: fixtureReducer,
+  gameweekHistory: gameweekHistoryReducer,
+  gameweeks: gameweeksReducer,
+  clubs: clubReducer,
+  league: leagueReducer
 };
 
 const rootReducer = combineReducers({
