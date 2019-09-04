@@ -2,11 +2,7 @@ import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {View} from 'react-native';
 
-<<<<<<< HEAD
-import {Card, Button, Input, Text} from 'react-native-elements';
-=======
 import {Button, Input, Text} from 'react-native-elements';
->>>>>>> 2c9d18fee7397d7393c0a05480bc2879855dccb2
 import {login} from '../containers/Auth/action';
 import {primaryColor} from '../styles/common';
 
@@ -49,14 +45,10 @@ const Login = ({navigation}: any) => {
           title="SIGN IN"
           onPress={e => handleLogin(e)}
         />
-<<<<<<< HEAD
-      </Card>
-=======
       </View>
       <Text style={{alignSelf: 'center', color: 'gray', marginTop: 40}}>
         BSA 2019 Fantasy Football | v0.0.1
       </Text>
->>>>>>> 2c9d18fee7397d7393c0a05480bc2879855dccb2
     </View>
   );
 };

@@ -29,7 +29,7 @@ const App = () => {
   return (
     <View style={{flex: 1, justifyContent: 'center'}}>
       <Routing />
-      <FlashMessage position="top" />
+      <FlashMessage position="top" style={{marginTop:20}} />
     </View>
   );
 };
