@@ -1,13 +1,8 @@
-import React from 'react';
-import {Platform, StatusBar} from 'react-native';
 import {
   createStackNavigator,
   createSwitchNavigator,
   createDrawerNavigator,
-  DrawerItems,
 } from 'react-navigation';
-
-import Icon from 'react-native-vector-icons/FontAwesome';
 
 import Login from '../../components/Login';
 import Home from '../Home';
@@ -17,10 +12,6 @@ import Fixtures from '../../containers/FixturesContainers';
 import Live from '../../containers/LiveContainer/index';
 
 import Sidebar from '../../components/Sidebar';
-
-const headerStyle = {
-  marginTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
-};
 
 export const MatchStats = createStackNavigator({
   Fixtures: {
