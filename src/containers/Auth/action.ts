@@ -57,9 +57,6 @@ const handleAuthResponse = (
 export const login = (request: LoginCredentials) =>
   handleAuthResponse(authService.login(request));
 
-export const registration = (request: RegisterCredentials) =>
-  handleAuthResponse(authService.registration(request));
-
 export const logout = (): AsyncUserAction => dispatch => {
   clearToken();
   dispatch(setUser(null));

@@ -12,6 +12,9 @@ import {GameweekType} from '../../types/gameweek.type';
 
 import Fixtures from '../../components/Fixtures/Fixtures';
 import Spinner from '../../components/Spinner';
+import GeneralStatusBarColor from '../../components/GeneralStatusBarColor';
+
+import {primaryColor, primaryDarkColor} from '../../styles/common';
 
 type Props = {
   gameweeks: GameweekType[];
@@ -63,6 +66,10 @@ const FixturesContainer = ({
   }
   return (
     <View>
+      <GeneralStatusBarColor
+        backgroundColor={primaryDarkColor}
+        barStyle="light-content"
+      />
       <Header
         containerStyle={{height: 60, paddingTop: 0}}
         leftComponent={{
@@ -75,7 +82,7 @@ const FixturesContainer = ({
           text: 'Fixtures',
           style: {color: '#fff', fontSize: 20},
         }}
-        backgroundColor={'#122737'}
+        backgroundColor={primaryColor}
       />
       <ScrollView>
         <View
