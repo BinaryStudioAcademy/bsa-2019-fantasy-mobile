@@ -46,7 +46,7 @@ const Spinner = () => {
 
   const bounceRange = bounceValue.interpolate({
     inputRange: [1, 1.25, 1.5, 1.75, 2],
-    outputRange: [0, -75, -150, -75, 0],
+    outputRange: [300, 150, 0, 150, 300],
   });
 
   const spinRange = spinValue.interpolate({

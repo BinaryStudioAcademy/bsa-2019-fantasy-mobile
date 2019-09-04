@@ -8,6 +8,7 @@ import Login from '../../components/Login';
 import Home from '../Home';
 import Profile from '../Profile';
 import FixturesDetails from '../../components/FixturesDetails';
+import Spinner from '../../components/Spinner';
 import Fixtures from '../../containers/FixturesContainers';
 import Live from '../../containers/LiveContainer/index';
 
@@ -35,6 +36,7 @@ export const SignedIn = createDrawerNavigator(
     Profile,
     Fixtures: MatchStats,
     Live,
+    Spinner,
   },
   {
     contentComponent: Sidebar,

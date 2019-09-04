@@ -55,7 +55,11 @@ const FixturesContainer = ({
   }, [currentGameweek, gameweeks, loadGamesAction]);
 
   if (!games || !gameweeks) {
-    return <ActivityIndicator size="large" color="#0000ff" />;
+    return (
+      <View style={{alignItems: 'center', justifyContent: 'center'}}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    );
   }
   return (
     <View>
