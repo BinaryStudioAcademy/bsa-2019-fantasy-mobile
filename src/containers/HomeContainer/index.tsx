@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {ActivityIndicator, Dimensions} from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import {View, Text, ScrollView} from 'react-native';
-import {Text as CustomText, Button, Header} from 'react-native-elements';
+import {Text as CustomText, Button, Header, Card} from 'react-native-elements';
 import {connect} from 'react-redux';
 import {bindActionCreators, Dispatch} from 'redux';
 import {useSelector, useDispatch} from 'react-redux';
@@ -16,7 +16,7 @@ import {
 import {loadUserLeagues} from '../LeaguesContainer/actions';
 
 import Leagues from './components/Leagues';
-import PlayerList from '../../components/PlayerList';
+import PlayerList from './components/PlayerList';
 import Spinner from '../../components/Spinner';
 
 const HomeContainer = ({
@@ -66,10 +66,9 @@ const itemWidth = slideWidth + horizontalMargin * 2;
 const itemHeight = 200;
 
   const renderGameeweekItem = ({ item, index }) => {
-    console.log('item', item);
 
     return (
-      <View>
+      <Card>
         <View
           style={{
             flex: 1,
@@ -86,7 +85,7 @@ const itemHeight = 200;
           <PlayerList players={teamHistory} />
         )}
 
-      </View>
+      </Card>
     )
   }
 
