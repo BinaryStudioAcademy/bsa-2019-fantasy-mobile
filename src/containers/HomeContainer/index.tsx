@@ -28,7 +28,7 @@ const HomeContainer = ({
   leagues,
   isLoading,
   currentGameweek,
-  navigation
+  navigation,
 }) => {
   const dispatch = useDispatch();
 
@@ -54,7 +54,6 @@ const HomeContainer = ({
       }
     }
   }, [currentGameweek, gameweeksHistory.length]);
-  console.log(currentGameweek, teamHistory);
 
   if (!gameweeksHistory && !leagues && !teamHistory.length) {
     return <ActivityIndicator size="large" color="#0000ff" />;

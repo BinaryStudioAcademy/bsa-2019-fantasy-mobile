@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
   container: {flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff'},
   icon: { position: 'absolute', top: -12, right: -12, backgroundColor: '#b2d8b2', padding: 25, borderRadius: 999, zIndex: 100 },
   card: {borderRadius: 5, marginBottom: 20, position: 'relative', padding: 0, overflow: 'hidden', borderColor: 'transparent'},
-  title: {fontWeight: 'bold', fontSize: 17},
+  title: {fontWeight: 'bold', fontSize: 18, marginBottom: 5},
 });
 
 export default PlayerList;

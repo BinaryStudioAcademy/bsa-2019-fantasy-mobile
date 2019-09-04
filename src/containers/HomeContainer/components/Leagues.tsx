@@ -65,7 +65,7 @@ const Leagues = ({data}: any) => {
 
 const styles = StyleSheet.create({
   container: {flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff'},
-  icon: { position: 'absolute', top: -12, right: -12, backgroundColor: '#eacccc', padding: 25, borderRadius: 999, zIndex: 100 },
+  icon: { position: 'absolute', top: -12, right: -12, backgroundColor: '#eacccc', padding: 20, borderRadius: 999, zIndex: 100 },
   card: {borderRadius: 5, marginBottom: 100, position: 'relative', padding: 0, overflow: 'hidden', borderColor: 'transparent'}
 });
 
