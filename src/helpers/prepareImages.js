@@ -7,4 +7,26 @@ const ex =
   files.map(x => `"${x.split('.png')[0]}": require("./${x}"),`).join('\n') +
   '}';
 const res = 'export default ' + ex;
-fs.writeFileSync('../images/index.js', res);
+fs.writeFileSync('../images/club-logos/index.js', res);
+
+
+const filesPlayersUniforms = fs
+  .readdirSync('../images/uniforms/field-players')
+  .filter(x => x.includes('png'));
+const exPlayersUniforms =
+  '{\n' +
+  filesPlayersUniforms.map(x => `"${x.split('.png')[0]}": require("./${x}"),`).join('\n') +
+  '}';
+const resPlayersUniforms = 'export default ' + exPlayersUniforms;
+fs.writeFileSync('../images/uniforms/field-players/index.js', resPlayersUniforms);
+
+
+const filesGoalkeepersUniforms = fs
+  .readdirSync('../images/uniforms/goalkeepers')
+  .filter(x => x.includes('png'));
+const exGoalkeepersUniforms =
+  '{\n' +
+  filesGoalkeepersUniforms.map(x => `"${x.split('.png')[0]}": require("./${x}"),`).join('\n') +
+  '}';
+const resGoalkeepersUniforms = 'export default ' + exGoalkeepersUniforms;
+fs.writeFileSync('../images/uniforms/goalkeepers/index.js', resGoalkeepersUniforms);

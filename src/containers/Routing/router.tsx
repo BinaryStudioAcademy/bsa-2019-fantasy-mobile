@@ -5,7 +5,7 @@ import {
 } from 'react-navigation';
 
 import Login from '../../components/Login';
-import Home from '../Home';
+import HomeContainer from '../../containers/HomeContainer';
 import Profile from '../Profile';
 import FixturesDetails from '../../components/FixturesDetails';
 import Spinner from '../../components/Spinner';
@@ -32,7 +32,7 @@ export const MatchStats = createStackNavigator({
 
 export const SignedIn = createDrawerNavigator(
   {
-    Home,
+    Home: HomeContainer,
     Profile,
     Fixtures: MatchStats,
     Live,

@@ -1,11 +1,22 @@
-import React, {useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {ActivityIndicator, View} from 'react-native';
 import FlashMessage from 'react-native-flash-message';
 
 import {createAppContainer} from 'react-navigation';
+import Spinner from './Spinner';
 
 import {createRootNavigator} from '../containers/Routing/router';
+
+import {
+  fetchGameweeks,
+  fetchGameweekHistory,
+  fetchGameweekHistoryResults,
+  fetchUserRankingForGameweek,
+} from '../containers/Routing/fetchGameweeks/actions';
+import { fetchClubs } from '../containers/Routing/fetchClubs/actions';
+
+import { currentGameweekSelector } from '../store/selectors/current-gameweek.selector';
 
 import {loadCurrentUser} from '../containers/Auth/action';
 import {RootState} from '../store/types';
@@ -18,7 +29,20 @@ const App = () => {
 
   useEffect(() => {
     dispatch(loadCurrentUser());
+    dispatch(fetchClubs());
+    dispatch(fetchGameweeks());
   }, [dispatch]);
+
+  const currentGameweek = useSelector(currentGameweekSelector);
+  const clubs = useSelector((state: RootState) => state.clubs.clubs);
+
+  useEffect(() => {
+    if (user && currentGameweek) {
+      dispatch(fetchGameweekHistory(user.id, currentGameweek.id));
+      dispatch(fetchUserRankingForGameweek(user.id, currentGameweek.id));
+      dispatch(fetchGameweekHistoryResults());
+    }
+  }, [dispatch, user, currentGameweek]);
 
   const Navigator = createRootNavigator(isAuthorized);
   const Routing = createAppContainer(Navigator);
