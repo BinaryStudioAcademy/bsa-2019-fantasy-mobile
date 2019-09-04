@@ -35,7 +35,7 @@ const Leagues = ({data}: any) => {
     },
   ];
 
-  const LeagueComponentTitle = () => {
+  const renderTitle = () => {
     return (
       <View style={{padding: 15, marginBottom: 5}}>
         <CustomText h3>User Leagues</CustomText>
@@ -46,7 +46,7 @@ const Leagues = ({data}: any) => {
 
   return (
     <Card
-      title={LeagueComponentTitle()}
+      title={renderTitle()}
       titleStyle={{textAlign: 'left', color: '#1a1a1a'}}
       containerStyle={styles.card}>
       {map(titles, item => {

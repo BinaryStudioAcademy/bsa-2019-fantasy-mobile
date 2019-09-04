@@ -58,7 +58,7 @@ export const MatchStats = createStackNavigator({
 
 export const SignedIn = createDrawerNavigator(
   {
-    HomeContainer,
+    Home: HomeContainer,
     Profile,
     Fixtures: MatchStats,
     Live,
