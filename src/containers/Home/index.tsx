@@ -1,9 +1,13 @@
 import React from 'react';
 import {View, Text} from 'react-native';
 import {Header} from 'react-native-elements';
+import GeneralStatusBarColor from '../../components/GeneralStatusBarColor';
+
+import { primaryColor, primaryDarkColor } from '../../styles/common';
 
 const Home = (props: any) => (
   <View style={{flex: 1}}>
+    <GeneralStatusBarColor backgroundColor={primaryDarkColor} barStyle="light-content" />
     <Header
       containerStyle={{height: 60, paddingTop: 0}}
       leftComponent={{
@@ -13,7 +17,7 @@ const Home = (props: any) => (
         onPress: () => props.navigation.openDrawer(),
       }}
       centerComponent={{text: 'Home', style: {color: '#fff', fontSize: 20}}}
-      backgroundColor={'#122737'}
+      backgroundColor={primaryColor}
     />
     <Text>Home page</Text>
   </View>

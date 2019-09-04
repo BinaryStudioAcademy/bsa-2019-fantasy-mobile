@@ -11,15 +11,6 @@ export const login = async (request: LoginCredentials) => {
   return response.json();
 };
 
-export const registration = async (request: RegisterCredentials) => {
-  const response = await callWebApi({
-    endpoint: '/api/auth/registration',
-    type: 'POST',
-    request,
-  });
-  return response.json();
-};
-
 export const getCurrentUser = async (): Promise<User | null> => {
   try {
     const response = await callWebApi({

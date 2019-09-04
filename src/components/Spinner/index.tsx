@@ -1,16 +1,69 @@
-import React from 'react';
-import {View, StyleSheet, ImageBackground} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {
+  View,
+  StyleSheet,
+  ImageBackground,
+  Image,
+  Text,
+  Animated,
+  Easing,
+} from 'react-native';
 
 const Spinner = () => {
+  const [spinValue] = useState(new Animated.Value(0));
+  const [bounceValue] = useState(new Animated.Value(1));
+
+  const bounce = (isStop?: boolean) => {
+    if (!isStop) {
+      bounceValue.setValue(1);
+      Animated.timing(bounceValue, {
+        toValue: 2,
+        duration: 2000,
+        easing: Easing.linear,
+      }).start(() => bounce(isStop));
+    }
+  };
+
+  const spin = (isStop?: boolean) => {
+    if (!isStop) {
+      spinValue.setValue(0);
+      Animated.timing(spinValue, {
+        toValue: 1,
+        duration: 2000,
+        easing: Easing.linear,
+      }).start(() => spin(isStop));
+    }
+  };
+
+  React.useEffect(() => {
+    bounce();
+    spin();
+    return () => {
+      bounce(true);
+      spin(true);
+    };
+  }, []);
+
+  const bounceRange = bounceValue.interpolate({
+    inputRange: [1, 1.25, 1.5, 1.75, 2],
+    outputRange: [300, 150, 0, 150, 300],
+  });
+
+  const spinRange = spinValue.interpolate({
+    inputRange: [0, 0.25, 0.5, 0.75, 1],
+    outputRange: ['0deg', '90deg', '180deg', '270deg', '360deg'],
+  });
+
   return (
-    <View style={styles.box}>
-      <View style={styles.shadow} />
-      <View style={styles.gravity}>
-        <ImageBackground
-          source={{uri: 'https://image.flaticon.com/icons/svg/33/33736.svg'}}
-          style={styles.ball}
-        />
-      </View>
+    <View style={{alignItems: 'center'}}>
+      <Animated.Image
+        style={{
+          width: 90,
+          height: 90,
+          transform: [{translateY: bounceRange}, {rotate: spinRange}],
+        }}
+        source={require('../../images/ball.png')}
+      />
     </View>
   );
 };

@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {ActivityIndicator} from 'react-native';
+import {ActivityIndicator, View} from 'react-native';
+import FlashMessage from 'react-native-flash-message';
 
 import {createAppContainer} from 'react-navigation';
 
@@ -25,7 +26,12 @@ const App = () => {
     return <ActivityIndicator size="large" color="#0000ff" />;
   }
 
-  return <Routing />;
+  return (
+    <View style={{flex: 1, justifyContent: 'center'}}>
+      <Routing />
+      <FlashMessage position="top" />
+    </View>
+  );
 };
 
 export default App;

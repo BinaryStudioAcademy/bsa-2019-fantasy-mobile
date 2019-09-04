@@ -9,6 +9,8 @@ import MatchStats from '../MatchStats';
 import {FixturesItemType, GameDetailsType} from '../../types/fixtures.types';
 import {RootState} from '../../store/types';
 import {loadGameDetailsAction} from '../../containers/FixturesContainers/action';
+import GeneralStatusBarColor from '../GeneralStatusBarColor';
+import {primaryColor, primaryDarkColor} from '../../styles/common';
 
 type Props = {
   currentMatchStats: FixturesItemType | undefined;
@@ -143,6 +145,10 @@ const FixtureDetails = ({currentMatchStats, navigation}: Props) => {
 
   return (
     <View style={{paddingBottom: 70}}>
+      <GeneralStatusBarColor
+        backgroundColor={primaryDarkColor}
+        barStyle="light-content"
+      />
       <Header
         containerStyle={{height: 60, paddingTop: 0, borderWidth: 0}}
         leftComponent={
@@ -157,7 +163,7 @@ const FixtureDetails = ({currentMatchStats, navigation}: Props) => {
           text: `${match.hometeam.name} vs ${match.awayteam.name}`,
           style: {color: '#fff', fontSize: 20},
         }}
-        backgroundColor={'#122737'}
+        backgroundColor={primaryColor}
       />
       <ScrollView>{displayStats()}</ScrollView>
     </View>
