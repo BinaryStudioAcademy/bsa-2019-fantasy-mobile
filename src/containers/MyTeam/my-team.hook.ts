@@ -58,8 +58,8 @@ export const useMyTeam = () => {
   };
 
   const handleOpenModal = player => {
-    const newOpenedPlayer = pitchPlayers.find(
-      p => p.item && p.item.player_stats.id === player.player_stats.id,
+    const newOpenedPlayer = teamPlayers.find(
+      p => p && p.player_stats.id === player.player_stats.id,
     );
 
     if (newOpenedPlayer) {
@@ -95,7 +95,7 @@ export const useMyTeam = () => {
   };
 
   const handleSetMain = (
-    assignment: 'is_captain' | 'is_vice_captain',
+    assignment: 'is_captain' | 'is_vice_captain'
   ) => () => {
     const otherKey =
       assignment === 'is_captain' ? 'is_vice_captain' : 'is_captain';

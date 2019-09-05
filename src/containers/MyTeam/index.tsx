@@ -4,6 +4,7 @@ import {Text, View, ScrollView, ActivityIndicator} from 'react-native';
 import {Text as CustomText, Button, Card, Header} from 'react-native-elements';
 
 import PlayerList from '../../components/PlayerList';
+import TeamModal from './components/TeamModal';
 
 import {useMyTeam} from './my-team.hook';
 
@@ -33,17 +34,6 @@ const MyTeam = () => {
   const dispatch = useDispatch();
   const [currentDialogPlayer, setCurrentDialogPlayer] = useState(null);
 
-  const handleOpenInfo = player => {
-    setCurrentDialogPlayer(player);
-    dispatch(fetchDataForPlayer(player.id, player.club_id + ''));
-    handleCloseModal();
-  };
-
-  const onModalDismiss = () => {
-    dispatch(resetPlayerDialogData());
-    setCurrentDialogPlayer(null);
-  };
-
   return (
     <View>
       <Header
@@ -61,7 +51,14 @@ const MyTeam = () => {
         backgroundColor={'#122737'}
       />
       <ScrollView>
-        <PlayerList players={players} hasBench={true} />        
+        <PlayerList
+          players={players}
+          onPlayerPress={handleOpenModal}
+          hasBench
+        />
+        {openedPlayer && (
+          <TeamModal player={openedPlayer} onClose={handleCloseModal} />
+        )}
       </ScrollView>
     </View>
   );

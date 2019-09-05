@@ -16,13 +16,13 @@ import PlayerItem from '../PlayerItem';
 type Props = {
   players;
   hasBench: boolean;
-  onPlayerClick?: (player) => void;
+  onPlayerPress?: (player) => void;
 };
 
 const PlayerList = ({
   players: givenPlayers,
   hasBench,
-  onPlayerClick,
+  onPlayerPress,
 }: Props) => {
   const clubs = useSelector((state: RootState) => state.clubs.clubs);
   const players = useMemo(
@@ -33,7 +33,9 @@ const PlayerList = ({
             display: {
               src: clubs[p.player_stats.club_id - 1].code,
             },
-            is_on_bench: p.is_on_bench
+            is_on_bench: p.is_on_bench,
+            is_captain: p.is_captain,
+            is_vice_captain: p.is_vice_captain
           }))
         : [],
     [clubs.length, givenPlayers],
@@ -84,6 +86,7 @@ const PlayerList = ({
 
           {items.map((p, idx) => (
             <PlayerItem
+              onPlayerPress={onPlayerPress}
               player={p}
               key={`team-list-${name}-${p ? p.player_stats.id : idx}`}
             />
