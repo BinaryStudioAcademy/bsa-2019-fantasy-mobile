@@ -24,9 +24,7 @@ module.exports = {
     'react/no-this-in-sfc': 'error',
     'react/prefer-stateless-function': ['warn', { ignorePureComponents: true }],
     'react/self-closing-comp': 'warn',
-    'react/static-property-placement': 'error',
     'react/void-dom-elements-no-children': 'error',
-    'react/state-in-constructor': ['error', 'never'],
     'react/prop-types': 'off',
 
     '@typescript-eslint/indent': 'off',
