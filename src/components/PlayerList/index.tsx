@@ -25,7 +25,6 @@ const PlayerList = ({
   onPlayerClick,
 }: Props) => {
   const clubs = useSelector((state: RootState) => state.clubs.clubs);
-
   const players = useMemo(
     () =>
       clubs.length > 0
@@ -34,6 +33,7 @@ const PlayerList = ({
             display: {
               src: clubs[p.player_stats.club_id - 1].code,
             },
+            is_on_bench: p.is_on_bench
           }))
         : [],
     [clubs.length, givenPlayers],
@@ -42,8 +42,8 @@ const PlayerList = ({
   let categorizedPlayers: {[k: string]};
   if (hasBench) {
     categorizedPlayers = {
-      Starters: players.filter(p => !p.player_stats.is_on_bench),
-      Substitutes: players.filter(p => p.player_stats.is_on_bench),
+      Starters: players.filter(p => !p.is_on_bench),
+      Substitutes: players.filter(p => p.is_on_bench),
     };
   } else {
     const categorized = categorizePlayers(players);
@@ -72,6 +72,7 @@ const PlayerList = ({
       Forwards: FWD.concat(Array(emptyPlayerAmounts.FWD).fill(null)),
     };
   }
+
 
   return (
     <View style={{paddingHorizontal: 15}}>
