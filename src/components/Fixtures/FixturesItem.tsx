@@ -3,8 +3,10 @@ import moment from 'moment';
 import {Text, View, Image} from 'react-native';
 import {Card, Button} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {useSelector, useDispatch} from 'react-redux';
 
 import {FixturesItemType} from '../../types/fixtures.types';
+import {addNotification} from '../Notifications/actions';
 import {images} from '../../images/club-logos/index';
 
 type Props = {
@@ -12,6 +14,9 @@ type Props = {
   navigation: any;
 };
 const FixturesItem = ({match, navigation}: Props) => {
+  const [stats, setStats] = useState<any>([]);
+  const [isSubscribed, setSubscribe] = useState<boolean>(subscribed);
+  const dispatch = useDispatch();
   let label = (
     <Text style={{fontSize: 18}}>{moment(match.start).format('HH:mm')}</Text>
   );
@@ -31,6 +36,33 @@ const FixturesItem = ({match, navigation}: Props) => {
       </View>
     );
   }
+
+  const onSubscribe = () => {
+    if (isSubscribed) {
+      dispatch(
+        addNotification(
+          `${t('Notifications.messages.unsubscribedFromFixture')} ${
+            match.hometeam.name
+          } - ${match.awayteam.name}, ${t(
+            'Notifications.messages.whichStartsOn',
+          )} ${moment(match.start).format('dddd D MMMM YYYY HH:mm')} `,
+        ),
+      );
+      dispatch(deleteFixtureSubscription(match.id));
+    } else {
+      dispatch(
+        addNotification(
+          `${t('Notifications.messages.subscribedToFixture')} ${
+            match.hometeam.name
+          } - ${match.awayteam.name}, ${t(
+            'Notifications.messages.whichStartsOn',
+          )} ${moment(match.start).format('dddd D MMMM YYYY HH:mm')} `,
+        ),
+      );
+      dispatch(createFixtureSubscription(match.id));
+    }
+    setSubscribe(!isSubscribed);
+  };
 
   return (
     <View
