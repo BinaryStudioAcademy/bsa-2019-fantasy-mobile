@@ -11,6 +11,7 @@ import FixturesDetails from '../../components/FixturesDetails';
 import Spinner from '../../components/Spinner';
 import Fixtures from '../../containers/FixturesContainers';
 import Live from '../../containers/LiveContainer/index';
+import MyTeam from '../../containers/MyTeam';
 
 import Sidebar from '../../components/Sidebar';
 
@@ -37,6 +38,7 @@ export const SignedIn = createDrawerNavigator(
     Fixtures: MatchStats,
     Live,
     Spinner,
+    'My Team': MyTeam
   },
   {
     contentComponent: Sidebar,

@@ -39,7 +39,7 @@ const PlayerList = ({
     [clubs.length, givenPlayers],
   );
 
-  let categorizedPlayers: {[k: string]: };
+  let categorizedPlayers: {[k: string]};
   if (hasBench) {
     categorizedPlayers = {
       Starters: players.filter(p => !p.player_stats.is_on_bench),
