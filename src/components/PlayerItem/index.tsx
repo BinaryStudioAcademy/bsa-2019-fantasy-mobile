@@ -1,6 +1,6 @@
 import React from 'react';
-import {useSelector} from 'react-redux';
 import {View, StyleSheet, ImageBackground, Text, Image} from 'react-native';
+import {useSelector} from 'react-redux';
 import {Text as CustomText, Button} from 'react-native-elements';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';

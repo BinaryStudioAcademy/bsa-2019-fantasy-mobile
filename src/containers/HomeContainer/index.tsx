@@ -18,7 +18,7 @@ import {
 import {loadUserLeagues} from '../LeaguesContainer/actions';
 
 import Leagues from './components/Leagues';
-import PlayerList from './components/PlayerList';
+import HomePlayerList from './components/HomePlayerList';
 import Spinner from '../../components/Spinner';
 
 const HomeContainer = ({
@@ -55,7 +55,7 @@ const HomeContainer = ({
     }
   }, [currentGameweek, gameweeksHistory.length]);
 
-  if (!gameweeksHistory && !leagues && !teamHistory.length) {
+  if (!gameweeksHistory && !leagues && !teamHistory) {
     return <ActivityIndicator size="large" color="#0000ff" />;
   }
 
@@ -65,6 +65,7 @@ const HomeContainer = ({
   const sliderWidth = Dimensions.get('window').width;
   const itemWidth = slideWidth - horizontalMargin * 2;
   const itemHeight = 200;
+  console.log(isLoading);
 
   const renderGameeweekItem = ({item, index}) => {
     return (
@@ -128,7 +129,7 @@ const HomeContainer = ({
             <ActivityIndicator />
           </View>
         ) : (
-          <PlayerList players={teamHistory} />
+          teamHistory.length ? <HomePlayerList players={teamHistory} /> : <Text>Nothing to show</Text>
         )}
         <Leagues data={leagues} />
       </ScrollView>
