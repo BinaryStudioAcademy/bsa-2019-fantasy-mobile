@@ -5,7 +5,11 @@ import {connect} from 'react-redux';
 import {bindActionCreators, Dispatch} from 'redux';
 import moment from 'moment';
 
-import {loadGameweeksAction, loadGamesAction} from './action';
+import {
+  loadGameweeksAction,
+  loadGamesAction,
+  loadFixtureSubscriptionsAction,
+} from './action';
 import {RootState} from '../../store/types';
 import {FixturesItemType} from '../../types/fixtures.types';
 import {GameweekType} from '../../types/gameweek.type';
@@ -20,6 +24,7 @@ type Props = {
   gameweeks: GameweekType[];
   loadGameweeksAction: typeof loadGameweeksAction;
   loadGamesAction: typeof loadGamesAction;
+  loadFixtureSubscriptionsAction: typeof loadFixtureSubscriptionsAction;
   games?: [FixturesItemType];
   isLoading: boolean;
   navigation: any;
@@ -28,6 +33,7 @@ type Props = {
 const FixturesContainer = ({
   loadGameweeksAction,
   loadGamesAction,
+  loadFixtureSubscriptionsAction,
   gameweeks,
   games,
   isLoading,
@@ -36,7 +42,8 @@ const FixturesContainer = ({
   const [currentGameweek, setCurrentGameweek] = useState<number>(0);
   useEffect(() => {
     loadGameweeksAction();
-  }, [loadGameweeksAction]);
+    loadFixtureSubscriptionsAction();
+  }, [loadGameweeksAction, loadFixtureSubscriptionsAction]);
 
   useEffect(() => {
     if (gameweeks) {
@@ -143,6 +150,7 @@ const mapStateToProps = (rootState: RootState) => ({
 const actions = {
   loadGameweeksAction,
   loadGamesAction,
+  loadFixtureSubscriptionsAction,
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
