@@ -91,7 +91,6 @@ export const createFixtureSubscription = (
   try {
     const user = await authService.getCurrentUser();
     const res = await profileService.createFixtureSub(user!.id, gameId);
-    loadCurrentUser(true)(dispatch, getState);
   } catch (err) {
     showMessage({
       icon: 'danger',
@@ -107,7 +106,6 @@ export const deleteFixtureSubscription = (
   try {
     const user = await authService.getCurrentUser();
     const res = await profileService.destroyFixtureSub(user!.id, gameId);
-    loadCurrentUser(true)(dispatch, getState);
   } catch (err) {
     showMessage({
       icon: 'danger',
