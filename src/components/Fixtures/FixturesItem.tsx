@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import moment from 'moment';
 import {Text, View, Image} from 'react-native';
 import {Card, Button} from 'react-native-elements';
@@ -7,14 +7,18 @@ import {useSelector, useDispatch} from 'react-redux';
 
 import {FixturesItemType} from '../../types/fixtures.types';
 import {addNotification} from '../Notifications/actions';
+import {
+  createFixtureSubscription,
+  deleteFixtureSubscription,
+} from '../../containers/Auth/action';
 import {images} from '../../images/club-logos/index';
 
 type Props = {
   match: FixturesItemType;
+  subscribed: boolean;
   navigation: any;
 };
-const FixturesItem = ({match, navigation}: Props) => {
-  const [stats, setStats] = useState<any>([]);
+const FixturesItem = ({match, navigation, subscribed}: Props) => {
   const [isSubscribed, setSubscribe] = useState<boolean>(subscribed);
   const dispatch = useDispatch();
   let label = (
@@ -41,22 +45,22 @@ const FixturesItem = ({match, navigation}: Props) => {
     if (isSubscribed) {
       dispatch(
         addNotification(
-          `${t('Notifications.messages.unsubscribedFromFixture')} ${
-            match.hometeam.name
-          } - ${match.awayteam.name}, ${t(
-            'Notifications.messages.whichStartsOn',
-          )} ${moment(match.start).format('dddd D MMMM YYYY HH:mm')} `,
+          `${'You have unsubscribed from fixture'} ${match.hometeam.name} - ${
+            match.awayteam.name
+          }, ${'which starts on'} ${moment(match.start).format(
+            'dddd D MMMM YYYY HH:mm',
+          )} `,
         ),
       );
       dispatch(deleteFixtureSubscription(match.id));
     } else {
       dispatch(
         addNotification(
-          `${t('Notifications.messages.subscribedToFixture')} ${
-            match.hometeam.name
-          } - ${match.awayteam.name}, ${t(
-            'Notifications.messages.whichStartsOn',
-          )} ${moment(match.start).format('dddd D MMMM YYYY HH:mm')} `,
+          `${'You have subscribed to fixture'} ${match.hometeam.name} - ${
+            match.awayteam.name
+          }, ${'which starts on'} ${moment(match.start).format(
+            'dddd D MMMM YYYY HH:mm',
+          )} `,
         ),
       );
       dispatch(createFixtureSubscription(match.id));
@@ -117,6 +121,19 @@ const FixturesItem = ({match, navigation}: Props) => {
               match,
             })
           }
+        />
+      )}
+      {match.started ? null : (
+        <Button
+          type="outline"
+          icon={
+            <Icon
+              name="bell"
+              size={15}
+              color={isSubscribed ? 'green' : 'white'}
+            />
+          }
+          onPress={() => onSubscribe()}
         />
       )}
     </View>
