@@ -4,6 +4,7 @@ import {Text, View, Image} from 'react-native';
 import {Card, Button} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useSelector, useDispatch} from 'react-redux';
+import {showMessage, hideMessage} from 'react-native-flash-message';
 
 import {FixturesItemType} from '../../types/fixtures.types';
 import {addNotification} from '../Notifications/actions';
@@ -43,26 +44,26 @@ const FixturesItem = ({match, navigation, subscribed}: Props) => {
 
   const onSubscribe = () => {
     if (isSubscribed) {
-      dispatch(
-        addNotification(
-          `${'You have unsubscribed from fixture'} ${match.hometeam.name} - ${
-            match.awayteam.name
-          }, ${'which starts on'} ${moment(match.start).format(
-            'dddd D MMMM YYYY HH:mm',
-          )} `,
-        ),
-      );
+      showMessage({
+        icon: 'success',
+        message: `${'You have unsubscribed from fixture'} ${
+          match.hometeam.name
+        } - ${match.awayteam.name}, ${'which starts on'} ${moment(
+          match.start,
+        ).format('dddd D MMMM YYYY HH:mm')} `,
+        type: 'success',
+      });
       dispatch(deleteFixtureSubscription(match.id));
     } else {
-      dispatch(
-        addNotification(
-          `${'You have subscribed to fixture'} ${match.hometeam.name} - ${
-            match.awayteam.name
-          }, ${'which starts on'} ${moment(match.start).format(
-            'dddd D MMMM YYYY HH:mm',
-          )} `,
-        ),
-      );
+      showMessage({
+        icon: 'success',
+        message: `${'You have subscribed from fixture'} ${
+          match.hometeam.name
+        } - ${match.awayteam.name}, ${'which starts on'} ${moment(
+          match.start,
+        ).format('dddd D MMMM YYYY HH:mm')} `,
+        type: 'success',
+      });
       dispatch(createFixtureSubscription(match.id));
     }
     setSubscribe(!isSubscribed);
