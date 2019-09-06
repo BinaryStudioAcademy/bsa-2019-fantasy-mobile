@@ -10,10 +10,14 @@ import {
   Dimensions,
 } from 'react-native';
 
+import {Text as CustomText, Button} from 'react-native-elements';
+
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').width;
 
-const TeamModal = ({player, onClose}) => {
+const TeamModal = ({player, onClose, onSetCaptain, onSetViceCaptain}) => {
+  console.log('modal', player);
+
   return (
     <View style={{marginTop: 22}}>
       <Modal animationType="fade" transparent={true} visible={true}>
@@ -34,14 +38,35 @@ const TeamModal = ({player, onClose}) => {
               borderRadius: 4,
               borderColor: 'rgba(0, 0, 0, 0.1)',
             }}>
-            <Text>Hello World!</Text>
+            <View>
+              <CustomText h4></CustomText>
+            </View>
+            {!player.item.is_on_bench && (
+              <View>
+                {!player.item.is_captain && (
+                  <Button
+                    buttonStyle={{marginBottom: 10}}
+                    onPress={() => onSetCaptain()}
+                    title=" Make Captain"
+                  />                   
+                )}
+                {!player.item.is_vice_captain && (
+                  <Button
+                    buttonStyle={{marginBottom: 10}}
+                    onPress={() => onSetViceCaptain()}
+                    title="Make Vice-Captain"  
+                  />
+                )}
+              </View>
+            )}
 
-            <TouchableHighlight
+            <Button
+              buttonStyle={{marginTop: 50}}
               onPress={() => {
                 onClose();
-              }}>
-              <Text>Hide Modal</Text>
-            </TouchableHighlight>
+              }} 
+              title="Hide Modal"
+              />
           </View>
         </View>
       </Modal>

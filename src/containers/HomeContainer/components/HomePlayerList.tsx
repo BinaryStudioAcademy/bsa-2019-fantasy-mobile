@@ -1,8 +1,5 @@
 import React, {useMemo} from 'react';
-import {
-  View,
-  StyleSheet,
-} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {Text as CustomText, Button, Card} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -13,23 +10,15 @@ const HomePlayerList = ({players: givenPlayers}) => {
     return (
       <View style={{padding: 15, marginBottom: 5}}>
         <CustomText h3>Players List</CustomText>
-        <Icon
-          name="ios-football"
-          size={40}
-          color="#008000"
-          style={styles.icon}
-        />
       </View>
     );
   };
 
   return (
-    <Card
-      title={renderTitle()}
-      titleStyle={{textAlign: 'left', color: '#1a1a1a'}}
-      containerStyle={styles.card}>
+    <View style={{textAlign: 'left', color: '#1a1a1a'}}>
+      {renderTitle()}
       <PlayerList players={givenPlayers} />
-    </Card>
+    </View>
   );
 };
 
@@ -50,7 +39,7 @@ const styles = StyleSheet.create({
     padding: 0,
     overflow: 'hidden',
     borderColor: 'transparent',
-  }
+  },
 });
 
 export default HomePlayerList;

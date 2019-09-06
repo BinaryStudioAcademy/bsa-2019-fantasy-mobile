@@ -2,12 +2,12 @@ import React, {useState, useEffect} from 'react';
 import {ActivityIndicator, Dimensions} from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import {View, Text, ScrollView, StyleSheet} from 'react-native';
-import {Text as CustomText, Button, Header, Card} from 'react-native-elements';
+import {Text as CustomText, Button, Header} from 'react-native-elements';
 import {connect} from 'react-redux';
 import {bindActionCreators, Dispatch} from 'redux';
 import {useSelector, useDispatch} from 'react-redux';
 
-import Icon from 'react-native-vector-icons/AntDesign';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 import {RootState} from '../../store/types';
 import {
@@ -32,16 +32,14 @@ const HomeContainer = ({
 }) => {
   const dispatch = useDispatch();
 
-  const userId = useSelector(
-    (state: RootState) => state.profile.user && state.profile.user.id,
-  );
+  const {id, name} = useSelector((state: RootState) => state.profile.user);
 
   useEffect(() => {
-    if (userId) {
-      dispatch(loadUserLeagues(userId));
-      dispatch(loadGameweeksHistoryAction(userId));
+    if (id) {
+      dispatch(loadUserLeagues(id));
+      dispatch(loadGameweeksHistoryAction(id));
     }
-  }, [dispatch, userId]);
+  }, [dispatch, id]);
 
   useEffect(() => {
     if (gameweeksHistory && gameweeksHistory.length) {
@@ -50,7 +48,7 @@ const HomeContainer = ({
       });
       if (idx !== -1) {
         const gameweekId = gameweeksHistory[idx].gameweek.id;
-        dispatch(loadTeamHistoryAction(userId, gameweekId, currentGameweek));
+        dispatch(loadTeamHistoryAction(id, gameweekId, currentGameweek));
       }
     }
   }, [currentGameweek, gameweeksHistory.length]);
@@ -69,36 +67,35 @@ const HomeContainer = ({
 
   const renderGameeweekItem = ({item, index}) => {
     return (
-      <Card style={{padding: 0, borderRadius: 5, marginHorizontal: 0}}>
         <View
           style={{
             flex: 1,
             alignItems: 'center',
             justifyContent: 'center',
-            marginTop: 30,
-            marginBottom: 30,
-            marginHorizontal: 0,
+            marginVertical: 20,
+            backgroundColor: '#4C6868',
+            paddingVertical: 25,
+            borderRadius: 10
           }}>
-          <CustomText h3>{`Gameweek ${index + 1}`}</CustomText>
+          <CustomText h3 h3Style={{ color: "white" }}>{`Gameweek ${index + 1}`}</CustomText>
           <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
             {index - 1 >= 0 && (
               <Text style={styles.pagination}>
-                <Icon name="caretleft" size={11} color="#999" /> Previous
+                <Icon name="md-arrow-dropleft" size={11} color="#F9F9F9" /> Previous
               </Text>
             )}
             {index + 2 <= gameweeksHistory.length && (
               <Text style={styles.pagination}>
-                Next <Icon name="caretright" size={11} color="#999" />
+                Next <Icon name="md-arrow-dropright" size={11} color="#F9F9F9" />
               </Text>
             )}
           </View>
         </View>
-      </Card>
     );
   };
 
   return (
-    <View style={{backgroundColor: '#e6e6e6'}}>
+    <View style={{backgroundColor: '#efefef'}}>
       <Header
         containerStyle={{height: 60, paddingTop: 0}}
         leftComponent={{
@@ -111,27 +108,46 @@ const HomeContainer = ({
         backgroundColor={'#122737'}
       />
       <ScrollView>
-        <Carousel
-          ref={c => {
-            this._carousel = c;
-          }}
-          data={gameweeksHistory}
-          renderItem={renderGameeweekItem}
-          inactiveSlideScale={1}
-          sliderWidth={sliderWidth}
-          itemWidth={itemWidth}
-          onBeforeSnapToItem={slideIndex =>
-            dispatch(setCurrentGameweekAction(slideIndex + 1))
-          }
-        />
-        {isLoading ? (
-          <View style={{marginTop: 10}}>
-            <ActivityIndicator />
-          </View>
-        ) : (
-          teamHistory.length ? <HomePlayerList players={teamHistory} /> : <Text>Nothing to show</Text>
-        )}
-        <Leagues data={leagues} />
+        <View style={{paddingHorizontal: 15, marginVertical: 20}}>
+          <CustomText
+            h3
+            h3Style={{color: '#272727'}}>{`Welcome back, ${name}!`}</CustomText>
+          <CustomText h4 h4Style={{fontSize: 15, color: '#272727'}}>
+            See the stats
+          </CustomText>
+        </View>
+        <View
+          style={{
+            backgroundColor: '#fff',
+            borderTopLeftRadius: 10,
+            borderTopRightRadius: 10,
+            paddingVertical: 15,
+            marginBottom: 50,
+          }}>
+          <Carousel
+            ref={c => {
+              this._carousel = c;
+            }}
+            data={gameweeksHistory}
+            renderItem={renderGameeweekItem}
+            inactiveSlideScale={0.95}
+            sliderWidth={sliderWidth}
+            itemWidth={itemWidth}
+            onBeforeSnapToItem={slideIndex =>
+              dispatch(setCurrentGameweekAction(slideIndex + 1))
+            }
+          />
+          {isLoading ? (
+            <View style={{marginTop: 10}}>
+              <ActivityIndicator />
+            </View>
+          ) : teamHistory.length ? (
+            <HomePlayerList players={teamHistory} />
+          ) : (
+            <Text style={{flex: 1}}>Nothing to show</Text>
+          )}
+          <Leagues data={leagues} />
+        </View>
       </ScrollView>
     </View>
   );
@@ -139,10 +155,11 @@ const HomeContainer = ({
 
 const styles = StyleSheet.create({
   pagination: {
-    color: '#999',
+    color: '#F9F9F9',
     textTransform: 'uppercase',
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: 'bold',
+    marginHorizontal: 10
   },
 });
 

@@ -35,7 +35,7 @@ const MyTeam = () => {
   const [currentDialogPlayer, setCurrentDialogPlayer] = useState(null);
 
   return (
-    <View>
+    <View style={{backgroundColor: '#efefef'}}>
       <Header
         containerStyle={{height: 60, paddingTop: 0}}
         leftComponent={{
@@ -51,14 +51,34 @@ const MyTeam = () => {
         backgroundColor={'#122737'}
       />
       <ScrollView>
-        <PlayerList
-          players={players}
-          onPlayerPress={handleOpenModal}
-          hasBench
-        />
-        {openedPlayer && (
-          <TeamModal player={openedPlayer} onClose={handleCloseModal} />
-        )}
+        <View style={{paddingHorizontal: 15, marginVertical: 20}}>
+          <CustomText h3>Team Page</CustomText>
+          <CustomText h4 h4Style={{fontSize: 15}}>
+            Choose your team there
+          </CustomText>
+        </View>
+        <View
+          style={{
+            backgroundColor: '#fff',
+            borderTopLeftRadius: 10,
+            borderTopRightRadius: 10,
+            paddingVertical: 15,
+            marginBottom: 50
+          }}>
+          <PlayerList
+            players={players}
+            onPlayerPress={handleOpenModal}
+            hasBench
+          />
+          {openedPlayer && (
+            <TeamModal
+              player={openedPlayer}
+              onClose={handleCloseModal}
+              onSetCaptain={handleSetCaptain}
+              onSetViceCaptain={handleSetViceCaptain}
+            />
+          )}
+        </View>
       </ScrollView>
     </View>
   );

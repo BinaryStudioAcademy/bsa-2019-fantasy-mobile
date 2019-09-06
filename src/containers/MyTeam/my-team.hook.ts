@@ -6,14 +6,11 @@ import {RootState} from '../../store/types';
 import {currentGameweekSelector} from '../../store/selectors/current-gameweek.selector';
 
 export const useMyTeam = () => {
-  const currentGameweek = useSelector(currentGameweekSelector);
   const teamPlayers = useSelector(
     (state: RootState) => state.gameweekHistory.teamHistory,
   );
 
-  console.log('team', teamPlayers);  
-  const { pitchPlayers, setPitch } = useState(teamPlayers);
-
+  const [pitchPlayers, setPitch] = useState([]);
 
   const [openedPlayer, setOpenedPlayer] = useState(null);
 
@@ -24,6 +21,7 @@ export const useMyTeam = () => {
 
   useEffect(() => {
     setChanged(false);
+    setPitch(teamPlayers);
   }, [teamPlayers]);
 
   const removeHighlights = () => {
@@ -94,17 +92,18 @@ export const useMyTeam = () => {
     closeModal();
   };
 
-  const handleSetMain = (
+    const handleSetMain = (
     assignment: 'is_captain' | 'is_vice_captain'
-  ) => () => {
+  ) => () =>  {
     const otherKey =
       assignment === 'is_captain' ? 'is_vice_captain' : 'is_captain';
 
     if (openedPlayer) {
       setPitch(pitch =>
         produce(pitch, draft => {
+          console.log('draft', draft);
           /* eslint-disable @typescript-eslint/no-non-null-assertion */
-          const currentCaptain = draft.find(p => p.item && p.item[assignment])!
+          const currentCaptain = draft.find(p => p && p.item[assignment])!
             .item!;
           const currentViceCaptain = draft.find(
             p => p.item && p.item[otherKey],
@@ -231,8 +230,7 @@ export const useMyTeam = () => {
 
   const playersToRender = useMemo(
     () =>
-      produce(teamPlayers, draft => {
-        console.log('draft', teamPlayers);
+      produce(pitchPlayers, draft => {
         draft.forEach((p, idx) => {
           if (p.type !== 'GKP') {
             draft[idx].accept = ['DEF', 'MID', 'FWD'];

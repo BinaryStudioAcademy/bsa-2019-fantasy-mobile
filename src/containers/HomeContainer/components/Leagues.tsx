@@ -39,16 +39,14 @@ const Leagues = ({data}: any) => {
     return (
       <View style={{padding: 15, marginBottom: 5}}>
         <CustomText h3>User Leagues</CustomText>
-        <Icon name="medal" size={40} color="#900" style={styles.icon} />
       </View>
     );
   };
 
   return (
-    <Card
-      title={renderTitle()}
-      titleStyle={{textAlign: 'left', color: '#1a1a1a'}}
-      containerStyle={styles.card}>
+    <View style={{textAlign: 'left', color: '#1a1a1a'}}>
+      {renderTitle()}
+
       {map(titles, item => {
         return (
           <LeagueTable
@@ -59,14 +57,29 @@ const Leagues = ({data}: any) => {
           />
         );
       })}
-    </Card>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff'},
-  icon: { position: 'absolute', top: -12, right: -12, backgroundColor: '#eacccc', padding: 20, borderRadius: 999, zIndex: 100 },
-  card: {borderRadius: 5, marginBottom: 100, position: 'relative', padding: 0, overflow: 'hidden', borderColor: 'transparent'}
+  icon: {
+    position: 'absolute',
+    top: -12,
+    right: -12,
+    backgroundColor: '#eacccc',
+    padding: 20,
+    borderRadius: 999,
+    zIndex: 100,
+  },
+  card: {
+    borderRadius: 5,
+    marginBottom: 100,
+    position: 'relative',
+    padding: 0,
+    overflow: 'hidden',
+    borderColor: 'transparent',
+  },
 });
 
 export default Leagues;
