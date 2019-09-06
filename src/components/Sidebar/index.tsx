@@ -13,15 +13,14 @@ import {primaryColor} from '../../styles/common';
 
 const Sidebar = (props: any) => {
   const {user} = useSelector((state: any) => state.profile);
-  const isImageLink = user && user.image && user.image.link;
 
   return (
     <SafeAreaView style={{flex: 1}}>
-      {isImageLink && (
+      {user && (
         <ImageBackground
           resizeMode={'cover'}
           style={{flex: 0}}
-          source={{uri: user.image.link}}>
+          source={{uri: user.image && user.image.link ? user.image.link : 'https://www.trzcacak.rs/myfile/detail/385-3856300_no-avatar-png.png'}}>
           <View
             style={{
               height: 180,
