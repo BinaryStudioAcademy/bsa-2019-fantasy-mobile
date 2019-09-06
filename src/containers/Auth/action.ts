@@ -2,9 +2,12 @@ import AsyncStorage from '@react-native-community/async-storage';
 import {showMessage, hideMessage} from 'react-native-flash-message';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-import {User} from '../../types/user.type';
+import {User, UserTeamDetails} from '../../types/user.type';
+import {TeamMemberData} from '../../types/teamMemberHistory.types';
+import {GameweekType} from '../../types/gameweek.type';
 
 import * as authService from '../../services/authService';
+import * as profileService from '../../services/profileService';
 
 import {LoginCredentials, RegisterCredentials} from '../../types/auth.types';
 
@@ -14,6 +17,7 @@ import {
   AsyncUserAction,
   UserAction,
 } from './action.type';
+import {FixturesItemType} from '../../types/fixtures.types';
 
 const setToken = (token: string) => AsyncStorage.setItem('token', token);
 const clearToken = () => AsyncStorage.removeItem('token');
@@ -78,5 +82,66 @@ export const loadCurrentUser = (
     if (!soft) {
       dispatch(setIsLoading(false));
     }
+  }
+};
+
+export const createFixtureSubscription = (
+  gameId: FixturesItemType['id'],
+): AsyncUserAction => async (dispatch, getState) => {
+  try {
+    const user = await authService.getCurrentUser();
+    const res = await profileService.createFixtureSub(user!.id, gameId);
+    loadCurrentUser(true)(dispatch, getState);
+  } catch (err) {
+    showMessage({
+      icon: 'danger',
+      message: 'Failed to update favorite club.',
+      type: 'danger',
+    });
+  }
+};
+
+export const deleteFixtureSubscription = (
+  gameId: FixturesItemType['id'],
+): AsyncUserAction => async (dispatch, getState) => {
+  try {
+    const user = await authService.getCurrentUser();
+    const res = await profileService.destroyFixtureSub(user!.id, gameId);
+    loadCurrentUser(true)(dispatch, getState);
+  } catch (err) {
+    showMessage({
+      icon: 'danger',
+      message: 'Failed to update favorite club.',
+      type: 'danger',
+    });
+  }
+};
+
+export const updateUserTeamDetails = (
+  userData: UserTeamDetails,
+  teamMemberData: TeamMemberData,
+  gameweekId: GameweekType['id'],
+): AsyncUserAction => async (dispatch, getState) => {
+  try {
+    const {user} = getState().profile;
+
+    const res = await profileService.updateUserTeamDetails(
+      user!.id,
+      gameweekId,
+      userData,
+      teamMemberData,
+    );
+    loadCurrentUser(true)(dispatch, getState);
+    showMessage({
+      icon: 'success',
+      message: (res && res.message) || res,
+      type: 'success',
+    });
+  } catch (err) {
+    showMessage({
+      icon: 'danger',
+      message: 'Failed to create your team',
+      type: 'danger',
+    });
   }
 };
