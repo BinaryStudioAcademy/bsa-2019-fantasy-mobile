@@ -139,7 +139,11 @@ const FixtureDetails = ({currentMatchStats, navigation}: Props) => {
         />
       ));
   if (isDetailLoading) {
-    return <ActivityIndicator size="large" color="#0000ff" />;
+    return (
+      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    );
   }
 
   return (

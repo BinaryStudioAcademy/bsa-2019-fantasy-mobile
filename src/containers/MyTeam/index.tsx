@@ -28,7 +28,7 @@ const MyTeam = () => {
     handleSetViceCaptain,
 
     handlePlayerSwitch,
-    // handleSubmit,
+    handleSubmit,
   } = useMyTeam();
 
   const dispatch = useDispatch();
@@ -69,6 +69,11 @@ const MyTeam = () => {
             players={players}
             onPlayerPress={handleOpenModal}
             hasBench
+            submit={{
+              label: "Save Team",
+              canSubmit: changed,
+              onSubmit: handleSubmit,
+            }}
           />
           {openedPlayer && (
             <TeamModal

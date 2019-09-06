@@ -37,7 +37,6 @@ export const SignedIn = createDrawerNavigator(
     Profile,
     Fixtures: MatchStats,
     Live,
-    Spinner,
     'My Team': MyTeam
   },
   {

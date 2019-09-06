@@ -7,22 +7,31 @@ import {
   ScrollView,
   ActivityIndicator,
 } from 'react-native';
+import {Button} from 'react-native-elements';
 
 import {categorizePlayers} from '../../helpers/categorizePlayers.ts';
 import {RootState} from '../../store/types';
 
 import PlayerItem from '../PlayerItem';
 
+import {primaryColor} from '../../styles/common';
+
 type Props = {
   players;
   hasBench: boolean;
   onPlayerPress?: (player) => void;
+  submit?: {
+    onSubmit: () => void;
+    canSubmit: boolean;
+    label: string;
+  };
 };
 
 const PlayerList = ({
   players: givenPlayers,
   hasBench,
   onPlayerPress,
+  submit,
 }: Props) => {
   const clubs = useSelector((state: RootState) => state.clubs.clubs);
   const players = useMemo(
@@ -35,7 +44,7 @@ const PlayerList = ({
             },
             is_on_bench: p.is_on_bench,
             is_captain: p.is_captain,
-            is_vice_captain: p.is_vice_captain
+            is_vice_captain: p.is_vice_captain,
           }))
         : [],
     [clubs.length, givenPlayers],
@@ -75,7 +84,6 @@ const PlayerList = ({
     };
   }
 
-
   return (
     <View style={{paddingHorizontal: 15}}>
       {Object.entries(categorizedPlayers).map(([name, items]) => (
@@ -91,6 +99,13 @@ const PlayerList = ({
               key={`team-list-${name}-${p ? p.player_stats.id : idx}`}
             />
           ))}
+
+          {submit &&           <Button
+            buttonStyle={{marginTop: 20, backgroundColor: primaryColor}}
+            disabled={!submit.canSubmit}
+            title={submit.label}
+            onPress={() => submit.onSubmit()}
+          />}
         </React.Fragment>
       ))}
     </View>

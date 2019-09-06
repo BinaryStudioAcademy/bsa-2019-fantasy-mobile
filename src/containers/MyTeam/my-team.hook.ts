@@ -6,6 +6,8 @@ import {RootState} from '../../store/types';
 import {currentGameweekSelector} from '../../store/selectors/current-gameweek.selector';
 
 export const useMyTeam = () => {
+  const dispatch = useDispatch();
+  
   const teamPlayers = useSelector(
     (state: RootState) => state.gameweekHistory.teamHistory,
   );
@@ -94,7 +96,7 @@ export const useMyTeam = () => {
 
     const handleSetMain = (
     assignment: 'is_captain' | 'is_vice_captain'
-  ) => () =>  {
+  ) => () =>   {
     const otherKey =
       assignment === 'is_captain' ? 'is_vice_captain' : 'is_captain';
 
@@ -240,6 +242,20 @@ export const useMyTeam = () => {
     [pitchPlayers],
   );
 
+  const handleSubmit = () => {
+    if (!pitchPlayers.some((p) => !p.item)) {
+      const result = pitchPlayers.map(({ item }) => ({
+        is_on_bench: item!.is_on_bench,
+        is_captain: item!.is_captain,
+        is_vice_captain: item!.is_vice_captain,
+        player_id: item!.player_stats.id,
+      }));
+
+      currentGameweek && dispatch(postGameweekHistory(currentGameweek.id, result));
+    }
+  };
+
+
   return {
     players: playersToRender,
     setPlayers: setPitch,
@@ -254,6 +270,6 @@ export const useMyTeam = () => {
     handleSetCaptain: handleSetMain('is_captain'),
     handleSetViceCaptain: handleSetMain('is_vice_captain'),
     handlePlayerSwitch,
-    // handleSubmit,
+    handleSubmit,
   };
 };

@@ -6,7 +6,7 @@ import {
   ScrollView,
   ActivityIndicator,
 } from 'react-native';
-import {Text as CustomText, Button, Header, Card} from 'react-native-elements';
+import {Text as CustomText, Button, Header} from 'react-native-elements';
 
 import {map} from 'lodash';
 
@@ -37,7 +37,7 @@ const Leagues = ({data}: any) => {
 
   const renderTitle = () => {
     return (
-      <View style={{padding: 15, marginBottom: 5}}>
+      <View style={{padding: 15}}>
         <CustomText h3>User Leagues</CustomText>
       </View>
     );
@@ -71,15 +71,7 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 999,
     zIndex: 100,
-  },
-  card: {
-    borderRadius: 5,
-    marginBottom: 100,
-    position: 'relative',
-    padding: 0,
-    overflow: 'hidden',
-    borderColor: 'transparent',
-  },
+  }
 });
 
 export default Leagues;

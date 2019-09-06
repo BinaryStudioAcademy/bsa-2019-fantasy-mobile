@@ -100,7 +100,7 @@ const PlayerItem = ({player, onPlayerPress}: Props) => {
 
 const styles = StyleSheet.create({
   name: {fontWeight: 'bold', fontSize: 15},
-  icon: {marginRight: 5},
+  icon: {padding: 5},
   money: {color: '#b2b200', fontSize: 14},
 });
 

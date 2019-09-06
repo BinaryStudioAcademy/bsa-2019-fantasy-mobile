@@ -23,7 +23,7 @@ const LeagueTable = ({columns, data, title}: any) => {
     <View style={styles.container}>
       <CustomText
         h4
-        style={{paddingHorizontal: 15, fontSize: 15, marginBottom: 10}}
+        style={{paddingHorizontal: 15, marginBottom: 5}}
         h4Style={{fontSize: 20}}>
         {title.title}
       </CustomText>
@@ -32,7 +32,7 @@ const LeagueTable = ({columns, data, title}: any) => {
         {!tableData.length ? (
           <Text style={styles.empty}>Nothing to show</Text>
         ) : (
-          <Rows data={tableData} textStyle={styles.rows} style={{paddingLeft: 14, paddingVertical: 5}} />
+          <Rows data={tableData} style={{paddingLeft: 14, paddingVertical: 7, paddingRight: 5}} />
         )}
       </Table>
     </View>
@@ -50,7 +50,6 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
   },
   empty: {textAlign: 'center', marginVertical: 20, textTransform: 'uppercase', fontSize: 10},
-  rows: {}
 });
 
 export default LeagueTable;

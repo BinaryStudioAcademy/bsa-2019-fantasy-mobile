@@ -21,6 +21,8 @@ import Leagues from './components/Leagues';
 import HomePlayerList from './components/HomePlayerList';
 import Spinner from '../../components/Spinner';
 
+import {primaryColor, primaryDarkColor} from '../../styles/common';
+
 const HomeContainer = ({
   gameweeks,
   gameweeksHistory,
@@ -67,30 +69,37 @@ const HomeContainer = ({
 
   const renderGameeweekItem = ({item, index}) => {
     return (
-        <View
-          style={{
-            flex: 1,
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginVertical: 20,
-            backgroundColor: '#4C6868',
-            paddingVertical: 25,
-            borderRadius: 10
-          }}>
-          <CustomText h3 h3Style={{ color: "white" }}>{`Gameweek ${index + 1}`}</CustomText>
-          <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
+      <View
+        style={{
+          flex: 1,
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginVertical: 20,
+          backgroundColor: primaryDarkColor,
+          paddingVertical: 25,
+          borderRadius: 10,
+        }}>
+        <Icon name="ios-football" size={45} color="#9CB4B4" style={{marginRight: 10}} />
+        <View>
+          <CustomText h3 h3Style={{color: 'white'}}>{`Gameweek ${index +
+            1}`}</CustomText>
+          <View style={{flexDirection: 'row', justifyContent: 'flex-start'}}>
             {index - 1 >= 0 && (
               <Text style={styles.pagination}>
-                <Icon name="md-arrow-dropleft" size={11} color="#F9F9F9" /> Previous
+                <Icon name="md-arrow-dropleft" size={12} color="#DDD" />{' '}
+                Previous
               </Text>
             )}
             {index + 2 <= gameweeksHistory.length && (
               <Text style={styles.pagination}>
-                Next <Icon name="md-arrow-dropright" size={11} color="#F9F9F9" />
+                Next{' '}
+                <Icon name="md-arrow-dropright" size={12} color="#DDD" />
               </Text>
             )}
           </View>
         </View>
+      </View>
     );
   };
 
@@ -105,15 +114,15 @@ const HomeContainer = ({
           onPress: () => navigation.openDrawer(),
         }}
         centerComponent={{text: 'Home', style: {color: '#fff', fontSize: 20}}}
-        backgroundColor={'#122737'}
+        backgroundColor={primaryColor}
       />
       <ScrollView>
         <View style={{paddingHorizontal: 15, marginVertical: 20}}>
           <CustomText
             h3
             h3Style={{color: '#272727'}}>{`Welcome back, ${name}!`}</CustomText>
-          <CustomText h4 h4Style={{fontSize: 15, color: '#272727'}}>
-            See the stats
+          <CustomText h4 h4Style={{fontSize: 16, color: '#272727'}}>
+            Explore your gameweek statistics
           </CustomText>
         </View>
         <View
@@ -137,14 +146,14 @@ const HomeContainer = ({
               dispatch(setCurrentGameweekAction(slideIndex + 1))
             }
           />
-          {isLoading ? (
+          {isLoading || !teamHistory.length ? (
             <View style={{marginTop: 10}}>
               <ActivityIndicator />
             </View>
           ) : teamHistory.length ? (
             <HomePlayerList players={teamHistory} />
           ) : (
-            <Text style={{flex: 1}}>Nothing to show</Text>
+            <Text style={{flex: 1, textAlign: 'center'}}>Nothing to show</Text>
           )}
           <Leagues data={leagues} />
         </View>
@@ -155,11 +164,11 @@ const HomeContainer = ({
 
 const styles = StyleSheet.create({
   pagination: {
-    color: '#F9F9F9',
+    color: '#DDD',
     textTransform: 'uppercase',
     fontSize: 11,
     fontWeight: 'bold',
-    marginHorizontal: 10
+    marginRight: 10,
   },
 });
 

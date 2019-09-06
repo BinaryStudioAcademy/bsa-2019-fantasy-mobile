@@ -1,6 +1,6 @@
 import React, {useMemo} from 'react';
 import {View, StyleSheet} from 'react-native';
-import {Text as CustomText, Button, Card} from 'react-native-elements';
+import {Text as CustomText, Button} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import PlayerList from '../../../components/PlayerList';
@@ -8,7 +8,7 @@ import PlayerList from '../../../components/PlayerList';
 const HomePlayerList = ({players: givenPlayers}) => {
   const renderTitle = () => {
     return (
-      <View style={{padding: 15, marginBottom: 5}}>
+      <View style={{padding: 15}}>
         <CustomText h3>Players List</CustomText>
       </View>
     );
@@ -31,14 +31,6 @@ const styles = StyleSheet.create({
     padding: 25,
     borderRadius: 999,
     zIndex: 100,
-  },
-  card: {
-    borderRadius: 5,
-    marginBottom: 20,
-    position: 'relative',
-    padding: 0,
-    overflow: 'hidden',
-    borderColor: 'transparent',
   },
 });
 
