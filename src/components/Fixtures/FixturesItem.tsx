@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import moment from 'moment';
-import {Text, View, Image} from 'react-native';
+import {Text, View, Image, TouchableOpacity} from 'react-native';
 import {Card, Button} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useSelector, useDispatch} from 'react-redux';
@@ -70,7 +70,7 @@ const FixturesItem = ({match, navigation, subscribed}: Props) => {
   };
 
   return (
-    <View
+    <TouchableOpacity
       style={{
         flex: 1,
         flexDirection: 'row',
@@ -81,6 +81,13 @@ const FixturesItem = ({match, navigation, subscribed}: Props) => {
         borderBottomWidth: 2,
         borderStyle: 'solid',
         paddingBottom: 10,
+      }}
+      onPress={() => {
+        if (match.started) {
+          navigation.navigate('FixturesDetails', {
+            match,
+          });
+        }
       }}>
       <View
         style={{width: '35%', alignItems: 'center', justifyContent: 'center'}}>
@@ -111,19 +118,6 @@ const FixturesItem = ({match, navigation, subscribed}: Props) => {
         />
         <Text style={{fontSize: 16}}>{match.awayteam.name}</Text>
       </View>
-      {match.started && (
-        <Button
-          containerStyle={{alignItems: 'center', justifyContent: 'center'}}
-          icon={<Icon name="arrow-right" size={15} color="green" />}
-          iconRight
-          type="outline"
-          onPress={() =>
-            navigation.navigate('FixturesDetails', {
-              match,
-            })
-          }
-        />
-      )}
       {match.started ? null : (
         <Button
           type="outline"
@@ -137,7 +131,7 @@ const FixturesItem = ({match, navigation, subscribed}: Props) => {
           onPress={() => onSubscribe()}
         />
       )}
-    </View>
+    </TouchableOpacity>
   );
 };
 
