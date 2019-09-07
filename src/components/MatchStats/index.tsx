@@ -1,6 +1,6 @@
 import React from 'react';
-import {View, Text} from 'react-native';
-import {Text as CustomText} from 'react-native-elements';
+import {View, Text, StyleSheet} from 'react-native';
+import {Text as CustomText, Card} from 'react-native-elements';
 
 type Props = {
   title: string;
@@ -20,34 +20,34 @@ const MatchStats = ({title, hometeam_stats, awayteam_stats}: Props) => {
           padding: 5,
         }}
         key={`stats-item-${item.player}`}>
-        <Text>
-          {item.player} <Text>( {item.count} )</Text>
+        <Text numberOfLines={1}>
+          <Text style={{width: '70%', overflow: 'hidden'}}>{item.player} </Text>{' '}
+          <Text style={{width: '30%'}}>( {item.count} )</Text>
         </Text>
       </View>
     ));
 
-  return (
-    <View
-      style={{
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}>
-      <View
-        style={{
-          backgroundColor: '#2a683a',
-          width: '100%',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-        <CustomText h4 h4Style={{color: 'white'}}>
-          {title}
-        </CustomText>
+  const renderTitle = () => {
+    return (
+      <View style={{padding: 15, marginBottom: 5}}>
+        <CustomText h3>{title}</CustomText>
       </View>
+    );
+  };
+
+  const maxLength = Math.max(hometeam_stats.length, awayteam_stats.length);
+
+  return (
+    <Card
+      title={renderTitle()}
+      titleStyle={{textAlign: 'left', color: '#1a1a1a'}}
+      containerStyle={styles.card}>
       <View
         style={{
           flex: 1,
           flexDirection: 'row',
-          height: Math.max(hometeam_stats.length, awayteam_stats.length) * 45,
+          height: maxLength === 1 ? 80 : maxLength * 45,
+          paddingBottom: 20,
         }}>
         <View
           style={{
@@ -65,8 +65,20 @@ const MatchStats = ({title, hometeam_stats, awayteam_stats}: Props) => {
           {mapArray(awayteam_stats)}
         </View>
       </View>
-    </View>
+    </Card>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff'},
+  card: {
+    borderRadius: 5,
+    marginBottom: 25,
+    position: 'relative',
+    padding: 0,
+    overflow: 'hidden',
+    borderColor: 'transparent',
+  },
+});
 
 export default MatchStats;
