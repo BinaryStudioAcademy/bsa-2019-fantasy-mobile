@@ -1,7 +1,6 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View} from 'react-native';
 import {Header, Button} from 'react-native-elements';
-import GeneralStatusBarColor from '../../components/GeneralStatusBarColor';
 
 import { useDispatch } from 'react-redux';
 import { logout } from '../Auth/action';
@@ -13,10 +12,6 @@ const Profile = (props: any) => {
 
   return (
     <View style={{flex: 1}}>
-      <GeneralStatusBarColor
-        backgroundColor={primaryDarkColor}
-        barStyle="light-content"
-      />
       <Header
         containerStyle={{height: 60, paddingTop: 0}}
         leftComponent={{

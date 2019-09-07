@@ -9,7 +9,6 @@ import MatchStats from '../MatchStats';
 import {FixturesItemType, GameDetailsType} from '../../types/fixtures.types';
 import {RootState} from '../../store/types';
 import {loadGameDetailsAction} from '../../containers/FixturesContainers/action';
-import GeneralStatusBarColor from '../GeneralStatusBarColor';
 import {primaryColor, primaryDarkColor} from '../../styles/common';
 
 type Props = {
@@ -145,10 +144,6 @@ const FixtureDetails = ({currentMatchStats, navigation}: Props) => {
 
   return (
     <View style={{paddingBottom: 70}}>
-      <GeneralStatusBarColor
-        backgroundColor={primaryDarkColor}
-        barStyle="light-content"
-      />
       <Header
         containerStyle={{height: 60, paddingTop: 0, borderWidth: 0}}
         leftComponent={

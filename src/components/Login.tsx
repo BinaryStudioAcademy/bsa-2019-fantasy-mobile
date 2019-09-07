@@ -6,8 +6,6 @@ import {Button, Input, Text} from 'react-native-elements';
 import {login} from '../containers/Auth/action';
 import {primaryColor} from '../styles/common';
 
-import GeneralStatusBarColor from './GeneralStatusBarColor';
-
 const Login = ({navigation}: any) => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState('');
@@ -22,10 +20,6 @@ const Login = ({navigation}: any) => {
   };
   return (
     <View style={{flex: 1, justifyContent: 'center', padding: 20}}>
-      <GeneralStatusBarColor
-        backgroundColor="#fff"
-        barStyle="dark-content"
-      />
       <View>
         <Input
           placeholder="Email"

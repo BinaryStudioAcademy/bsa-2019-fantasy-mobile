@@ -16,7 +16,6 @@ import {GameweekType} from '../../types/gameweek.type';
 
 import Fixtures from '../../components/Fixtures/Fixtures';
 import Spinner from '../../components/Spinner';
-import GeneralStatusBarColor from '../../components/GeneralStatusBarColor';
 
 import {primaryColor, primaryDarkColor} from '../../styles/common';
 
@@ -73,10 +72,6 @@ const FixturesContainer = ({
   }
   return (
     <View>
-      <GeneralStatusBarColor
-        backgroundColor={primaryDarkColor}
-        barStyle="light-content"
-      />
       <Header
         containerStyle={{height: 60, paddingTop: 0}}
         leftComponent={{

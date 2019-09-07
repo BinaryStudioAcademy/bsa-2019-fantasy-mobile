@@ -55,6 +55,7 @@ const handleAuthResponse = (
       message: err && err.message ? err.message : err,
       type: 'danger',
     });
+  } finally {
   }
 };
 

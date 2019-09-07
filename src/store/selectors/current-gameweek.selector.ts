@@ -8,7 +8,6 @@ export const currentGameweekSelector = createSelector(
   gameweeks =>
     (() => {
       const now = moment();
-      console.log('gameweeks', gameweeks);
       let currentGameweek = gameweeks.find(
         g => moment(g.start).isSameOrBefore(now) && moment(g.end).isAfter(now),
       );

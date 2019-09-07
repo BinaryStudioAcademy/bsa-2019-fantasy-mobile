@@ -14,19 +14,13 @@ import {primaryColor} from '../../styles/common';
 const Sidebar = (props: any) => {
   const {user} = useSelector((state: any) => state.profile);
 
-  let avatarSrc = 'https://i2.wp.com/www.ahfirstaid.org/wp-content/uploads/2014/07/avatar-placeholder.png';
-
-  if (user && user.image) {
-    avatarSrc = user.image.link;
-  }
-
   return (
     <SafeAreaView style={{flex: 1}}>
-      {user && user.name && (
+      {user && (
         <ImageBackground
           resizeMode={'cover'}
           style={{flex: 0}}
-          source={{uri: avatarSrc}}>
+          source={{uri: user.image && user.image.link ? user.image.link : 'https://www.trzcacak.rs/myfile/detail/385-3856300_no-avatar-png.png'}}>
           <View
             style={{
               height: 180,
