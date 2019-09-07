@@ -1,13 +1,16 @@
-import {useState, useEffect, useMemo} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
-import produce, {applyPatches} from 'immer';
+import { useState, useEffect, useMemo } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import produce, { applyPatches } from 'immer';
 
-import {RootState} from '../../store/types';
-import {currentGameweekSelector} from '../../store/selectors/current-gameweek.selector';
+import { RootState } from '../../store/types';
+
+import { postGameweekHistory } from '../../containers/Routing/fetchGameweeks/actions';
+import { currentGameweekSelector } from '../../store/selectors/current-gameweek.selector';
 
 export const useMyTeam = () => {
   const dispatch = useDispatch();
-  
+
+  const currentGameweek = useSelector(currentGameweekSelector);
   const teamPlayers = useSelector(
     (state: RootState) => state.gameweekHistory.teamHistory,
   );
@@ -27,8 +30,8 @@ export const useMyTeam = () => {
   }, [teamPlayers]);
 
   const removeHighlights = () => {
-    setPitch(pitch =>
-      produce(pitch, draft => {
+    setPitch((pitch) =>
+      produce(pitch, (draft) => {
         draft.forEach((p, idx) => {
           if (p.item) {
             draft[idx].item!.display.highlight = undefined;
@@ -39,14 +42,11 @@ export const useMyTeam = () => {
   };
 
   const addHighlights = () => {
-    setPitch(pitch =>
-      produce(pitch, draft => {
-        console.log(draft);
+    setPitch((pitch) =>
+      produce(pitch, (draft) => {
         draft.forEach((p, idx) => {
           if (p.item && p.accept.includes(switcheroo[0].type)) {
-            if (
-              p.item.player_stats.id === switcheroo[0].item!.player_stats.id
-            ) {
+            if (p.item.player_stats.id === switcheroo[0].item!.player_stats.id) {
               draft[idx].item!.display.highlight = 'rgba(255, 255, 0, 0.6)';
             } else {
               draft[idx].item!.display.highlight = 'rgba(255, 102, 0, 0.6)';
@@ -57,24 +57,22 @@ export const useMyTeam = () => {
     );
   };
 
-  const handleOpenModal = player => {
-    const newOpenedPlayer = teamPlayers.find(
-      p => p && p.player_stats.id === player.player_stats.id,
+  const handleOpenModal = (player) => {
+    const newOpenedPlayer = pitchPlayers.find(
+      (p) => p && p.player_stats.id === player.player_stats.id,
     );
 
     if (newOpenedPlayer) {
       setOpenedPlayer({
         item: newOpenedPlayer,
         inSwitcheroo: switcheroo.some(
-          v =>
-            v.item &&
-            newOpenedPlayer.item &&
-            v.item.player_stats.id === newOpenedPlayer.item.player_stats.id,
+          (v) =>
+            v && newOpenedPlayer && v.player_stats.id === newOpenedPlayer.player_stats.id,
         ),
         canBeSwitched:
           switcheroo.length === 0 ||
-          switcheroo.some(v => {
-            return newOpenedPlayer.accept.includes(v.type);
+          switcheroo.some((v) => {
+            return newOpenedPlayer.accept.includes(v.player_stats.position);
           }),
       });
     }
@@ -85,7 +83,7 @@ export const useMyTeam = () => {
   };
 
   const addPlayerToSwitcheroo = () => {
-    openedPlayer && setSwitcheroo(s => [...s, openedPlayer.item]);
+    openedPlayer && setSwitcheroo((s) => [...s, openedPlayer]);
     closeModal();
   };
 
@@ -94,33 +92,24 @@ export const useMyTeam = () => {
     closeModal();
   };
 
-    const handleSetMain = (
-    assignment: 'is_captain' | 'is_vice_captain'
-  ) => () =>   {
-    const otherKey =
-      assignment === 'is_captain' ? 'is_vice_captain' : 'is_captain';
+  const handleSetMain = (assignment: 'is_captain' | 'is_vice_captain') => () => {
+    const otherKey = assignment === 'is_captain' ? 'is_vice_captain' : 'is_captain';
 
     if (openedPlayer) {
-      setPitch(pitch =>
-        produce(pitch, draft => {
-          console.log('draft', draft);
+      setPitch((pitch) =>
+        produce(pitch, (draft) => {
           /* eslint-disable @typescript-eslint/no-non-null-assertion */
-          const currentCaptain = draft.find(p => p && p.item[assignment])!
-            .item!;
-          const currentViceCaptain = draft.find(
-            p => p.item && p.item[otherKey],
-          )!.item!;
+          const currentCaptain = draft.find((p) => p && p[assignment]);
+
+          const currentViceCaptain = draft.find((p) => p && p[otherKey]);
+
           const currentPlayer = draft.find(
-            p =>
-              p.item &&
-              p.item.player_stats.id ===
-                openedPlayer.item.item!.player_stats.id,
-          )!.item!;
+            (p) => p && p.player_stats.id === openedPlayer.item.player_stats.id,
+          );
+
           /* eslint-enable @typescript-eslint/no-non-null-assertion */
 
-          if (
-            currentPlayer.player_stats.id === currentViceCaptain.player_stats.id
-          ) {
+          if (currentPlayer.player_stats.id === currentViceCaptain.player_stats.id) {
             currentViceCaptain[otherKey] = false;
             currentViceCaptain[assignment] = true;
             currentCaptain[otherKey] = true;
@@ -137,18 +126,18 @@ export const useMyTeam = () => {
   };
 
   const refreshAccepts = () => {
-    setPitch(pitch =>
-      produce(pitch, draft => {
+    setPitch((pitch) =>
+      produce(pitch, (draft) => {
         const amountsMap = draft.reduce(
           (acc, p) => {
-            if (!p.item || p.type === 'GKP' || p.item.is_on_bench) {
+            if (!p || p.player_stats.position === 'GKP' || p.is_on_bench) {
               return acc;
             } else {
-              const count = acc[p.type];
-              return {...acc, [p.type]: count + 1};
+              const count = acc[p.player_stats.position];
+              return { ...acc, [p.player_stats.position]: count + 1 };
             }
           },
-          {DEF: 0, MID: 0, FWD: 0},
+          { DEF: 0, MID: 0, FWD: 0 },
         );
         const canBeSwitchedMap = {
           DEF: amountsMap.DEF < 5,
@@ -157,21 +146,21 @@ export const useMyTeam = () => {
         };
 
         const availablePositions = Object.entries(canBeSwitchedMap)
-          .filter(v => v[1])
-          .map(v => v[0]);
+          .filter((v) => v[1])
+          .map((v) => v[0]);
 
         draft.forEach((p, idx) => {
-          if (p.type !== 'GKP') {
-            const newAccepts = new Set([...availablePositions, p.type]);
+          if (p.player_stats.position !== 'GKP') {
+            const newAccepts = new Set([...availablePositions, p.player_stats.position]);
 
-            const amount = amountsMap[p.type];
+            const amount = amountsMap[p.player_stats.position];
             if (
-              (p.type === 'DEF' && amount === 3) ||
-              (p.type === 'MID' && amount === 3) ||
-              (p.type === 'FWD' && amount === 1)
+              (p.player_stats.position === 'DEF' && amount === 3) ||
+              (p.player_stats.position === 'MID' && amount === 3) ||
+              (p.player_stats.position === 'FWD' && amount === 1)
             ) {
               newAccepts.clear();
-              newAccepts.add(p.type);
+              newAccepts.add(p.player_stats.position);
             }
 
             draft[idx].accept = [...newAccepts];
@@ -188,10 +177,10 @@ export const useMyTeam = () => {
           return acc;
         } else {
           const count = acc[p.type];
-          return {...acc, [p.type]: count + 1};
+          return { ...acc, [p.type]: count + 1 };
         }
       },
-      {DEF: 0, MID: 0, FWD: 0},
+      { DEF: 0, MID: 0, FWD: 0 },
     );
 
     const validMap = {
@@ -212,15 +201,15 @@ export const useMyTeam = () => {
       feedback.error('Your team should have 1-3 forwards');
     }
 
-    return !Object.values(validMap).some(v => !v);
+    return !Object.values(validMap).some((v) => !v);
   };
 
   const handlePlayerSwitch = (target, player, immer_reverse) => {
-    return newPlayers => {
+    return (newPlayers) => {
       const isValid = runValidations(newPlayers);
 
       if (!isValid) {
-        setPitch(pitch => applyPatches(pitch, immer_reverse));
+        setPitch((pitch) => applyPatches(pitch, immer_reverse));
       }
 
       refreshAccepts();
@@ -230,11 +219,17 @@ export const useMyTeam = () => {
     };
   };
 
+  useEffect(() => {
+    if (pitchPlayers.length) {
+      refreshAccepts();
+    }
+  }, [pitchPlayers.length, pitchPlayers.some((p) => p)]);
+
   const playersToRender = useMemo(
     () =>
-      produce(pitchPlayers, draft => {
+      produce(pitchPlayers, (draft) => {
         draft.forEach((p, idx) => {
-          if (p.type !== 'GKP') {
+          if (p.player_stats.position !== 'GKP') {
             draft[idx].accept = ['DEF', 'MID', 'FWD'];
           }
         });
@@ -243,18 +238,19 @@ export const useMyTeam = () => {
   );
 
   const handleSubmit = () => {
-    if (!pitchPlayers.some((p) => !p.item)) {
-      const result = pitchPlayers.map(({ item }) => ({
-        is_on_bench: item!.is_on_bench,
-        is_captain: item!.is_captain,
-        is_vice_captain: item!.is_vice_captain,
-        player_id: item!.player_stats.id,
+    if (!pitchPlayers.some((p) => !p)) {
+      const result = pitchPlayers.map((item) => ({
+        is_on_bench: item.is_on_bench,
+        is_captain: item.is_captain,
+        is_vice_captain: item.is_vice_captain,
+        player_id: item.player_stats.id,
       }));
+
+      console.log(result);
 
       currentGameweek && dispatch(postGameweekHistory(currentGameweek.id, result));
     }
   };
-
 
   return {
     players: playersToRender,
