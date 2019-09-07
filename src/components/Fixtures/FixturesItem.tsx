@@ -1,17 +1,27 @@
-import React from 'react';
+import React, {useState} from 'react';
 import moment from 'moment';
-import {Text, View, Image} from 'react-native';
+import {Text, View, Image, TouchableOpacity} from 'react-native';
 import {Card, Button} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {useSelector, useDispatch} from 'react-redux';
+import {showMessage, hideMessage} from 'react-native-flash-message';
 
 import {FixturesItemType} from '../../types/fixtures.types';
+import {addNotification} from '../Notifications/actions';
+import {
+  createFixtureSubscription,
+  deleteFixtureSubscription,
+} from '../../containers/Auth/action';
 import {images} from '../../images/club-logos/index';
 
 type Props = {
   match: FixturesItemType;
+  subscribed: boolean;
   navigation: any;
 };
-const FixturesItem = ({match, navigation}: Props) => {
+const FixturesItem = ({match, navigation, subscribed}: Props) => {
+  const [isSubscribed, setSubscribe] = useState<boolean>(subscribed);
+  const dispatch = useDispatch();
   let label = (
     <Text style={{fontSize: 18}}>{moment(match.start).format('HH:mm')}</Text>
   );
@@ -32,8 +42,35 @@ const FixturesItem = ({match, navigation}: Props) => {
     );
   }
 
+  const onSubscribe = () => {
+    if (isSubscribed) {
+      showMessage({
+        icon: 'success',
+        message: `${'You have unsubscribed from fixture'} ${
+          match.hometeam.name
+        } - ${match.awayteam.name}, ${'which starts on'} ${moment(
+          match.start,
+        ).format('dddd D MMMM YYYY HH:mm')} `,
+        type: 'success',
+      });
+      dispatch(deleteFixtureSubscription(match.id));
+    } else {
+      showMessage({
+        icon: 'success',
+        message: `${'You have subscribed from fixture'} ${
+          match.hometeam.name
+        } - ${match.awayteam.name}, ${'which starts on'} ${moment(
+          match.start,
+        ).format('dddd D MMMM YYYY HH:mm')} `,
+        type: 'success',
+      });
+      dispatch(createFixtureSubscription(match.id));
+    }
+    setSubscribe(!isSubscribed);
+  };
+
   return (
-    <View
+    <TouchableOpacity
       style={{
         flex: 1,
         flexDirection: 'row',
@@ -44,6 +81,13 @@ const FixturesItem = ({match, navigation}: Props) => {
         borderBottomWidth: 2,
         borderStyle: 'solid',
         paddingBottom: 10,
+      }}
+      onPress={() => {
+        if (match.started) {
+          navigation.navigate('FixturesDetails', {
+            match,
+          });
+        }
       }}>
       <View
         style={{width: '35%', alignItems: 'center', justifyContent: 'center'}}>
@@ -74,20 +118,20 @@ const FixturesItem = ({match, navigation}: Props) => {
         />
         <Text style={{fontSize: 16}}>{match.awayteam.name}</Text>
       </View>
-      {match.started && (
+      {match.started ? null : (
         <Button
-          containerStyle={{alignItems: 'center', justifyContent: 'center'}}
-          icon={<Icon name="arrow-right" size={15} color="green" />}
-          iconRight
           type="outline"
-          onPress={() =>
-            navigation.navigate('FixturesDetails', {
-              match,
-            })
+          icon={
+            <Icon
+              name="bell-o"
+              size={15}
+              color={isSubscribed ? 'green' : 'white'}
+            />
           }
+          onPress={() => onSubscribe()}
         />
       )}
-    </View>
+    </TouchableOpacity>
   );
 };
 

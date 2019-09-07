@@ -39,9 +39,10 @@ const PlayerItem = ({player}) => {
         />
       )}
       <View style={{marginLeft: 20}}>
-        <Text style={styles.name}>{`${player_stats.first_name} ${
-          player_stats.second_name
-        }`}</Text>
+        <Text
+          style={
+            styles.name
+          }>{`${player_stats.first_name} ${player_stats.second_name}`}</Text>
         <View style={{flex: 1, flexDirection: 'row', marginBottom: 5}}>
           <Text style={{fontWeight: 'bold'}}>{clubName}</Text>
           <Text style={{fontWeight: 'bold', marginLeft: 10}}>
@@ -66,7 +67,7 @@ const PlayerItem = ({player}) => {
 const styles = StyleSheet.create({
   name: {fontWeight: 'bold', fontSize: 15},
   icon: {marginRight: 5},
-  money: { color: "#b2b200", fontSize: 14}
+  money: {color: '#b2b200', fontSize: 14},
 });
 
 export default PlayerItem;

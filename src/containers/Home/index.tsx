@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text} from 'react-native';
 import {Header} from 'react-native-elements';
 
-import { primaryColor, primaryDarkColor } from '../../styles/common';
+import {primaryColor, primaryDarkColor} from '../../styles/common';
 
 const Home = (props: any) => (
   <View style={{flex: 1}}>

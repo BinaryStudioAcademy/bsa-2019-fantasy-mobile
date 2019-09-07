@@ -1,21 +1,27 @@
 import React from 'react';
 import {View, Text} from 'react-native';
-import {Header} from 'react-native-elements';
+import {useSelector} from 'react-redux';
 
 import moment from 'moment';
 
+import {RootState} from '../../store/types';
 import FixturesItem from './FixturesItem';
 import {FixturesType, FixturesItemType} from '../../types/fixtures.types';
+import {FixtureSubscribtion} from '../../types/fixture.types';
 
 const Fixtures = ({games, navigation}: any) => {
-  const renderMessages = () => {
+  const fixtureSubscribtions = useSelector(
+    (state: RootState) => state.fixtures.fixtureSubscribtions,
+  );
+  const renderMessages = (subscribtions: FixtureSubscribtion[]) => {
     let currentDate = '';
-
+    const subscribedFixturesIds = subscribtions.map(s => s.game_id);
     return games.map((match: FixturesItemType) => {
       const res = [
         <FixturesItem
           match={match}
           navigation={navigation}
+          subscribed={subscribedFixturesIds.includes(match.id)}
           key={`fixtures-${match.id}`}
         />,
       ];
@@ -41,7 +47,11 @@ const Fixtures = ({games, navigation}: any) => {
       return res;
     });
   };
-  return <View>{renderMessages()}</View>;
+  return (
+    <View>
+      {fixtureSubscribtions ? renderMessages(fixtureSubscribtions) : null}
+    </View>
+  );
 };
 
 export default Fixtures;
