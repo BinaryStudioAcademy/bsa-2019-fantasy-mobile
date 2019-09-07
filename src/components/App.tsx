@@ -23,6 +23,7 @@ import {RootState} from '../store/types';
 import * as socket from '../helpers/socket';
 
 const App = () => {
+  console.disableYellowBox = true;
   socket.startSocket();
   const dispatch = useDispatch();
   const {isLoading, user, isAuthorized} = useSelector(

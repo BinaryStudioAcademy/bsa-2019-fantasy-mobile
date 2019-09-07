@@ -8,7 +8,7 @@ import TeamModal from './components/TeamModal';
 
 import {useMyTeam} from './my-team.hook';
 
-const MyTeam = () => {
+const MyTeam = ({ navigation }) => {
   const {
     players,
     setPlayers,
