@@ -123,7 +123,7 @@ const FixturesItem = ({match, navigation, subscribed}: Props) => {
           type="outline"
           icon={
             <Icon
-              name="bell"
+              name="bell-o"
               size={15}
               color={isSubscribed ? 'green' : 'white'}
             />
