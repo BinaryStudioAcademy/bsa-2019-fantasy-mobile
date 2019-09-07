@@ -26,6 +26,11 @@ export const useMyTeam = () => {
 
   useEffect(() => {
     setChanged(false);
+
+    teamPlayers.forEach((item) => {
+      item.highlight = 'transparent';
+    });
+
     setPitch(teamPlayers);
   }, [teamPlayers]);
 
@@ -33,8 +38,8 @@ export const useMyTeam = () => {
     setPitch((pitch) =>
       produce(pitch, (draft) => {
         draft.forEach((p, idx) => {
-          if (p.item) {
-            draft[idx].item!.display.highlight = undefined;
+          if (p) {
+            draft[idx].highlight = 'transparent';
           }
         });
       }),
@@ -45,17 +50,28 @@ export const useMyTeam = () => {
     setPitch((pitch) =>
       produce(pitch, (draft) => {
         draft.forEach((p, idx) => {
-          if (p.item && p.accept.includes(switcheroo[0].type)) {
-            if (p.item.player_stats.id === switcheroo[0].item!.player_stats.id) {
-              draft[idx].item!.display.highlight = 'rgba(255, 255, 0, 0.6)';
+          if (p && p.accept.includes(switcheroo[0].item.player_stats.position)) {
+            if (p.player_stats.id === switcheroo[0].item.player_stats.id) {
+              draft[idx].highlight = 'rgba(255, 255, 0, 0.6)';
             } else {
-              draft[idx].item!.display.highlight = 'rgba(255, 102, 0, 0.6)';
+              draft[idx].highlight = 'rgba(255, 102, 0, 0.6)';
             }
           }
         });
       }),
     );
   };
+
+  useEffect(() => {
+    if (switcheroo.length === 0) {
+      removeHighlights();
+    } else if (switcheroo.length === 1) {
+      addHighlights();
+    } else if (switcheroo.length === 2) {
+      setSwitchQuery((q) => [...q, switcheroo]);
+      setSwitcheroo([]);
+    }
+  }, [switcheroo]);
 
   const handleOpenModal = (player) => {
     const newOpenedPlayer = pitchPlayers.find(
@@ -67,12 +83,14 @@ export const useMyTeam = () => {
         item: newOpenedPlayer,
         inSwitcheroo: switcheroo.some(
           (v) =>
-            v && newOpenedPlayer && v.player_stats.id === newOpenedPlayer.player_stats.id,
+            v &&
+            newOpenedPlayer &&
+            v.item.player_stats.id === newOpenedPlayer.player_stats.id,
         ),
         canBeSwitched:
           switcheroo.length === 0 ||
           switcheroo.some((v) => {
-            return newOpenedPlayer.accept.includes(v.player_stats.position);
+            return newOpenedPlayer.accept.includes(v.item.player_stats.position);
           }),
       });
     }
@@ -164,6 +182,8 @@ export const useMyTeam = () => {
             }
 
             draft[idx].accept = [...newAccepts];
+          } else {
+            draft[idx].accept = ['GKP'];
           }
         });
       }),
@@ -173,11 +193,11 @@ export const useMyTeam = () => {
   const runValidations = (players = pitchPlayers) => {
     const amountsMap = players.reduce(
       (acc, p) => {
-        if (!p.item || p.type === 'GKP' || p.item.is_on_bench) {
+        if (!p || p.player_stats.position === 'GKP' || p.is_on_bench) {
           return acc;
         } else {
-          const count = acc[p.type];
-          return { ...acc, [p.type]: count + 1 };
+          const count = acc[p.player_stats.position];
+          return { ...acc, [p.player_stats.position]: count + 1 };
         }
       },
       { DEF: 0, MID: 0, FWD: 0 },
@@ -190,15 +210,15 @@ export const useMyTeam = () => {
     };
 
     if (!validMap.DEF) {
-      feedback.error('Your team should have 3-5 defenders');
+      console.log('Your team should have 3-5 defenders');
     }
 
     if (!validMap.MID) {
-      feedback.error('Your team should have 3-5 middlefielders');
+      console.log('Your team should have 3-5 middlefielders');
     }
 
     if (!validMap.FWD) {
-      feedback.error('Your team should have 1-3 forwards');
+      console.log('Your team should have 1-3 forwards');
     }
 
     return !Object.values(validMap).some((v) => !v);
@@ -231,6 +251,8 @@ export const useMyTeam = () => {
         draft.forEach((p, idx) => {
           if (p.player_stats.position !== 'GKP') {
             draft[idx].accept = ['DEF', 'MID', 'FWD'];
+          } else {
+            draft[idx].accept = ['GKP'];
           }
         });
       }),
@@ -245,8 +267,6 @@ export const useMyTeam = () => {
         is_vice_captain: item.is_vice_captain,
         player_id: item.player_stats.id,
       }));
-
-      console.log(result);
 
       currentGameweek && dispatch(postGameweekHistory(currentGameweek.id, result));
     }

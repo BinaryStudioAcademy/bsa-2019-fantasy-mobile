@@ -23,6 +23,8 @@ const PlayerItem = ({player, onPlayerPress}: Props) => {
       state.clubs.clubs[player_stats.club_id - 1].short_name,
   );
 
+  const highlight = player.highlight ? player.highlight : 'transparent';
+
   return (
     <View
       style={{
@@ -32,6 +34,7 @@ const PlayerItem = ({player, onPlayerPress}: Props) => {
         justifyContent: 'space-between',
         paddingHorizontal: 15,
         marginBottom: 10,
+        backgroundColor: highlight,
       }}>
       <View
         style={{

@@ -40,11 +40,12 @@ const PlayerList = ({
         ? givenPlayers.map(p => ({
             player_stats: p.player_stats,
             display: {
-              src: clubs[p.player_stats.club_id - 1].code
+              src: clubs[p.player_stats.club_id - 1].code,
             },
             is_on_bench: p.is_on_bench,
             is_captain: p.is_captain,
-            is_vice_captain: p.is_vice_captain
+            is_vice_captain: p.is_vice_captain,
+            highlight: p.highlight
           }))
         : [],
     [clubs.length, givenPlayers]

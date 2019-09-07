@@ -10,17 +10,24 @@ import {
   Dimensions,
 } from 'react-native';
 
-import {Text as CustomText, Button} from 'react-native-elements';
+import { Text as CustomText, Button } from 'react-native-elements';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').width;
 
-const TeamModal = ({player, onClose, onSetCaptain, onSetViceCaptain}) => {
+const TeamModal = ({
+  player: { item: player, canBeSwitched, inSwitcheroo },
+  onClose,
+  onSetCaptain,
+  onSetViceCaptain,
+  onSwitch,
+  onCancel,
+}) => {
   console.log('modal', player);
 
   return (
-    <View style={{marginTop: 22}}>
-      <Modal animationType="fade" transparent={true} visible={true}>
+    <View style={{ marginTop: 22 }}>
+      <Modal animationType='fade' transparent={true} visible={true}>
         <View
           style={{
             flex: 1,
@@ -28,7 +35,8 @@ const TeamModal = ({player, onClose, onSetCaptain, onSetViceCaptain}) => {
             justifyContent: 'center',
             alignItems: 'center',
             backgroundColor: '#00000080',
-          }}>
+          }}
+        >
           <View
             style={{
               width: 300,
@@ -37,36 +45,44 @@ const TeamModal = ({player, onClose, onSetCaptain, onSetViceCaptain}) => {
               padding: 20,
               borderRadius: 4,
               borderColor: 'rgba(0, 0, 0, 0.1)',
-            }}>
+            }}
+          >
             <View>
-              <CustomText h4></CustomText>
+              <CustomText h4 />
             </View>
-            {!player.item.is_on_bench && (
+            {canBeSwitched && (
+              <Button
+                onPress={() => {
+                  inSwitcheroo ? onCancel() : onSwitch();
+                }}
+                title={inSwitcheroo ? 'Cancel' : 'Switch'}
+              />
+            )}
+            {!player.is_on_bench && (
               <View>
-                {!player.item.is_captain && (
+                {!player.is_captain && (
                   <Button
-                    buttonStyle={{marginBottom: 10}}
+                    buttonStyle={{ marginBottom: 10 }}
                     onPress={() => onSetCaptain()}
-                    title=" Make Captain"
-                  />                   
+                    title=' Make Captain'
+                  />
                 )}
-                {!player.item.is_vice_captain && (
+                {!player.is_vice_captain && (
                   <Button
-                    buttonStyle={{marginBottom: 10}}
+                    buttonStyle={{ marginBottom: 10 }}
                     onPress={() => onSetViceCaptain()}
-                    title="Make Vice-Captain"  
+                    title='Make Vice-Captain'
                   />
                 )}
               </View>
             )}
-
             <Button
-              buttonStyle={{marginTop: 50}}
+              buttonStyle={{ marginTop: 50 }}
               onPress={() => {
                 onClose();
-              }} 
-              title="Hide Modal"
-              />
+              }}
+              title='Hide Modal'
+            />
           </View>
         </View>
       </Modal>
