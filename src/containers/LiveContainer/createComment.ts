@@ -11,6 +11,9 @@ export const createComment = (event: any, { homeClub, awayClub, score }: any) =>
     case 'endGame':
       return `The match ${homeClub && homeClub.name} - ${awayClub &&
         awayClub.name} finished with score ${home}:${away}.`;
+    case 'stopGame':
+      return `The match ${homeClub && homeClub.name} - ${awayClub &&
+        awayClub.name} was stopped for technical reasons. Score ${home}:${away}.`;
     case 'startTime':
       return `Time started.`;
     case 'endTime':
