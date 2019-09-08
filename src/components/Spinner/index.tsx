@@ -18,7 +18,7 @@ const Spinner = () => {
       bounceValue.setValue(1);
       Animated.timing(bounceValue, {
         toValue: 2,
-        duration: 2000,
+        duration: 4000,
         easing: Easing.linear,
       }).start(() => bounce(isStop));
     }
@@ -29,7 +29,7 @@ const Spinner = () => {
       spinValue.setValue(0);
       Animated.timing(spinValue, {
         toValue: 1,
-        duration: 2000,
+        duration: 4000,
         easing: Easing.linear,
       }).start(() => spin(isStop));
     }
@@ -46,7 +46,7 @@ const Spinner = () => {
 
   const bounceRange = bounceValue.interpolate({
     inputRange: [1, 1.25, 1.5, 1.75, 2],
-    outputRange: [300, 150, 0, 150, 300],
+    outputRange: [200, 100, 0, 100, 200],
   });
 
   const spinRange = spinValue.interpolate({
@@ -58,8 +58,8 @@ const Spinner = () => {
     <View style={{alignItems: 'center'}}>
       <Animated.Image
         style={{
-          width: 90,
-          height: 90,
+          width: 80,
+          height: 80,
           transform: [{translateY: bounceRange}, {rotate: spinRange}],
         }}
         source={require('../../images/ball.png')}
