@@ -34,6 +34,7 @@ const PlayerItem = ({ player, onPlayerPress }: Props) => {
         paddingHorizontal: 15,
         marginBottom: 10,
         backgroundColor: highlight,
+        borderRadius: 5
       }}
     >
       {player ? (

@@ -1,3 +1,5 @@
+import { showMessage } from 'react-native-flash-message';
+
 import * as gameweeksService from '../../../services/gameweekService';
 import * as gameweeksHistoryService from '../../../services/gameweekHistoryService';
 import {
@@ -148,7 +150,7 @@ export const postGameweekHistory = (
   data: TeamMemberType[],
 ): AsyncFetchGameweeksAction => async (dispatch, getRootState) => {
   const { user } = getRootState().profile;
-  
+
   try {
     await gameweeksHistoryService.postGameweekHistoryForUserById(
       user!.id,
@@ -156,8 +158,17 @@ export const postGameweekHistory = (
       data,
     );
     await fetchGameweekHistory(user!.id, gameweekId)(dispatch, getRootState);
-    console.log('Your team has been saved successfully')
+    console.log();
+    showMessage({
+      icon: 'success',
+      message: 'Your team has been saved successfully',
+      type: 'success',
+    });
   } catch (err) {
-    console.log('Failed to save your team')
+    showMessage({
+      icon: 'danger',
+      message: 'Failed to save your team',
+      type: 'danger',
+    });
   }
 };

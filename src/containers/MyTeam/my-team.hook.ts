@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { showMessage } from 'react-native-flash-message';
 import produce, { applyPatches } from 'immer';
 
 import { RootState } from '../../store/types';
@@ -210,15 +211,27 @@ export const useMyTeam = () => {
     };
 
     if (!validMap.DEF) {
-      console.log('Your team should have 3-5 defenders');
+      showMessage({
+        icon: 'danger',
+        message: 'Your team should have 3-5 defenders',
+        type: 'danger',
+      });
     }
 
     if (!validMap.MID) {
-      console.log('Your team should have 3-5 middlefielders');
+      showMessage({
+        icon: 'danger',
+        message: 'Your team should have 3-5 middlefielders',
+        type: 'danger',
+      });
     }
 
     if (!validMap.FWD) {
-      console.log('Your team should have 1-3 forwards');
+      showMessage({
+        icon: 'danger',
+        message: 'Your team should have 1-3 forwards',
+        type: 'danger',
+      });
     }
 
     return !Object.values(validMap).some((v) => !v);
@@ -244,7 +257,6 @@ export const useMyTeam = () => {
     }
   }, [pitchPlayers.length, pitchPlayers.some((p) => p)]);
 
-  
   const handleSubmit = () => {
     if (!pitchPlayers.some((p) => !p)) {
       const result = pitchPlayers.map((item) => ({
@@ -253,7 +265,7 @@ export const useMyTeam = () => {
         is_vice_captain: item.is_vice_captain,
         player_id: item.player_stats.id,
       }));
-      
+
       currentGameweek && dispatch(postGameweekHistory(currentGameweek.id, result));
     }
   };

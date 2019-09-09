@@ -1,4 +1,5 @@
 import React, { useCallback, useState, useEffect } from 'react';
+import { showMessage } from 'react-native-flash-message';
 import { produce } from 'immer';
 
 import { View, ActivityIndicator } from 'react-native';
@@ -75,7 +76,11 @@ const TeamSelection = ({
                 playerItem.is_captain ||
                 playerItem.is_vice_captain
               ) {
-                console.log('Captain or vice captain cannot sit on bench!');
+                showMessage({
+                  icon: 'danger',
+                  message: 'Captain or vice captain cannot sit on bench!',
+                  type: 'danger',
+                });
 
                 return;
               }
@@ -159,12 +164,14 @@ const TeamSelection = ({
       <React.Fragment>
         <PlayerList players={players} hasBench={hasBench} onPlayerPress={onPlayerPress} />
         {submit && (
-          <Button
-            buttonStyle={{ marginTop: 20, backgroundColor: primaryColor }}
-            disabled={!submit.canSubmit}
-            title={submit.label}
-            onPress={() => submit.onSubmit()}
-          />
+          <View style={{paddingHorizontal: 20}}>
+            <Button
+              buttonStyle={{ marginVertical: 20, backgroundColor: primaryColor }}
+              disabled={!submit.canSubmit}
+              title={submit.label}
+              onPress={() => submit.onSubmit()}
+            />
+          </View>
         )}
       </React.Fragment>
     </View>
