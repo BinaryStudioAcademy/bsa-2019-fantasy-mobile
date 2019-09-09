@@ -1,64 +1,93 @@
 import React from 'react';
-import {View, Text, ScrollView} from 'react-native';
-import {Header} from 'react-native-elements';
-import {RootState} from '../../store/types';
-import {useSelector} from 'react-redux';
+import { View, ScrollView, Image } from 'react-native';
+import { Header, Text, Card } from 'react-native-elements';
+import { RootState } from '../../store/types';
+import { useSelector } from 'react-redux';
 
-import {primaryColor} from '../../styles/common';
-import {createComment} from './createComment';
+import { primaryColor } from '../../styles/common';
+import { createComment } from './createComment';
+import SingleComent from './SingleComent';
+
+import { images } from '../../images/club-logos/index';
 
 const LiveContainer = (props: any) => {
   const live = useSelector((state: RootState) => state.live);
   const clubs = useSelector((state: RootState) => state.clubs.clubs);
 
   const getClubById = (id: number) => {
-    return clubs.find(club => club.id === Number(id));
+    return clubs.find((club) => club.id === Number(id));
   };
 
   /* to avoid line break */
-  const commentsFilteredEvents = live.events.filter((event: any) => event.name !== 'nothing');
+  const commentsFilteredEvents = live.events
+    .filter((event: any) => event.name !== 'nothing')
+    .reverse();
   const commentsLiveStats = {
     homeClub: getClubById(live.homeClubId),
     awayClub: getClubById(live.awayClubId),
     score: live.score,
   };
 
+  const isMatchExist =
+    commentsLiveStats.homeClub && commentsLiveStats.awayClub && commentsLiveStats.score;
+
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       <Header
-        containerStyle={{height: 60, paddingTop: 0}}
+        containerStyle={{ height: 60, paddingTop: 0 }}
         leftComponent={{
           icon: 'menu',
           color: '#fff',
           size: 30,
           onPress: () => props.navigation.openDrawer(),
         }}
-        centerComponent={{text: 'Live', style: {color: '#fff', fontSize: 20}}}
+        centerComponent={{ text: 'Live', style: { color: '#fff', fontSize: 20 } }}
         backgroundColor={primaryColor}
       />
-      <View style={{flex: 1, padding: 20}}>
-        <Text style={{fontWeight: 'bold'}}>
-          Current match:{' '}
-          {commentsLiveStats.homeClub && commentsLiveStats.awayClub
-            ? commentsLiveStats.homeClub.name +
-              ' - ' +
-              commentsLiveStats.awayClub.name
-            : '-'}
-        </Text>
-        <Text style={{fontWeight: 'bold'}}>
-          Current score:{' '}
-          {commentsLiveStats.score
-            ? commentsLiveStats.score[0] + ' : ' + commentsLiveStats.score[1]
-            : '-'}
-        </Text>
-        <ScrollView>
-          {commentsFilteredEvents.map((event: any) => {
-              return (
-                <Text key={event.text}>
-                  {createComment(event, commentsLiveStats)}
+      <View style={{ flex: 1, padding: 20 }}>
+        <View style={{ marginBottom: 100 }}>
+          {isMatchExist && (
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+              }}
+            >
+              <View style={{ alignItems: 'center', width: 100 }}>
+                <Image source={images[`badge_${commentsLiveStats.homeClub.code}_40`]} />
+                <Text style={{ fontWeight: 'bold', fontSize: 16, textAlign: 'center' }}>
+                  {commentsLiveStats.homeClub.name}
                 </Text>
-              );
-          })}
+              </View>
+              <View style={{ alignItems: 'center' }}>
+                <Text style={{ fontWeight: 'bold', fontSize: 24 }}>
+                  {commentsLiveStats.score[0] + ' : ' + commentsLiveStats.score[1]}
+                </Text>
+              </View>
+              <View style={{ alignItems: 'center', width: 100 }}>
+                <Image source={images[`badge_${commentsLiveStats.awayClub.code}_40`]} />
+                <Text style={{ fontWeight: 'bold', fontSize: 16, textAlign: 'center' }}>
+                  {commentsLiveStats.awayClub.name}
+                </Text>
+              </View>
+            </View>
+          )}
+        </View>
+        <ScrollView>
+          {commentsFilteredEvents.map((event: any) =>
+            ['startGame', 'endGame', 'stopGame', 'startTime', 'endTime', 'goal'].includes(
+              event.name,
+            ) ? (
+              <Text key={event.text} style={{ fontWeight: 'bold' }}>
+                <SingleComent text={createComment(event, commentsLiveStats)} />
+              </Text>
+            ) : (
+              <Text key={event.text}>
+                <SingleComent text={createComment(event, commentsLiveStats)} />
+              </Text>
+            ),
+          )}
         </ScrollView>
       </View>
     </View>

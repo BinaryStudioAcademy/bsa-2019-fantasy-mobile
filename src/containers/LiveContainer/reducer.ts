@@ -17,6 +17,9 @@ const initialState = {
 export default (state = initialState, action: any) => {
   switch (action.type) {
     case SET_LIVE_STATUS:
+      if (action.payload.gameStarted) {
+        return { ...state, ...action.payload, events: [] };
+      }
       return { ...state, ...action.payload };
     case ADD_LIVE_EVENT:
       return produce(state, (draft: any) => {

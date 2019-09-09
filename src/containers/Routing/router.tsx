@@ -31,18 +31,20 @@ export const MatchStats = createStackNavigator({
   },
 });
 
-export const SignedIn = createDrawerNavigator(
-  {
-    Home: HomeContainer,
-    Profile,
-    Fixtures: MatchStats,
-    Live,
-    'My Team': MyTeam
-  },
-  {
-    contentComponent: Sidebar,
-  },
-);
+const screens = {
+  Home: HomeContainer,
+  Profile,
+  Fixtures: MatchStats,
+  Live,
+  Spinner,
+  'My Team': MyTeam
+};
+
+const contentComponent = {
+  contentComponent: Sidebar,
+};
+
+export const SignedIn = createDrawerNavigator(screens, contentComponent);
 
 export const createRootNavigator = (signedIn = false) => {
   return createSwitchNavigator(
