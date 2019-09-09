@@ -31,3 +31,14 @@ export type GameDetailsType = {
 export type GamesDetailsType = {
   gamesDetails: GameDetailsType[];
 };
+
+export type FixtureSubType = {
+  start: string;
+  end: string;
+  finished: boolean;
+  homeTeamScore?: number;
+  awayTeamScore?: number;
+  homeTeamName?: string;
+  awayTeamName?: string;
+  isFavClub?: boolean;
+};
