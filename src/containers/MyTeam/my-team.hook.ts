@@ -12,7 +12,7 @@ export const useMyTeam = () => {
 
   const currentGameweek = useSelector(currentGameweekSelector);
   const teamPlayers = useSelector(
-    (state: RootState) => state.gameweekHistory.teamHistory,
+    (state: RootState) => state.gameweeks.gameweeks_history,
   );
 
   const [pitchPlayers, setPitch] = useState([]);
@@ -227,7 +227,6 @@ export const useMyTeam = () => {
   const handlePlayerSwitch = (target, player, immer_reverse) => {
     return (newPlayers) => {
       const isValid = runValidations(newPlayers);
-
       if (!isValid) {
         setPitch((pitch) => applyPatches(pitch, immer_reverse));
       }
@@ -245,6 +244,20 @@ export const useMyTeam = () => {
     }
   }, [pitchPlayers.length, pitchPlayers.some((p) => p)]);
 
+  
+  const handleSubmit = () => {
+    if (!pitchPlayers.some((p) => !p)) {
+      const result = pitchPlayers.map((item) => ({
+        is_on_bench: item.is_on_bench,
+        is_captain: item.is_captain,
+        is_vice_captain: item.is_vice_captain,
+        player_id: item.player_stats.id,
+      }));
+      
+      currentGameweek && dispatch(postGameweekHistory(currentGameweek.id, result));
+    }
+  };
+
   const playersToRender = useMemo(
     () =>
       produce(pitchPlayers, (draft) => {
@@ -258,19 +271,6 @@ export const useMyTeam = () => {
       }),
     [pitchPlayers],
   );
-
-  const handleSubmit = () => {
-    if (!pitchPlayers.some((p) => !p)) {
-      const result = pitchPlayers.map((item) => ({
-        is_on_bench: item.is_on_bench,
-        is_captain: item.is_captain,
-        is_vice_captain: item.is_vice_captain,
-        player_id: item.player_stats.id,
-      }));
-
-      currentGameweek && dispatch(postGameweekHistory(currentGameweek.id, result));
-    }
-  };
 
   return {
     players: playersToRender,

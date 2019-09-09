@@ -3,7 +3,7 @@ import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { Text, View, ScrollView, ActivityIndicator } from 'react-native';
 import { Text as CustomText, Button, Card, Header } from 'react-native-elements';
 
-import PlayerList from '../../components/PlayerList';
+import TeamSelection from '../../components/TeamSelection';
 import TeamModal from './components/TeamModal';
 
 import { useMyTeam } from './my-team.hook';
@@ -33,6 +33,7 @@ const MyTeam = ({ navigation }) => {
 
   const dispatch = useDispatch();
   const [currentDialogPlayer, setCurrentDialogPlayer] = useState(null);
+  console.log('should be like', players);
 
   return (
     <View style={{ backgroundColor: '#efefef' }}>
@@ -66,9 +67,13 @@ const MyTeam = ({ navigation }) => {
             marginBottom: 50,
           }}
         >
-          <PlayerList
+          <TeamSelection
             players={players}
+            setPlayers={setPlayers}
+            query={switchQuery}
+            setQuery={setSwitchQuery}
             onPlayerPress={handleOpenModal}
+            onPlayerDrop={handlePlayerSwitch}
             hasBench
             submit={{
               label: 'Save Team',

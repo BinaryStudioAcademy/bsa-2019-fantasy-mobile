@@ -13,7 +13,7 @@ type FetchArgs = {
 
 function getFetchUrl(args: FetchArgs) {
   return (
-    'http://ec2-18-224-246-75.us-east-2.compute.amazonaws.com:5001' +
+    'http://fantasy-football.tk' +
     args.endpoint +
     (args.query ? `?${queryString.stringify(args.query)}` : '')
   );

@@ -148,6 +148,7 @@ export const postGameweekHistory = (
   data: TeamMemberType[],
 ): AsyncFetchGameweeksAction => async (dispatch, getRootState) => {
   const { user } = getRootState().profile;
+  
   try {
     await gameweeksHistoryService.postGameweekHistoryForUserById(
       user!.id,

@@ -1,43 +1,29 @@
-import React, { useMemo } from "react";
-import { useSelector } from "react-redux";
-import {
-  Text,
-  View,
-  StyleSheet,
-  ScrollView,
-  ActivityIndicator
-} from "react-native";
-import { Button } from "react-native-elements";
+import React, { useMemo } from 'react';
+import { useSelector } from 'react-redux';
+import { Text, View, StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
 
-import { categorizePlayers } from "../../helpers/categorizePlayers.ts";
-import { RootState } from "../../store/types";
+import { categorizePlayers } from '../../helpers/categorizePlayers.ts';
+import { RootState } from '../../store/types';
 
-import PlayerItem from "../PlayerItem";
+import PlayerItem from '../PlayerItem';
 
-import { primaryColor } from "../../styles/common";
 
 type Props = {
   players;
   hasBench: boolean;
   onPlayerPress?: (player) => void;
-  submit?: {
-    onSubmit: () => void;
-    canSubmit: boolean;
-    label: string;
-  };
 };
 
 const PlayerList = ({
   players: givenPlayers,
-  hasBench,
+  hasBench = false,
   onPlayerPress,
-  submit
 }: Props) => {
   const clubs = useSelector((state: RootState) => state.clubs.clubs);
   const players = useMemo(
     () =>
       clubs.length > 0
-        ? givenPlayers.map(p => ({
+        ? givenPlayers.map((p) => ({
             player_stats: p.player_stats,
             display: {
               src: clubs[p.player_stats.club_id - 1].code,
@@ -45,17 +31,17 @@ const PlayerList = ({
             is_on_bench: p.is_on_bench,
             is_captain: p.is_captain,
             is_vice_captain: p.is_vice_captain,
-            highlight: p.highlight
+            highlight: p.highlight,
           }))
         : [],
-    [clubs.length, givenPlayers]
+    [clubs.length, givenPlayers],
   );
 
-  let categorizedPlayers: { [k: string] };
+  let categorizedPlayers: { [k: string]: any };
   if (hasBench) {
     categorizedPlayers = {
-      Starters: players.filter(p => !p.is_on_bench),
-      Substitutes: players.filter(p => p.is_on_bench)
+      Starters: players.filter((p) => !p.is_on_bench),
+      Substitutes: players.filter((p) => p.is_on_bench),
     };
   } else {
     const categorized = categorizePlayers(players);
@@ -66,10 +52,10 @@ const PlayerList = ({
       GKP: 2 - GKP.length,
       DEF: 5 - DEF.length,
       MID: 5 - MID.length,
-      FWD: 3 - FWD.length
+      FWD: 3 - FWD.length,
     };
 
-    if (Object.values(emptyPlayerAmounts).some(v => v < 0)) {
+    if (Object.values(emptyPlayerAmounts).some((v) => v < 0)) {
       Object.entries(emptyPlayerAmounts).forEach(([type, amount]) => {
         if (amount < 0) {
           emptyPlayerAmounts[type] = 0;
@@ -81,7 +67,7 @@ const PlayerList = ({
       Goalkeepers: GKP.concat(Array(emptyPlayerAmounts.GKP).fill(null)),
       Defenders: DEF.concat(Array(emptyPlayerAmounts.DEF).fill(null)),
       Midfielders: MID.concat(Array(emptyPlayerAmounts.MID).fill(null)),
-      Forwards: FWD.concat(Array(emptyPlayerAmounts.FWD).fill(null))
+      Forwards: FWD.concat(Array(emptyPlayerAmounts.FWD).fill(null)),
     };
   }
 
@@ -89,7 +75,7 @@ const PlayerList = ({
     <View style={{ paddingHorizontal: 15 }}>
       {Object.entries(categorizedPlayers).map(([name, items]) => (
         <React.Fragment key={`team-list-${name}`}>
-          <Text style={{ fontWeight: "bold", fontSize: 18, marginBottom: 5 }}>
+          <Text style={{ fontWeight: 'bold', fontSize: 18, marginBottom: 5 }}>
             {name}
           </Text>
 
@@ -102,15 +88,6 @@ const PlayerList = ({
           ))}
         </React.Fragment>
       ))}
-
-      {submit && (
-        <Button
-          buttonStyle={{ marginTop: 20, backgroundColor: primaryColor }}
-          disabled={!submit.canSubmit}
-          title={submit.label}
-          onPress={() => submit.onSubmit()}
-        />
-      )}
     </View>
   );
 };
