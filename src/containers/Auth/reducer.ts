@@ -1,5 +1,5 @@
-import {SET_USER, SET_IS_LOADING, UserAction} from './action.type';
-import {User} from '../../types/user.type';
+import { SET_USER, SET_IS_LOADING, UserAction } from './action.type';
+import { User } from '../../types/user.type';
 
 type State = {
   user: User | null;

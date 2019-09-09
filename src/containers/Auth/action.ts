@@ -144,3 +144,26 @@ export const updateUserTeamDetails = (
     });
   }
 };
+
+export const updateUser = (
+  imageId: string,
+  name: string,
+  email: string,
+): AsyncUserAction => async (dispatch, getState) => {
+  try {
+    const user = await authService.getCurrentUser();
+    const res = await profileService.updateUser(user!.id, imageId, name, email);
+    loadCurrentUser(true)(dispatch, getState);
+    showMessage({
+      icon: 'success',
+      message: (res && res.message) || res,
+      type: 'success',
+    });
+  } catch {
+    showMessage({
+      icon: 'danger',
+      message: 'Failed to update profile datails',
+      type: 'danger',
+    });
+  }
+};

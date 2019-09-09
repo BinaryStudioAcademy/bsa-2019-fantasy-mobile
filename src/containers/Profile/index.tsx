@@ -7,6 +7,7 @@ import { logout } from '../Auth/action';
 
 import { RootState } from '../../store/types';
 import { generateImageSrc } from '../../helpers/avatar';
+import { updateUser } from './actions';
 
 import { primaryColor, primaryDarkColor } from '../../styles/common';
 
@@ -49,6 +50,48 @@ const Profile = (props: any) => {
         <ActivityIndicator size='large' color='#0000ff' />
       </View>
     );
+
+  const usernameChanged = (name: string) => {
+    setUsername(name);
+    setIsUsernameValid(true);
+  };
+
+  const emailChanged = (email: string) => {
+    setEmail(email);
+    setIsEmailValid(true);
+  };
+
+  const validateUsername = () => {
+    const isNameValid = validator.isByteLength(username, { min: 5, max: undefined });
+    setIsUsernameValid(isNameValid);
+    return isNameValid;
+  };
+
+  const validateEmail = () => {
+    const isEmailValid = validator.isEmail(email);
+    setIsEmailValid(isEmailValid);
+    return isEmailValid;
+  };
+
+  const onSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+
+    const valid = [validateEmail(), validateUsername()].every(Boolean);
+
+    if (!valid) {
+      return;
+    }
+
+    dispatch(updateUser(imageId, username, email));
+  };
+
+  const onUsernameChange = (e) => {
+    setUsername(e.target.value);
+  };
+
+  const onEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
 
   return (
     <View style={{ flex: 1, backgroundColor: '#efefef' }}>
