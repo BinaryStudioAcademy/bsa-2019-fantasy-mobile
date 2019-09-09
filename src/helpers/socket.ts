@@ -3,7 +3,7 @@ import handlers from './handlers';
 import { User } from '../types/user.type';
 
 const socket = io(
-  'http://ec2-18-224-246-75.us-east-2.compute.amazonaws.com:5002',
+  'https://fantasy-football.tk/',
 );
 
 handlers(socket);

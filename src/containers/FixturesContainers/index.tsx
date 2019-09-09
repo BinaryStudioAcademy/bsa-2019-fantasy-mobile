@@ -66,8 +66,8 @@ const FixturesContainer = ({
 
   if (!games || !gameweeks) {
     return (
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        <ActivityIndicator size="large" color="#0000ff" />
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <ActivityIndicator size='large' color='#0000ff' />
       </View>
     );
   }
@@ -79,6 +79,8 @@ const FixturesContainer = ({
           icon: 'menu',
           color: '#fff',
           size: 30,
+          // @ts-ignore: Unreachable code error
+          underlayColor: 'rgba(0, 0, 0, 0.2)',
           onPress: () => navigation.openDrawer(),
         }}
         centerComponent={{

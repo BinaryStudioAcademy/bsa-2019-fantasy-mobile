@@ -7,6 +7,7 @@ import TeamSelection from '../../components/TeamSelection';
 import TeamModal from './components/TeamModal';
 
 import { useMyTeam } from './my-team.hook';
+import { primaryColor } from '../../styles/common';
 
 const MyTeam = ({ navigation }) => {
   const {
@@ -43,13 +44,15 @@ const MyTeam = ({ navigation }) => {
           icon: 'menu',
           color: '#fff',
           size: 30,
+          // @ts-ignore: Unreachable code error
+          underlayColor: 'rgba(0, 0, 0, 0.2)',
           onPress: () => navigation.openDrawer(),
         }}
         centerComponent={{
           text: 'My Team',
           style: { color: '#fff', fontSize: 20 },
         }}
-        backgroundColor={'#122737'}
+        backgroundColor={primaryColor}
       />
       <ScrollView>
         <View style={{ paddingHorizontal: 15, marginVertical: 20 }}>

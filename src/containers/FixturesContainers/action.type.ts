@@ -1,4 +1,4 @@
-import {Thunky} from '../../store/types';
+import { Thunky } from '../../store/types';
 
 export const SET_GAMEWEEKS = 'GAMEWEEK_ACTION:SET_GAMEWEEKS';
 export const SET_GAMES = 'GAME_ACTIONS:SET_GAME';

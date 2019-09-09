@@ -39,6 +39,8 @@ const LiveContainer = (props: any) => {
           icon: 'menu',
           color: '#fff',
           size: 30,
+          // @ts-ignore: Unreachable code error
+          underlayColor: 'rgba(0, 0, 0, 0.2)',
           onPress: () => props.navigation.openDrawer(),
         }}
         centerComponent={{ text: 'Live', style: { color: '#fff', fontSize: 20 } }}

@@ -18,9 +18,9 @@ import {
   AsyncSetGameDetailsAction,
 } from './action.type';
 
-import {FixturesItemType, GamesDetailsType} from '../../types/fixtures.types';
-import {GameweekHistoryType} from '../../types/gameweekHistory.type';
-import {FixtureSubscribtion} from '../../types/fixture.types';
+import { FixturesItemType, GamesDetailsType } from '../../types/fixtures.types';
+import { GameweekHistoryType } from '../../types/gameweekHistory.type';
+import { FixtureSubscribtion } from '../../types/fixture.types';
 
 const setGameweeks = (gameweeks: GameweekHistoryType[]): setGameweekAction => ({
   type: SET_GAMEWEEKS,

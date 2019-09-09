@@ -11,9 +11,9 @@ import {
   setFixtureSubAction,
 } from './action.type';
 
-import {FixturesItemType, GamesDetailsType} from '../../types/fixtures.types';
-import {FixtureSubscribtion} from '../../types/fixture.types';
-import {GameweekType} from '../../types/gameweek.type';
+import { FixturesItemType, GamesDetailsType } from '../../types/fixtures.types';
+import { FixtureSubscribtion } from '../../types/fixture.types';
+import { GameweekType } from '../../types/gameweek.type';
 
 type State = {
   gameweeks?: GameweekType[];
@@ -24,7 +24,7 @@ type State = {
   isDetailLoading: boolean;
 };
 
-const initialState: State = {isLoading: true, isDetailLoading: true};
+const initialState: State = { isLoading: true, isDetailLoading: true };
 
 export default (
   state = initialState,
@@ -36,11 +36,11 @@ export default (
 ) => {
   switch (action.type) {
     case SET_GAMEWEEKS:
-      return {...state, gameweeks: action.payload};
+      return { ...state, gameweeks: action.payload };
     case SET_GAMES:
-      return {...state, games: action.payload};
+      return { ...state, games: action.payload };
     case SET_GAME_DETAILS:
-      return {...state, gameDetails: action.payload};
+      return { ...state, gameDetails: action.payload };
     case SET_IS_LOADING:
       return {
         ...state,

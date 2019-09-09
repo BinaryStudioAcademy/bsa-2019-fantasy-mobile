@@ -4,8 +4,8 @@ import AsyncStorage from '@react-native-community/async-storage';
 type FetchArgs = {
   endpoint: string;
   type: 'GET' | 'POST' | 'PUT' | 'DELETE';
-  request?: {[k: string]: any};
-  query?: {[k: string]: number | boolean | string | null};
+  request?: { [k: string]: any };
+  query?: { [k: string]: number | boolean | string | null };
   attachment?: string;
   skipAuthorization?: boolean;
   ct?: any;
@@ -22,7 +22,7 @@ function getFetchUrl(args: FetchArgs) {
 async function getFetchArgs(
   args: FetchArgs,
 ): Promise<Pick<RequestInit, 'method' | 'headers' | 'credentials' | 'body'>> {
-  const headers: {[header: string]: string} = {};
+  const headers: { [header: string]: string } = {};
   if (!args.attachment) {
     headers['Content-Type'] = 'application/json';
     headers.Accept = 'application/json';
@@ -49,7 +49,7 @@ async function getFetchArgs(
     method: args.type,
     headers,
     credentials: args.ct,
-    ...(args.type === 'GET' ? {} : {body}),
+    ...(args.type === 'GET' ? {} : { body }),
   };
 }
 
