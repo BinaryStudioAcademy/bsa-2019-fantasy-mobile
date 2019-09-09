@@ -13,7 +13,7 @@ type FetchArgs = {
 
 function getFetchUrl(args: FetchArgs) {
   return (
-    'http://fantasy-football.tk' +
+    'https://fantasy-football.tk' +
     args.endpoint +
     (args.query ? `?${queryString.stringify(args.query)}` : '')
   );

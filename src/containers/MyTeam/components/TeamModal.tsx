@@ -46,9 +46,17 @@ const TeamModal = ({
               borderColor: 'rgba(0, 0, 0, 0.1)',
             }}
           >
-            <View style={{ backgroundColor: primaryDarkColor }}>
-              <CustomText h4>
-                <Text>{`[${player.player_stats.position}]`}</Text>
+            <View
+              style={{
+                backgroundColor: primaryDarkColor,
+                paddingHorizontal: 20,
+                paddingVertical: 10,
+              }}
+            >
+              <CustomText h4 style={{ color: '#fff' }}>
+                <Text style={{ color: '#9ae6b4', marginRight: 5 }}>{`[${
+                  player.player_stats.position
+                }]`}</Text>
                 {player.player_stats.second_name}
               </CustomText>
             </View>
