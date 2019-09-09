@@ -54,8 +54,8 @@ const MyTeam = ({ navigation }) => {
         }}
         backgroundColor={primaryColor}
       />
-      <ScrollView>
-        <View style={{ paddingHorizontal: 15, marginVertical: 20 }}>
+      <ScrollView style={{ padding: 20 }}>
+        <View style={{ marginBottom: 20 }}>
           <CustomText h3>Team Page</CustomText>
           <CustomText h4 h4Style={{ fontSize: 15 }}>
             Choose your team there

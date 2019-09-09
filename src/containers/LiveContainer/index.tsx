@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, ScrollView, Image } from 'react-native';
-import { Header, Text, Card } from 'react-native-elements';
+import { Header, Text, Text as CustomText } from 'react-native-elements';
 import { RootState } from '../../store/types';
 import { useSelector } from 'react-redux';
 
@@ -46,7 +46,13 @@ const LiveContainer = (props: any) => {
         centerComponent={{ text: 'Live', style: { color: '#fff', fontSize: 20 } }}
         backgroundColor={primaryColor}
       />
-      <View style={{ flex: 1, padding: 20 }}>
+      <View style={{ flex: 1, padding: 20, backgroundColor: '#efefef' }}>
+        <View style={{ marginBottom: 30 }}>
+          <CustomText h3>Live Page</CustomText>
+          <CustomText h4 h4Style={{ fontSize: 15 }}>
+            Live football stream
+          </CustomText>
+        </View>
         <View style={{ marginBottom: 100 }}>
           {isMatchExist && (
             <View
