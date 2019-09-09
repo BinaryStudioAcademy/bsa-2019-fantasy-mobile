@@ -12,6 +12,8 @@ import {
 
 import { Text as CustomText, Button } from 'react-native-elements';
 
+import { primaryColor, primaryDarkColor } from '../../../styles/common';
+
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').width;
 
@@ -23,8 +25,6 @@ const TeamModal = ({
   onSwitch,
   onCancel,
 }) => {
-  console.log('modal', player);
-
   return (
     <View style={{ marginTop: 22 }}>
       <Modal animationType='fade' transparent={true} visible={true}>
@@ -42,47 +42,63 @@ const TeamModal = ({
               width: 300,
               height: 300,
               backgroundColor: '#fff',
-              padding: 20,
               borderRadius: 4,
               borderColor: 'rgba(0, 0, 0, 0.1)',
             }}
           >
-            <View>
-              <CustomText h4 />
+            <View style={{ backgroundColor: primaryDarkColor }}>
+              <CustomText h4>
+                <Text>{`[${player.player_stats.position}]`}</Text>
+                {player.player_stats.second_name}
+              </CustomText>
             </View>
-            {canBeSwitched && (
-              <Button
-                onPress={() => {
-                  inSwitcheroo ? onCancel() : onSwitch();
-                }}
-                title={inSwitcheroo ? 'Cancel' : 'Switch'}
-              />
-            )}
-            {!player.is_on_bench && (
+            <View
+              style={{
+                flex: 1,
+                justifyContent: 'space-between',
+                paddingHorizontal: 20,
+                paddingVertical: 30,
+              }}
+            >
               <View>
-                {!player.is_captain && (
+                {canBeSwitched && (
                   <Button
-                    buttonStyle={{ marginBottom: 10 }}
-                    onPress={() => onSetCaptain()}
-                    title=' Make Captain'
+                    buttonStyle={{ marginBottom: 10, backgroundColor: primaryColor }}
+                    onPress={() => {
+                      inSwitcheroo ? onCancel() : onSwitch();
+                    }}
+                    title={inSwitcheroo ? 'Cancel' : 'Switch'}
                   />
                 )}
-                {!player.is_vice_captain && (
-                  <Button
-                    buttonStyle={{ marginBottom: 10 }}
-                    onPress={() => onSetViceCaptain()}
-                    title='Make Vice-Captain'
-                  />
+                {!player.is_on_bench && (
+                  <View>
+                    {!player.is_captain && (
+                      <Button
+                        buttonStyle={{ marginBottom: 10, backgroundColor: primaryColor }}
+                        onPress={() => onSetCaptain()}
+                        title=' Make Captain'
+                      />
+                    )}
+                    {!player.is_vice_captain && (
+                      <Button
+                        buttonStyle={{ marginBottom: 10, backgroundColor: primaryColor }}
+                        onPress={() => onSetViceCaptain()}
+                        title='Make Vice-Captain'
+                      />
+                    )}
+                  </View>
                 )}
               </View>
-            )}
-            <Button
-              buttonStyle={{ marginTop: 50 }}
-              onPress={() => {
-                onClose();
-              }}
-              title='Hide Modal'
-            />
+              <Button
+                buttonStyle={{
+                  backgroundColor: primaryColor,
+                }}
+                onPress={() => {
+                  onClose();
+                }}
+                title='Hide Modal'
+              />
+            </View>
           </View>
         </View>
       </Modal>
