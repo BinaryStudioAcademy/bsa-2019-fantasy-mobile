@@ -1,16 +1,18 @@
-import {SET_USER, SET_IS_LOADING, UserAction} from './action.type';
-import {User} from '../../types/user.type';
+import { SET_USER, SET_IS_LOADING, SET_UPDATING_USER, UserAction } from './action.type';
+import { User } from '../../types/user.type';
 
 type State = {
   user: User | null;
   isAuthorized: boolean;
   isLoading: boolean;
+  updatingUser: boolean
 };
 
 const initialState: State = {
   user: null,
   isAuthorized: false,
   isLoading: true,
+  updatingUser: false
 };
 
 export default (state = initialState, action: UserAction) => {
@@ -28,6 +30,12 @@ export default (state = initialState, action: UserAction) => {
         ...state,
         isLoading: action.payload,
       };
+
+    case SET_UPDATING_USER:
+      return {
+        ...state,
+        updatingUser: action.payload
+      }
 
     default:
       return state;

@@ -14,6 +14,7 @@ import {LoginCredentials, RegisterCredentials} from '../../types/auth.types';
 import {
   SET_USER,
   SET_IS_LOADING,
+  SET_UPDATING_USER,
   AsyncUserAction,
   UserAction,
 } from './action.type';
@@ -31,6 +32,11 @@ const setIsLoading = (isLoading: boolean): UserAction => ({
   type: SET_IS_LOADING,
   payload: isLoading,
 });
+
+const setUpdatingUser = (isLoading: boolean) => ({
+  type: SET_UPDATING_USER,
+  payload: isLoading
+})
 
 const setAuthData = (
   user: User,
@@ -142,5 +148,31 @@ export const updateUserTeamDetails = (
       message: 'Failed to create your team',
       type: 'danger',
     });
+  }
+};
+
+export const updateUser = (
+  imageId: string,
+  name: string,
+  email: string,
+): AsyncUserAction => async (dispatch, getState) => {
+  try {
+    setUpdatingUser(true);
+    const user = await authService.getCurrentUser();
+    const res = await profileService.updateUser(user!.id, imageId, name, email);
+    loadCurrentUser(true)(dispatch, getState);
+    showMessage({
+      icon: 'success',
+      message: (res && res.message) || res,
+      type: 'success',
+    });
+  } catch {
+    showMessage({
+      icon: 'danger',
+      message: 'Failed to update profile datails',
+      type: 'danger',
+    });
+  } finally {
+    setUpdatingUser(false);
   }
 };

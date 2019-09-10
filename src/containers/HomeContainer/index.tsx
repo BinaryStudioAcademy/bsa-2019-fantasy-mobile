@@ -65,7 +65,6 @@ const HomeContainer = ({
   const sliderWidth = Dimensions.get('window').width;
   const itemWidth = slideWidth - horizontalMargin * 2;
   const itemHeight = 200;
-  console.log(isLoading);
 
   const renderGameeweekItem = ({ item, index, navigation }) => {
     return (
