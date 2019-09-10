@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   StyleSheet,
@@ -18,7 +18,7 @@ const Spinner = () => {
       bounceValue.setValue(1);
       Animated.timing(bounceValue, {
         toValue: 2,
-        duration: 4000,
+        duration: 1000,
         easing: Easing.linear,
       }).start(() => bounce(isStop));
     }
@@ -29,7 +29,7 @@ const Spinner = () => {
       spinValue.setValue(0);
       Animated.timing(spinValue, {
         toValue: 1,
-        duration: 4000,
+        duration: 1000,
         easing: Easing.linear,
       }).start(() => spin(isStop));
     }
@@ -55,12 +55,12 @@ const Spinner = () => {
   });
 
   return (
-    <View style={{alignItems: 'center'}}>
+    <View style={{ alignItems: 'center' }}>
       <Animated.Image
         style={{
           width: 80,
           height: 80,
-          transform: [{translateY: bounceRange}, {rotate: spinRange}],
+          transform: [{ translateY: bounceRange }, { rotate: spinRange }],
         }}
         source={require('../../images/ball.png')}
       />
