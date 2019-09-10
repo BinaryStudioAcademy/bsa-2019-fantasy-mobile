@@ -116,7 +116,9 @@ const FixturesItem = ({ match, navigation, subscribed }: Props) => {
       {match.started ? null : (
         <Button
           type='outline'
-          icon={<Icon name='bell-o' size={15} color={isSubscribed ? 'green' : 'white'} />}
+          icon={
+            <Icon name={isSubscribed ? 'bell' : 'bell-o'} size={15} color={'green'} />
+          }
           onPress={() => onSubscribe()}
         />
       )}

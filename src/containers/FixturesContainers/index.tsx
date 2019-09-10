@@ -52,8 +52,7 @@ const FixturesContainer = ({
       });
       if (gameweek) {
         const gameweekNumber = gameweek.number;
-        // setCurrentGameweek(gameweekNumber - 1);
-        setCurrentGameweek(0);
+        setCurrentGameweek(gameweekNumber - 1);
       }
     }
   }, [gameweeks]);
