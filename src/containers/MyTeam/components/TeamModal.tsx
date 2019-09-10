@@ -12,7 +12,7 @@ import {
 
 import { Text as CustomText, Button } from 'react-native-elements';
 
-import { primaryColor, primaryDarkColor } from '../../../styles/common';
+import { primaryColor } from '../../../styles/common';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').width;
@@ -48,15 +48,15 @@ const TeamModal = ({
           >
             <View
               style={{
-                backgroundColor: primaryDarkColor,
+                backgroundColor: primaryColor,
                 paddingHorizontal: 20,
                 paddingVertical: 10,
               }}
             >
               <CustomText h4 style={{ color: '#fff' }}>
-                <Text style={{ color: '#9ae6b4', marginRight: 5 }}>{`[${
-                  player.player_stats.position
-                }]`}</Text>
+                <Text
+                  style={{ color: '#9ae6b4', marginRight: 5 }}
+                >{`[${player.player_stats.position}]`}</Text>
                 {player.player_stats.second_name}
               </CustomText>
             </View>

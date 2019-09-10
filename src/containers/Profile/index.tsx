@@ -18,7 +18,7 @@ import { logout, updateUser } from '../Auth/action';
 import { RootState } from '../../store/types';
 import { generateImageSrc } from '../../helpers/avatar';
 
-import { primaryColor, primaryDarkColor } from '../../styles/common';
+import { primaryColor } from '../../styles/common';
 
 const windowWidth = Dimensions.get('window').width;
 

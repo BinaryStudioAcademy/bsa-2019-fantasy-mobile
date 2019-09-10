@@ -17,7 +17,7 @@ import { GameweekType } from '../../types/gameweek.type';
 import Fixtures from '../../components/Fixtures/Fixtures';
 import Spinner from '../../components/Spinner';
 
-import { primaryColor, primaryDarkColor } from '../../styles/common';
+import { primaryColor } from '../../styles/common';
 
 type Props = {
   gameweeks: GameweekType[];
@@ -64,13 +64,6 @@ const FixturesContainer = ({
     }
   }, [currentGameweek, gameweeks, loadGamesAction]);
 
-  if (!games || !gameweeks) {
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <ActivityIndicator size='large' color='#0000ff' />
-      </View>
-    );
-  }
   return (
     <View>
       <Header
@@ -89,53 +82,59 @@ const FixturesContainer = ({
         }}
         backgroundColor={primaryColor}
       />
-      <ScrollView>
-        <View
-          style={{
-            flex: 1,
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginTop: 10,
-            paddingVertical: 70,
-            paddingBottom: 150,
-          }}
-        >
-          <CustomText h3>Fixtures page</CustomText>
-          <Text style={{ marginVertical: 7, fontSize: 17 }}>
-            Gameweek {currentGameweek + 1} -{' '}
-            {moment(gameweeks[currentGameweek].start).format('ddd D MMMM YYYY')}
-          </Text>
 
+      <View style={{ padding: 20 }}>
+        <CustomText h3>Fixtures Page</CustomText>
+        <CustomText h4 h4Style={{ fontSize: 15 }}>
+          Welcome to fixtures page
+        </CustomText>
+      </View>
+
+      <ScrollView>
+        {games && gameweeks && (
           <View
             style={{
               flex: 1,
-              flexDirection: 'row',
-              justifyContent: currentGameweek === 0 ? 'flex-end' : 'space-between',
-              marginBottom: 15,
-              width: '100%',
+              alignItems: 'center',
+              paddingBottom: 350,
             }}
           >
-            {currentGameweek >= 1 && (
-              <View style={{ width: '30%', marginLeft: 10 }}>
-                <Button
-                  buttonStyle={{ backgroundColor: 'green' }}
-                  title='Prev'
-                  onPress={() => setCurrentGameweek(currentGameweek - 1)}
-                />
-              </View>
-            )}
-            {currentGameweek < gameweeks.length - 1 && (
-              <View style={{ width: '30%', marginRight: 10, alignSelf: 'flex-end' }}>
-                <Button
-                  buttonStyle={{ backgroundColor: 'green' }}
-                  title='Next'
-                  onPress={() => setCurrentGameweek(currentGameweek + 1)}
-                />
-              </View>
-            )}
+            <Text style={{ marginVertical: 7, fontSize: 17 }}>
+              Gameweek {currentGameweek + 1} -{' '}
+              {moment(gameweeks[currentGameweek].start).format('ddd D MMMM YYYY')}
+            </Text>
+
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                justifyContent: currentGameweek === 0 ? 'flex-end' : 'space-between',
+                marginBottom: 15,
+                width: '100%',
+              }}
+            >
+              {currentGameweek >= 1 && (
+                <View style={{ width: '30%', marginLeft: 10 }}>
+                  <Button
+                    buttonStyle={{ backgroundColor: primaryColor }}
+                    title='Prev'
+                    onPress={() => setCurrentGameweek(currentGameweek - 1)}
+                  />
+                </View>
+              )}
+              {currentGameweek < gameweeks.length - 1 && (
+                <View style={{ width: '30%', marginRight: 10, alignSelf: 'flex-end' }}>
+                  <Button
+                    buttonStyle={{ backgroundColor: primaryColor }}
+                    title='Next'
+                    onPress={() => setCurrentGameweek(currentGameweek + 1)}
+                  />
+                </View>
+              )}
+            </View>
+            {!isLoading && <Fixtures navigation={navigation} games={games} />}
           </View>
-          {!isLoading && <Fixtures navigation={navigation} games={games} />}
-        </View>
+        )}
       </ScrollView>
     </View>
   );
