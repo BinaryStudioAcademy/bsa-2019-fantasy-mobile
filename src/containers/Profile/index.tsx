@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { ActivityIndicator, View, ScrollView, Dimensions } from 'react-native';
-import { Header, Button, Image, Text as CustomText } from 'react-native-elements';
+import { ActivityIndicator, StyleSheet, View, ScrollView, Dimensions, Text } from 'react-native';
+import { Header, Button, Image, Text as CustomText, Input} from 'react-native-elements';
+import validator from 'validator';
+
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { logout } from '../Auth/action';
+import { logout, updateUser } from '../Auth/action';
 
 import { RootState } from '../../store/types';
 import { generateImageSrc } from '../../helpers/avatar';
-import { updateUser } from './actions';
 
 import { primaryColor, primaryDarkColor } from '../../styles/common';
 
@@ -85,13 +87,7 @@ const Profile = (props: any) => {
     dispatch(updateUser(imageId, username, email));
   };
 
-  const onUsernameChange = (e) => {
-    setUsername(e.target.value);
-  };
-
-  const onEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
+  const { money, score } = user;
 
   return (
     <View style={{ flex: 1, backgroundColor: '#efefef' }}>
@@ -124,9 +120,53 @@ const Profile = (props: any) => {
               PlaceholderContent={<ActivityIndicator />}
             />
 
-            <CustomText h4 style={{ textAlign: 'center', marginVertical: 15 }}>
+            <CustomText h3 style={{ textAlign: 'center', marginVertical: 15 }}>
               {initialUsername}
             </CustomText>
+          </View>
+        </View>
+        <View style={{marginVertical: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
+          <Text style={{fontWeight: 'bold', color: '#666', fontSize: 20}}>
+            <Icon name='coin' color='#666' size={20} style={styles.icon} />
+            £{money}
+          </Text>
+          <Text style={{fontWeight: 'bold', color: '#666', fontSize: 20}}>
+            <Icon name='coin' color='#666' size={20} style={styles.icon} />
+            {score} points
+          </Text>
+        </View>
+
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              padding: 20,
+              backgroundColor: '#fff',
+              borderRadius: 10
+            }}
+          >
+            <CustomText h4 h4Style={{marginTop: 5}}>Your Personal Details</CustomText>
+            <Input
+              label='Username'
+              placeholder='Username'
+              value={username}
+              onChangeText={(text) => setUsername(text)}
+              onBlur={validateUsername}
+            />
+            <Input
+              label='Email'
+              placeholder='Email'
+              value={email}
+              onChangeText={(text) => setEmail(text)}
+              onBlur={validateEmail}
+
+            />
+            <Button
+              buttonStyle={{marginTop: 20, marginBottom: 10, backgroundColor: primaryColor}}
+              title='Submit'
+              disabled={!canSubmit || !username || !email}
+              onPress={onSubmit}
+            />
           </View>
           <View style={{ padding: 20 }}>
             <Button
@@ -135,10 +175,14 @@ const Profile = (props: any) => {
               onPress={() => dispatch(logout())}
             />
           </View>
-        </View>
       </ScrollView>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  icon: { marginRight: 5 },
+  money: { color: '#b2b200', fontSize: 14 },
+});
 
 export default Profile;
