@@ -131,6 +131,7 @@ const FixturesContainer = ({
                 </View>
               )}
             </View>
+            {isLoading && <ActivityIndicator />}
             {!isLoading && <Fixtures navigation={navigation} games={games} />}
           </View>
         )}
