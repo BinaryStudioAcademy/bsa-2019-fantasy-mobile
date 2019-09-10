@@ -75,7 +75,7 @@ const HomeContainer = ({
           alignItems: 'center',
           justifyContent: 'center',
           marginVertical: 20,
-          backgroundColor: primaryDarkColor,
+          backgroundColor: primaryColor,
           paddingVertical: 25,
           borderRadius: 10,
         }}
