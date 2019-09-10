@@ -46,7 +46,7 @@ const LiveContainer = (props: any) => {
         centerComponent={{ text: 'Live', style: { color: '#fff', fontSize: 20 } }}
         backgroundColor={primaryColor}
       />
-      <View style={{ flex: 1, padding: 20, backgroundColor: '#efefef' }}>
+      <View style={{ flex: 1, padding: 20 }}>
         <View style={{ marginBottom: 30 }}>
           <CustomText h3>Live Page</CustomText>
           <CustomText h4 h4Style={{ fontSize: 15 }}>

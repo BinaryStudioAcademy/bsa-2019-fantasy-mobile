@@ -21,7 +21,7 @@ import Leagues from './components/Leagues';
 import HomePlayerList from './components/HomePlayerList';
 import Spinner from '../../components/Spinner';
 
-import { primaryColor, primaryDarkColor } from '../../styles/common';
+import { primaryColor } from '../../styles/common';
 
 const HomeContainer = ({
   gameweeks,
@@ -75,7 +75,7 @@ const HomeContainer = ({
           alignItems: 'center',
           justifyContent: 'center',
           marginVertical: 20,
-          backgroundColor: primaryDarkColor,
+          backgroundColor: primaryColor,
           paddingVertical: 25,
           borderRadius: 10,
         }}

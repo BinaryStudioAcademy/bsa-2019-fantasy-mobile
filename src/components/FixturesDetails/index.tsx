@@ -1,15 +1,15 @@
-import React, {useState, useEffect} from 'react';
-import {View, Text, ScrollView, ActivityIndicator} from 'react-native';
-import {Text as CustomText, Button, Header} from 'react-native-elements';
+import React, { useState, useEffect } from 'react';
+import { View, Text, ScrollView, ActivityIndicator } from 'react-native';
+import { Text as CustomText, Button, Header } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {useSelector, useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import moment from 'moment';
 import MatchStats from '../MatchStats';
 
-import {FixturesItemType, GameDetailsType} from '../../types/fixtures.types';
-import {RootState} from '../../store/types';
-import {loadGameDetailsAction} from '../../containers/FixturesContainers/action';
-import {primaryColor, primaryDarkColor} from '../../styles/common';
+import { FixturesItemType, GameDetailsType } from '../../types/fixtures.types';
+import { RootState } from '../../store/types';
+import { loadGameDetailsAction } from '../../containers/FixturesContainers/action';
+import { primaryColor } from '../../styles/common';
 
 type Props = {
   currentMatchStats: FixturesItemType | undefined;
@@ -30,7 +30,7 @@ type Stats = {
   awayteam_stats: TeamStats[];
 };
 
-const names: {[s: string]: string} = {
+const names: { [s: string]: string } = {
   attack: 'Attack',
   shot: 'Shots',
   foul: 'Fouls',
@@ -49,10 +49,10 @@ const names: {[s: string]: string} = {
   nothing: 'Nothing',
 } as const;
 
-const FixtureDetails = ({currentMatchStats, navigation}: Props) => {
+const FixtureDetails = ({ currentMatchStats, navigation }: Props) => {
   const match = navigation.getParam('match', {});
   const [stats, setStats] = useState<any>([]);
-  const {isDetailLoading, gameDetails} = useSelector(
+  const { isDetailLoading, gameDetails } = useSelector(
     (state: RootState) => state.fixtures,
   );
   const dispatch = useDispatch();
@@ -73,9 +73,7 @@ const FixtureDetails = ({currentMatchStats, navigation}: Props) => {
               : 'awayteam_stats';
           // }
 
-          const statsItem = stats.find(
-            (st: Stats) => st.title === names[g.event_type],
-          );
+          const statsItem = stats.find((st: Stats) => st.title === names[g.event_type]);
           if (statsItem) {
             const index = statsItem[team].findIndex(
               (item: TeamStats) => item.player === g.player.player.second_name,
@@ -130,7 +128,7 @@ const FixtureDetails = ({currentMatchStats, navigation}: Props) => {
         }
         return 0;
       })
-      .map(({title, awayteam_stats, hometeam_stats}: Stats) => (
+      .map(({ title, awayteam_stats, hometeam_stats }: Stats) => (
         <MatchStats
           title={title}
           awayteam_stats={awayteam_stats}
@@ -140,27 +138,27 @@ const FixtureDetails = ({currentMatchStats, navigation}: Props) => {
       ));
   if (isDetailLoading) {
     return (
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        <ActivityIndicator size="large" color="#0000ff" />
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <ActivityIndicator size='large' color='#0000ff' />
       </View>
     );
   }
 
   return (
-    <View style={{paddingBottom: 70}}>
+    <View style={{ paddingBottom: 70 }}>
       <Header
-        containerStyle={{height: 60, paddingTop: 0, borderWidth: 0}}
+        containerStyle={{ height: 60, paddingTop: 0, borderWidth: 0 }}
         leftComponent={
           <Icon
-            name="caret-left"
+            name='caret-left'
             size={30}
-            color="#fff"
+            color='#fff'
             onPress={() => navigation.navigate('Fixtures')}
           />
         }
         centerComponent={{
           text: `${match.hometeam.name} vs ${match.awayteam.name}`,
-          style: {color: '#fff', fontSize: 20},
+          style: { color: '#fff', fontSize: 20 },
         }}
         backgroundColor={primaryColor}
       />

@@ -1,26 +1,29 @@
-import React from 'react';
-import {
-  Text,
-  View,
-  SafeAreaView,
-  ScrollView,
-  ImageBackground,
-} from 'react-native';
-import {useSelector} from 'react-redux';
-import {DrawerItems} from 'react-navigation';
+import React, { useState } from 'react';
+import { Text, View, SafeAreaView, ScrollView, ImageBackground } from 'react-native';
+import { useSelector } from 'react-redux';
+import { DrawerItems } from 'react-navigation';
 
-import {primaryColor} from '../../styles/common';
+import { primaryColor } from '../../styles/common';
+import { generateImageSrc } from '../../helpers/avatar';
 
 const Sidebar = (props: any) => {
-  const {user} = useSelector((state: any) => state.profile);
+  const { user } = useSelector((state: any) => state.profile);
+  const [initialImageId, initialImageLink] =
+    user && user.image ? [user.image.id, user.image.link] : ['', ''];
+
+  const [imageId, setImageId] = useState<string>(initialImageId);
+  const [imageLink, setImageLink] = useState<string>(initialImageLink);
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{ flex: 1 }}>
       {user && (
         <ImageBackground
           resizeMode={'cover'}
-          style={{flex: 0}}
-          source={{uri: user.image && user.image.link ? user.image.link : 'https://www.trzcacak.rs/myfile/detail/385-3856300_no-avatar-png.png'}}>
+          style={{ flex: 0 }}
+          source={{
+            uri: generateImageSrc(user, imageLink),
+          }}
+        >
           <View
             style={{
               height: 180,
@@ -28,7 +31,8 @@ const Sidebar = (props: any) => {
               alignItems: 'flex-end',
               justifyContent: 'flex-end',
               padding: 20,
-            }}>
+            }}
+          >
             <View>
               <Text
                 style={{
@@ -36,10 +40,11 @@ const Sidebar = (props: any) => {
                   fontWeight: 'bold',
                   color: '#fff',
                   textAlign: 'right',
-                }}>
+                }}
+              >
                 {user.name}
               </Text>
-              <Text style={{color: '#fff', textAlign: 'right'}}>
+              <Text style={{ color: '#fff', textAlign: 'right' }}>
                 {user.money}£ | {user.score} points
               </Text>
             </View>

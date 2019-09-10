@@ -18,7 +18,7 @@ import { logout, updateUser } from '../Auth/action';
 import { RootState } from '../../store/types';
 import { generateImageSrc } from '../../helpers/avatar';
 
-import { primaryColor, primaryDarkColor } from '../../styles/common';
+import { primaryColor } from '../../styles/common';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -28,10 +28,10 @@ const Profile = (props: any) => {
   const { user, updatingUser } = useSelector((state: RootState) => state.profile);
 
   const [initialUsername, initialEmail] = user ? [user.name, user.email] : ['', ''];
-  const [intialImageId, initialImageLink] =
+  const [initialImageId, initialImageLink] =
     user && user.image ? [user.image.id, user.image.link] : ['', ''];
 
-  const [imageId, setImageId] = useState<string>(intialImageId);
+  const [imageId, setImageId] = useState<string>(initialImageId);
   const [imageLink, setImageLink] = useState<string>(initialImageLink);
   const [username, setUsername] = useState<string>(initialUsername);
   const [email, setEmail] = useState<string>(initialEmail);

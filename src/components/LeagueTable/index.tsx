@@ -1,30 +1,32 @@
 import React from 'react';
-import {map} from 'lodash/map';
-import {StyleSheet, View, Text} from 'react-native';
-import {Text as CustomText, Button, Header} from 'react-native-elements';
-import {Table, Row, Rows} from 'react-native-table-component';
+import { StyleSheet, View, Text } from 'react-native';
+import { Text as CustomText, Button, Header } from 'react-native-elements';
+import { Table, Row, Rows } from 'react-native-table-component';
+import { useDispatch, useSelector } from 'react-redux';
+import { loadLeagueDetails } from '../../containers/LeaguesContainer/actions';
+import { RootState } from '../../store/types';
 
-const LeagueTable = ({columns, data, title}: any) => {
-  const tableData = [];
+const LeagueTable = ({ columns, data, title }: any) => {
+  const dispatch = useDispatch();
+  const tableData: any = [];
+  const leagueDetails = useSelector((state: RootState) => state.league.leagueDetails);
 
   if (data && data.length) {
-    data.map(item => {
-      return tableData.push([
-        item.current_rank,
-        item.league.name,
-        item.total_points,
-      ]);
+    data.map((item: any) => {
+      return tableData.push([item.current_rank, item.league.name, item.total_points]);
     });
-
-
   }
+
+  // dispatch(loadLeagueDetails('Overall'));
+  // console.log(leagueDetails);
 
   return (
     <View style={styles.container}>
       <CustomText
         h4
-        style={{paddingHorizontal: 15, marginBottom: 5}}
-        h4Style={{fontSize: 20}}>
+        style={{ paddingHorizontal: 15, marginBottom: 5 }}
+        h4Style={{ fontSize: 20 }}
+      >
         {title.title}
       </CustomText>
       <Table>
@@ -32,7 +34,10 @@ const LeagueTable = ({columns, data, title}: any) => {
         {!tableData.length ? (
           <Text style={styles.empty}>Nothing to show</Text>
         ) : (
-          <Rows data={tableData} style={{paddingLeft: 14, paddingVertical: 7, paddingRight: 5}} />
+          <Rows
+            data={tableData}
+            style={{ paddingLeft: 14, paddingVertical: 7, paddingRight: 5 }}
+          />
         )}
       </Table>
     </View>
@@ -40,8 +45,8 @@ const LeagueTable = ({columns, data, title}: any) => {
 };
 
 const styles = StyleSheet.create({
-  container: {flex: 1, marginBottom: 10, backgroundColor: '#fff'},
-  head: {backgroundColor: '#666', padding: 14},
+  container: { flex: 1, marginBottom: 10, backgroundColor: '#fff' },
+  head: { backgroundColor: '#666', padding: 14 },
   text: {
     color: '#fff',
     fontSize: 10,
@@ -49,7 +54,12 @@ const styles = StyleSheet.create({
     paddingLeft: 3,
     textTransform: 'uppercase',
   },
-  empty: {textAlign: 'center', marginVertical: 20, textTransform: 'uppercase', fontSize: 10},
+  empty: {
+    textAlign: 'center',
+    marginVertical: 20,
+    textTransform: 'uppercase',
+    fontSize: 10,
+  },
 });
 
 export default LeagueTable;

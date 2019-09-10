@@ -36,7 +36,6 @@ const screens = {
   Profile,
   Fixtures: MatchStats,
   Live,
-  Spinner,
   'My Team': MyTeam
 };
 
