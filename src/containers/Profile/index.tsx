@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { ActivityIndicator, StyleSheet, View, ScrollView, Dimensions, Text } from 'react-native';
-import { Header, Button, Image, Text as CustomText, Input} from 'react-native-elements';
+import {
+  ActivityIndicator,
+  StyleSheet,
+  View,
+  ScrollView,
+  Dimensions,
+  Text,
+} from 'react-native';
+import { Header, Button, Image, Text as CustomText, Input } from 'react-native-elements';
 import validator from 'validator';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -18,7 +25,7 @@ const windowWidth = Dimensions.get('window').width;
 const Profile = (props: any) => {
   const dispatch = useDispatch();
 
-  const user = useSelector((state: RootState) => state.profile.user);
+  const { user, updatingUser } = useSelector((state: RootState) => state.profile);
 
   const [initialUsername, initialEmail] = user ? [user.name, user.email] : ['', ''];
   const [intialImageId, initialImageLink] =
@@ -88,6 +95,7 @@ const Profile = (props: any) => {
   };
 
   const { money, score } = user;
+  console.log(updatingUser);
 
   return (
     <View style={{ flex: 1, backgroundColor: '#efefef' }}>
@@ -113,7 +121,7 @@ const Profile = (props: any) => {
             borderBottomRightRadius: 10,
           }}
         >
-          <View>
+          <View style={{ flex: 1 }}>
             <Image
               source={{ uri: generateImageSrc(user, imageLink) }}
               style={{ width: windowWidth, height: 300 }}
@@ -125,56 +133,83 @@ const Profile = (props: any) => {
             </CustomText>
           </View>
         </View>
-        <View style={{marginVertical: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
-          <Text style={{fontWeight: 'bold', color: '#666', fontSize: 20}}>
-            <Icon name='coin' color='#666' size={20} style={styles.icon} />
-            £{money}
+        <View
+          style={{
+            marginVertical: 20,
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <Text
+            style={{
+              marginHorizontal: 5,
+              fontWeight: 'bold',
+              color: '#666',
+              fontSize: 20,
+            }}
+          >
+            <Icon name='coin' color='#666' size={20} style={styles.icon} />£{money}
           </Text>
-          <Text style={{fontWeight: 'bold', color: '#666', fontSize: 20}}>
+          <Text
+            style={{
+              marginHorizontal: 5,
+              fontWeight: 'bold',
+              color: '#666',
+              fontSize: 20,
+            }}
+          >
             <Icon name='coin' color='#666' size={20} style={styles.icon} />
             {score} points
           </Text>
         </View>
 
-          <View
-            style={{
-              flex: 1,
-              justifyContent: 'center',
-              padding: 20,
-              backgroundColor: '#fff',
-              borderRadius: 10
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            padding: 20,
+            backgroundColor: '#fff',
+            borderRadius: 10,
+          }}
+        >
+          <CustomText h4 h4Style={{ marginBottom: 15 }}>
+            Your Personal Details
+          </CustomText>
+          <Input
+            label='Username'
+            placeholder='Username'
+            value={username}
+            onChangeText={(text) => setUsername(text)}
+            onBlur={validateUsername}
+            containerStyle={{ marginBottom: 10 }}
+          />
+          <Input
+            label='Email'
+            placeholder='Email'
+            value={email}
+            onChangeText={(text) => setEmail(text)}
+            onBlur={validateEmail}
+          />
+          <Button
+            buttonStyle={{
+              marginTop: 20,
+              marginBottom: 10,
+              backgroundColor: primaryColor,
             }}
-          >
-            <CustomText h4 h4Style={{marginTop: 5}}>Your Personal Details</CustomText>
-            <Input
-              label='Username'
-              placeholder='Username'
-              value={username}
-              onChangeText={(text) => setUsername(text)}
-              onBlur={validateUsername}
-            />
-            <Input
-              label='Email'
-              placeholder='Email'
-              value={email}
-              onChangeText={(text) => setEmail(text)}
-              onBlur={validateEmail}
-
-            />
-            <Button
-              buttonStyle={{marginTop: 20, marginBottom: 10, backgroundColor: primaryColor}}
-              title='Submit'
-              disabled={!canSubmit || !username || !email}
-              onPress={onSubmit}
-            />
-          </View>
-          <View style={{ padding: 20 }}>
-            <Button
-              buttonStyle={{ marginTop: 4, backgroundColor: primaryColor }}
-              title='Sign Out'
-              onPress={() => dispatch(logout())}
-            />
-          </View>
+            title='Submit'
+            disabled={!canSubmit || !username || !email}
+            onPress={onSubmit}
+            loading={updatingUser}
+          />
+        </View>
+        <View style={{ padding: 20 }}>
+          <Button
+            buttonStyle={{ marginTop: 4, backgroundColor: primaryColor }}
+            title='Sign Out'
+            onPress={() => dispatch(logout())}
+          />
+        </View>
       </ScrollView>
     </View>
   );
@@ -182,7 +217,6 @@ const Profile = (props: any) => {
 
 const styles = StyleSheet.create({
   icon: { marginRight: 5 },
-  money: { color: '#b2b200', fontSize: 14 },
 });
 
 export default Profile;
