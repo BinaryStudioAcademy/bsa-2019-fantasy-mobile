@@ -23,7 +23,7 @@ const MatchStats = ({ title, hometeam_stats, awayteam_stats }: Props) => {
       >
         <Text numberOfLines={1}>
           <Text style={{ width: '50%', overflow: 'hidden' }}>
-            {item.player.length > 18 ? item.player.substring(0, 15) + '...' : item.player}
+            {item.player.length > 15 ? item.player.substring(0, 12) + '...' : item.player}
           </Text>{' '}
           <Text style={{ width: '30%' }}>( {item.count} )</Text>
         </Text>
