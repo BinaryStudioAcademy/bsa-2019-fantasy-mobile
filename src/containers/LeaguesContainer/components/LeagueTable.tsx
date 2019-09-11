@@ -1,12 +1,13 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
-import { Text as CustomText, Button, Header } from 'react-native-elements';
-import { Table, Row, Rows } from 'react-native-table-component';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { Text as CustomText } from 'react-native-elements';
+import { Table, Row } from 'react-native-table-component';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadLeagueDetails } from '../../containers/LeaguesContainer/actions';
-import { RootState } from '../../store/types';
+import { loadLeagueDetails, deleteLeagueDetails } from '../actions';
+import { RootState } from '../../../store/types';
+import LeagueModal from './LeagueModal';
 
-const LeagueTable = ({ columns, data, title }: any) => {
+const LeagueTable = ({ columns, data, title, navigation }: any) => {
   const dispatch = useDispatch();
   const tableData: any = [];
   const leagueDetails = useSelector((state: RootState) => state.league.leagueDetails);
@@ -17,8 +18,7 @@ const LeagueTable = ({ columns, data, title }: any) => {
     });
   }
 
-  // dispatch(loadLeagueDetails('Overall'));
-  // console.log(leagueDetails);
+  console.log(leagueDetails);
 
   return (
     <View style={styles.container}>
@@ -34,10 +34,20 @@ const LeagueTable = ({ columns, data, title }: any) => {
         {!tableData.length ? (
           <Text style={styles.empty}>Nothing to show</Text>
         ) : (
-          <Rows
-            data={tableData}
-            style={{ paddingLeft: 14, paddingVertical: 7, paddingRight: 5 }}
-          />
+          tableData.map((leagueData: string[]) => (
+            <TouchableOpacity
+              key={leagueData[1]}
+              onPress={() => {
+                // dispatch(loadLeagueDetails(leagueData[1]));
+                navigation.navigate('LeagueDetails');
+              }}
+            >
+              <Row
+                data={leagueData}
+                style={{ paddingLeft: 14, paddingVertical: 7, paddingRight: 5 }}
+              />
+            </TouchableOpacity>
+          ))
         )}
       </Table>
     </View>

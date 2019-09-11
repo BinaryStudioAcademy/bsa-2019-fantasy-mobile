@@ -6,7 +6,7 @@ import { map } from 'lodash';
 
 import Icon from 'react-native-vector-icons/Entypo';
 
-import LeagueTable from '../../../components/LeagueTable';
+import LeagueTable from '../../LeaguesContainer/components/LeagueTable';
 
 const Leagues = ({ data }: any) => {
   const columns = ['Rank', 'Title', 'Total Points'];
