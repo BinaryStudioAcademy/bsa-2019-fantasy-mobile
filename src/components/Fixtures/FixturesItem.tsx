@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import moment from 'moment';
 import { Text, View, Image, TouchableOpacity } from 'react-native';
-import { Card, Button } from 'react-native-elements';
+import { Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { useSelector, useDispatch } from 'react-redux';
-import { showMessage, hideMessage } from 'react-native-flash-message';
+import { useDispatch } from 'react-redux';
+import { showMessage } from 'react-native-flash-message';
 
 import { FixturesItemType } from '../../types/fixtures.types';
-import { addNotification } from '../Notifications/actions';
 import {
   createFixtureSubscription,
   deleteFixtureSubscription,

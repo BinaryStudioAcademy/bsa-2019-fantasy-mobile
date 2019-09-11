@@ -10,6 +10,7 @@ import { FixturesItemType, GameDetailsType } from '../../types/fixtures.types';
 import { RootState } from '../../store/types';
 import { loadGameDetailsAction } from '../../containers/FixturesContainers/action';
 import { primaryColor } from '../../styles/common';
+import Spinner from '../../components/Spinner';
 
 type Props = {
   currentMatchStats: FixturesItemType | undefined;
@@ -137,11 +138,7 @@ const FixtureDetails = ({ currentMatchStats, navigation }: Props) => {
         />
       ));
   if (isDetailLoading) {
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <ActivityIndicator size='large' color='#0000ff' />
-      </View>
-    );
+    return <Spinner />;
   }
 
   return (

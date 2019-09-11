@@ -19,6 +19,7 @@ import { RootState } from '../../store/types';
 import { generateImageSrc } from '../../helpers/avatar';
 
 import { primaryColor } from '../../styles/common';
+import Spinner from '../../components/Spinner';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -53,12 +54,7 @@ const Profile = (props: any) => {
     }
   }, [username, email, imageId]);
 
-  if (!user)
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <ActivityIndicator size='large' color='#0000ff' />
-      </View>
-    );
+  if (!user) return <Spinner />;
 
   const usernameChanged = (name: string) => {
     setUsername(name);
@@ -127,7 +123,7 @@ const Profile = (props: any) => {
             <Image
               source={{ uri: generateImageSrc(user, imageLink) }}
               style={{ width: windowWidth, height: 300 }}
-              PlaceholderContent={<ActivityIndicator />}
+              PlaceholderContent={<Spinner />}
             />
 
             <CustomText h3 style={{ textAlign: 'center', marginVertical: 15 }}>

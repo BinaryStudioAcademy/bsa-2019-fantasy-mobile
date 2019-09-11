@@ -56,7 +56,7 @@ const HomeContainer = ({
   }, [currentGameweek, gameweeksHistory.length]);
 
   if (!gameweeksHistory && !leagues && !teamHistory) {
-    return <ActivityIndicator size='large' color='#0000ff' />;
+    return <Spinner />;
   }
 
   const horizontalMargin = 0;
@@ -150,7 +150,7 @@ const HomeContainer = ({
           />
           {isLoading || !teamHistory.length ? (
             <View style={{ marginTop: 10 }}>
-              <ActivityIndicator />
+              <Spinner />
             </View>
           ) : teamHistory.length ? (
             <HomePlayerList players={teamHistory} />

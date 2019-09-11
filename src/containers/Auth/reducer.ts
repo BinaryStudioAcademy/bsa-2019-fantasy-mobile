@@ -5,14 +5,14 @@ type State = {
   user: User | null;
   isAuthorized: boolean;
   isLoading: boolean;
-  updatingUser: boolean
+  updatingUser: boolean;
 };
 
 const initialState: State = {
   user: null,
   isAuthorized: false,
   isLoading: true,
-  updatingUser: false
+  updatingUser: false,
 };
 
 export default (state = initialState, action: UserAction) => {
@@ -34,8 +34,8 @@ export default (state = initialState, action: UserAction) => {
     case SET_UPDATING_USER:
       return {
         ...state,
-        updatingUser: action.payload
-      }
+        updatingUser: action.payload,
+      };
 
     default:
       return state;

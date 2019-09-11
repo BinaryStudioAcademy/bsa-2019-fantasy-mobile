@@ -6,6 +6,7 @@ import { View, ActivityIndicator } from 'react-native';
 import { Button } from 'react-native-elements';
 
 import PlayerList from '../PlayerList';
+import Spinner from '../../components/Spinner';
 
 import { primaryColor } from '../../styles/common';
 
@@ -156,7 +157,7 @@ const TeamSelection = ({
   }, [query, setQuery, handlePlayerDrop, players]);
 
   if (!players) {
-    return <ActivityIndicator />;
+    return <Spinner />;
   }
 
   return (
