@@ -34,7 +34,6 @@ const MyTeam = ({ navigation }) => {
 
   const dispatch = useDispatch();
   const [currentDialogPlayer, setCurrentDialogPlayer] = useState(null);
-  console.log('should be like', players);
 
   return (
     <View style={{ backgroundColor: '#efefef' }}>

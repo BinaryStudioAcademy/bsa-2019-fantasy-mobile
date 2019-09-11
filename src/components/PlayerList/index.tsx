@@ -39,10 +39,19 @@ const PlayerList = ({
 
   let categorizedPlayers: { [k: string]: any };
   if (hasBench) {
+    const categorized = categorizePlayers(players);
     categorizedPlayers = {
-      Starters: players.filter((p) => !p.is_on_bench),
-      Substitutes: players.filter((p) => p.is_on_bench),
+      Starters: [],
+      Substitutes: []
     };
+
+    Object.entries(categorized).forEach(group => {
+      group[1].forEach(player => {
+        player.is_on_bench ? categorizedPlayers.Substitutes.push(player) : categorizedPlayers.Starters.push(player)
+      })
+    })
+  
+
   } else {
     const categorized = categorizePlayers(players);
 
