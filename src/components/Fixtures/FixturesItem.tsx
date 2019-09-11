@@ -13,6 +13,7 @@ import {
   deleteFixtureSubscription,
 } from '../../containers/Auth/action';
 import { images } from '../../images/club-logos/index';
+import { primaryColor } from '../../styles/common';
 
 type Props = {
   match: FixturesItemType;
@@ -73,7 +74,7 @@ const FixturesItem = ({ match, navigation, subscribed }: Props) => {
         justifyContent: 'center',
         marginBottom: 10,
         borderBottomColor: '#999',
-        borderBottomWidth: 2,
+        borderBottomWidth: 1,
         borderStyle: 'solid',
         paddingBottom: 10,
       }}
@@ -95,7 +96,7 @@ const FixturesItem = ({ match, navigation, subscribed }: Props) => {
       <View
         style={{
           width: '20%',
-          borderColor: 'green',
+          borderColor: primaryColor,
           padding: 5,
           borderRadius: 10,
           borderStyle: 'solid',
@@ -116,8 +117,18 @@ const FixturesItem = ({ match, navigation, subscribed }: Props) => {
       {match.started ? null : (
         <Button
           type='outline'
+          buttonStyle={{
+            borderColor: primaryColor,
+            position: 'absolute',
+            top: 23,
+            right: -20,
+          }}
           icon={
-            <Icon name={isSubscribed ? 'bell' : 'bell-o'} size={15} color={'green'} />
+            <Icon
+              name={isSubscribed ? 'bell' : 'bell-o'}
+              size={15}
+              color={primaryColor}
+            />
           }
           onPress={() => onSubscribe()}
         />
