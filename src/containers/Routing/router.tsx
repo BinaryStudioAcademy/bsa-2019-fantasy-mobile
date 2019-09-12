@@ -37,6 +37,12 @@ export const MatchStats = createStackNavigator({
       header: null,
     },
   },
+  Home: {
+    screen: HomeContainer,
+    navigationOptions: {
+      header: null,
+    },
+  },
 });
 
 const screens = {

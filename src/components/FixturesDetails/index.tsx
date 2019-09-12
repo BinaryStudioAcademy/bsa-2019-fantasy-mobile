@@ -149,10 +149,12 @@ const FixtureDetails = ({ currentMatchStats, navigation }: Props) => {
       <Header
         containerStyle={{ height: 60, paddingTop: 0, borderWidth: 0 }}
         leftComponent={
+          // @ts-ignore: Unreachable code error
           <Icon
             name='caret-left'
             size={30}
             color='#fff'
+            underlayColor='rgba(0, 0, 0, 0.2)'
             onPress={() => navigation.navigate('Fixtures')}
           />
         }

@@ -8,7 +8,7 @@ import Icon from 'react-native-vector-icons/Entypo';
 
 import LeagueTable from '../../LeaguesContainer/components/LeagueTable';
 
-const Leagues = ({ data }: any) => {
+const Leagues = ({ data, navigation }: any) => {
   const columns = ['Rank', 'Title', 'Total Points'];
 
   const titles = [
@@ -48,6 +48,7 @@ const Leagues = ({ data }: any) => {
             data={data[item.accessor]}
             title={item}
             key={item.id}
+            navigation={navigation}
           />
         );
       })}

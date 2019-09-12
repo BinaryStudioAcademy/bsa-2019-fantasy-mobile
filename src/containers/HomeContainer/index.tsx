@@ -157,7 +157,7 @@ const HomeContainer = ({
           ) : (
             <Text style={{ flex: 1, textAlign: 'center' }}>Nothing to show</Text>
           )}
-          <Leagues data={leagues} />
+          <Leagues data={leagues} navigation={navigation} />
         </View>
       </ScrollView>
     </View>

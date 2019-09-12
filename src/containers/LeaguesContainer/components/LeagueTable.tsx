@@ -5,20 +5,15 @@ import { Table, Row } from 'react-native-table-component';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadLeagueDetails, deleteLeagueDetails } from '../actions';
 import { RootState } from '../../../store/types';
-import LeagueModal from './LeagueModal';
 
 const LeagueTable = ({ columns, data, title, navigation }: any) => {
-  const dispatch = useDispatch();
   const tableData: any = [];
-  const leagueDetails = useSelector((state: RootState) => state.league.leagueDetails);
 
   if (data && data.length) {
     data.map((item: any) => {
       return tableData.push([item.current_rank, item.league.name, item.total_points]);
     });
   }
-
-  console.log(leagueDetails);
 
   return (
     <View style={styles.container}>
@@ -38,8 +33,7 @@ const LeagueTable = ({ columns, data, title, navigation }: any) => {
             <TouchableOpacity
               key={leagueData[1]}
               onPress={() => {
-                // dispatch(loadLeagueDetails(leagueData[1]));
-                navigation.navigate('LeagueDetails');
+                navigation.navigate('LeagueDetails', { leagueName: leagueData[1] });
               }}
             >
               <Row

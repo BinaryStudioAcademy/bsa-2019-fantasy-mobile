@@ -95,7 +95,6 @@ const Profile = (props: any) => {
   };
 
   const { money, score } = user;
-  console.log(updatingUser);
 
   return (
     <View style={{ flex: 1, backgroundColor: '#efefef' }}>

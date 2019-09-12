@@ -158,7 +158,6 @@ export const postGameweekHistory = (
       data,
     );
     await fetchGameweekHistory(user!.id, gameweekId)(dispatch, getRootState);
-    console.log();
     showMessage({
       icon: 'success',
       message: 'Your team has been saved successfully',
