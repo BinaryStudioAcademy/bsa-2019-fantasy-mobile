@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, ActivityIndicator } from 'react-native';
 import { Header, Text as CustomText } from 'react-native-elements';
 import { RootState } from '../../../store/types';
 import { useSelector, useDispatch } from 'react-redux';
@@ -16,7 +16,11 @@ const LeagueDetails = ({ navigation }: any) => {
     dispatch(loadLeagueDetails(leagueName));
   }, [leagueName]);
 
-  const leagueDetails = useSelector((state: RootState) => state.league.leagueDetails);
+  const { leagueDetails, isLeagueDetailsLoading } = useSelector(
+    (state: RootState) => state.league,
+  );
+
+  console.log(isLeagueDetailsLoading);
 
   return (
     <View style={{ flex: 1 }}>
@@ -50,17 +54,25 @@ const LeagueDetails = ({ navigation }: any) => {
           </CustomText>
         </View>
 
-        {leagueDetails && leagueDetails.participants && (
+        {isLeagueDetailsLoading ? (
+          <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <ActivityIndicator size='large' color='#0000ff' />
+          </View>
+        ) : (
           <View>
-            <CustomText h4 h4Style={{ fontSize: 15 }}>
-              Participants: {leagueDetails.participants.length}
-            </CustomText>
+            {leagueDetails && leagueDetails.participants && (
+              <View>
+                <CustomText h4 h4Style={{ fontSize: 15 }}>
+                  Participants: {leagueDetails.participants.length}
+                </CustomText>
 
-            {leagueDetails.participants.map((participant: any) => (
-              <CustomText key={participant.user.name}>
-                {participant.user.name} ({participant.user.team_name})
-              </CustomText>
-            ))}
+                {leagueDetails.participants.map((participant: any) => (
+                  <CustomText key={participant.user.name}>
+                    {participant.user.name} ({participant.user.team_name})
+                  </CustomText>
+                ))}
+              </View>
+            )}
           </View>
         )}
       </View>

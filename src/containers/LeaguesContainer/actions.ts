@@ -3,11 +3,13 @@ import {
   SET_USER_LEAGUES,
   SET_LEAGUE_DETAILS,
   DELETE_LEAGUE_DETAILS,
+  SET_LEAGUE_DETAILS_LOADING,
   SetLeaguesAction,
   AsyncSetLeaguesAction,
   AsyncSetLeagueDetailsAction,
   SetLeagueDetailsAction,
   DeleteLeagueDetailsAction,
+  SetLoadingLeagueDetailsAction,
 } from './action.types';
 
 const setUserLeagues = (leagues: any): SetLeaguesAction => ({
@@ -18,6 +20,11 @@ const setUserLeagues = (leagues: any): SetLeaguesAction => ({
 const setLeagueDetails = (payload: any): SetLeagueDetailsAction => ({
   type: SET_LEAGUE_DETAILS,
   payload,
+});
+
+const setLeagueDetailsLoading = (isLeagueDetailsLoading: boolean): SetLoadingLeagueDetailsAction => ({
+  type: SET_LEAGUE_DETAILS_LOADING,
+  payload: isLeagueDetailsLoading,
 });
 
 export const deleteLeagueDetails = (): DeleteLeagueDetailsAction => ({
@@ -32,8 +39,10 @@ export const loadUserLeagues = (id: any): AsyncSetLeaguesAction => async dispatc
 
 export const loadLeagueDetails = (name: string): AsyncSetLeagueDetailsAction => async dispatch => {
   try {
+    dispatch(setLeagueDetailsLoading(true));
     const result = await leagueService.getLeagueDetails(name);
     dispatch(setLeagueDetails(result));
+    dispatch(setLeagueDetailsLoading(false));
   } catch (err) {
     // TODO handle not existing league
   }
