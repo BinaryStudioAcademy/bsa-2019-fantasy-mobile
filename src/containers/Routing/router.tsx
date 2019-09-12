@@ -6,6 +6,7 @@ import {
 
 import Login from '../../components/Login';
 import HomeContainer from '../../containers/HomeContainer';
+import LeagueDetails from '../../containers/LeaguesContainer/components/LeagueDetails';
 import Profile from '../Profile';
 import FixturesDetails from '../../components/FixturesDetails';
 import Spinner from '../../components/Spinner';
@@ -29,6 +30,12 @@ export const MatchStats = createStackNavigator({
       header: null,
     },
   },
+  LeagueDetails: {
+    screen: LeagueDetails,
+    navigationOptions: {
+      header: null,
+    },
+  },
 });
 
 const screens = {
@@ -36,7 +43,7 @@ const screens = {
   Profile,
   Fixtures: MatchStats,
   Live,
-  'My Team': MyTeam
+  'My Team': MyTeam,
 };
 
 const contentComponent = {

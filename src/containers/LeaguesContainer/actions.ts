@@ -2,10 +2,12 @@ import * as leagueService from '../../services/leagueService';
 import {
   SET_USER_LEAGUES,
   SET_LEAGUE_DETAILS,
+  DELETE_LEAGUE_DETAILS,
   SetLeaguesAction,
   AsyncSetLeaguesAction,
   AsyncSetLeagueDetailsAction,
-  SetLeagueDetailsAction
+  SetLeagueDetailsAction,
+  DeleteLeagueDetailsAction,
 } from './action.types';
 
 const setUserLeagues = (leagues: any): SetLeaguesAction => ({
@@ -16,6 +18,11 @@ const setUserLeagues = (leagues: any): SetLeaguesAction => ({
 const setLeagueDetails = (payload: any): SetLeagueDetailsAction => ({
   type: SET_LEAGUE_DETAILS,
   payload,
+});
+
+export const deleteLeagueDetails = (): DeleteLeagueDetailsAction => ({
+  type: DELETE_LEAGUE_DETAILS,
+  payload: [],
 });
 
 export const loadUserLeagues = (id: any): AsyncSetLeaguesAction => async dispatch => {
