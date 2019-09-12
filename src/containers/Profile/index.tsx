@@ -20,7 +20,7 @@ import { generateImageSrc } from '../../helpers/avatar';
 
 import { primaryColor } from '../../styles/common';
 
-const windowWidth = Dimensions.get('window').width;
+const windowWidth = Dimensions.get('window').width - 40;
 
 const Profile = (props: any) => {
   const dispatch = useDispatch();
@@ -115,18 +115,22 @@ const Profile = (props: any) => {
         }}
         backgroundColor={primaryColor}
       />
-      <ScrollView>
+      <ScrollView style={{ padding: 20 }}>
         <View
           style={{
             backgroundColor: '#fff',
-            borderBottomLeftRadius: 10,
-            borderBottomRightRadius: 10,
+            borderRadius: 10,
           }}
         >
           <View style={{ flex: 1 }}>
             <Image
               source={{ uri: generateImageSrc(user, imageLink) }}
-              style={{ width: windowWidth, height: 300 }}
+              style={{
+                width: windowWidth,
+                height: 300,
+                borderTopLeftRadius: 10,
+                borderTopRightRadius: 10,
+              }}
               PlaceholderContent={<ActivityIndicator />}
             />
 
@@ -143,27 +147,47 @@ const Profile = (props: any) => {
             justifyContent: 'center',
           }}
         >
-          <Text
+          <View
             style={{
-              marginHorizontal: 5,
-              fontWeight: 'bold',
-              color: '#666',
-              fontSize: 20,
+              marginHorizontal: 10,
+              flexDirection: 'row',
+              alignItems: 'center',
             }}
           >
-            <Icon name='coin' color='#666' size={20} style={styles.icon} />£{money}
-          </Text>
-          <Text
+            <View style={styles.icon}>
+              <Icon name='coin' color='#666' size={20} />
+            </View>
+            <Text
+              style={{
+                fontWeight: 'bold',
+                color: '#666',
+                fontSize: 20,
+              }}
+            >
+              £{money}
+            </Text>
+          </View>
+
+          <View
             style={{
-              marginHorizontal: 5,
-              fontWeight: 'bold',
-              color: '#666',
-              fontSize: 20,
+              marginHorizontal: 10,
+              flexDirection: 'row',
+              alignItems: 'center',
             }}
           >
-            <Icon name='coin' color='#666' size={20} style={styles.icon} />
-            {score} points
-          </Text>
+            <View style={styles.icon}>
+              <Icon name='star-four-points-outline' color='#666' size={20} />
+            </View>
+            <Text
+              style={{
+                fontWeight: 'bold',
+                color: '#666',
+                fontSize: 20,
+              }}
+            >
+              {score} points
+            </Text>
+          </View>
         </View>
 
         <View
@@ -173,6 +197,7 @@ const Profile = (props: any) => {
             padding: 20,
             backgroundColor: '#fff',
             borderRadius: 10,
+            marginBottom: 20,
           }}
         >
           <CustomText h4 h4Style={{ marginBottom: 15 }}>
@@ -205,20 +230,18 @@ const Profile = (props: any) => {
             loading={updatingUser}
           />
         </View>
-        <View style={{ padding: 20 }}>
-          <Button
-            buttonStyle={{ marginTop: 4, backgroundColor: primaryColor }}
-            title='Sign Out'
-            onPress={() => dispatch(logout())}
-          />
-        </View>
+        <Button
+          buttonStyle={{ marginBottom: 40, backgroundColor: primaryColor }}
+          title='Sign Out'
+          onPress={() => dispatch(logout())}
+        />
       </ScrollView>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  icon: { marginRight: 5 },
+  icon: { marginRight: 3 },
 });
 
 export default Profile;
