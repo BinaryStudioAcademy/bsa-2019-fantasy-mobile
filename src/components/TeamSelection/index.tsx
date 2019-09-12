@@ -164,7 +164,7 @@ const TeamSelection = ({
       <React.Fragment>
         <PlayerList players={players} hasBench={hasBench} onPlayerPress={onPlayerPress} />
         {submit && (
-          <View style={{paddingHorizontal: 20}}>
+          <View style={{paddingHorizontal: 20, marginBottom: 20 }}>
             <Button
               buttonStyle={{ marginVertical: 20, backgroundColor: primaryColor }}
               disabled={!submit.canSubmit}

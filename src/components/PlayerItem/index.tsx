@@ -34,7 +34,7 @@ const PlayerItem = ({ player, onPlayerPress }: Props) => {
         paddingHorizontal: 15,
         marginBottom: 10,
         backgroundColor: highlight,
-        borderRadius: 5
+        borderRadius: 5,
       }}
     >
       {player ? (
@@ -73,7 +73,7 @@ const PlayerItem = ({ player, onPlayerPress }: Props) => {
                 />
               )}
             </View>
-            <View style={{ marginLeft: 20 }}>
+            <View style={{ marginLeft: 15, flex: 1 }}>
               <Text style={styles.name}>{`${player_stats.first_name} ${
                 player_stats.second_name
               }`}</Text>
@@ -84,14 +84,32 @@ const PlayerItem = ({ player, onPlayerPress }: Props) => {
                 </Text>
               </View>
               <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-                <Text style={styles.money}>
-                  <Icon name='coin' color='#b2b200' size={14} style={styles.icon} />
-                  {`${player_stats.player_price} coins`}
-                </Text>
-                <Text style={{ marginLeft: 10 }}>
-                  <Icon name='star-four-points' size={14} style={styles.icon} />
-                  {`${player_stats.player_score} points`}
-                </Text>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                  }}
+                >
+                  <View style={styles.icon}>
+                    <Icon name='coin' color='#b2b200' size={14} />
+                  </View>
+                  <Text style={styles.money}>{`${player_stats.player_price} coins`}</Text>
+                </View>
+
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginLeft: 10,
+                  }}
+                >
+                  <View style={styles.icon}>
+                    <Icon name='star-four-points' size={14} />
+                  </View>
+                  <Text>{`${
+                    player_stats.player_score
+                  } points`}</Text>
+                </View>
               </View>
             </View>
           </View>
@@ -111,7 +129,7 @@ const PlayerItem = ({ player, onPlayerPress }: Props) => {
 
 const styles = StyleSheet.create({
   name: { fontWeight: 'bold', fontSize: 15 },
-  icon: { marginRight: 5 },
+  icon: { marginRight: 3 },
   money: { color: '#b2b200', fontSize: 14 },
 });
 

@@ -4,8 +4,6 @@ import { Text as CustomText, Button, Header } from 'react-native-elements';
 
 import { map } from 'lodash';
 
-import Icon from 'react-native-vector-icons/Entypo';
-
 import LeagueTable from '../../LeaguesContainer/components/LeagueTable';
 
 const Leagues = ({ data, navigation }: any) => {
@@ -31,7 +29,7 @@ const Leagues = ({ data, navigation }: any) => {
 
   const renderTitle = () => {
     return (
-      <View style={{ padding: 15 }}>
+      <View style={{ paddingHorizontal: 15, marginBottom: 5 }}>
         <CustomText h3>User Leagues</CustomText>
       </View>
     );
@@ -58,15 +56,6 @@ const Leagues = ({ data, navigation }: any) => {
 
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff' },
-  icon: {
-    position: 'absolute',
-    top: -12,
-    right: -12,
-    backgroundColor: '#eacccc',
-    padding: 20,
-    borderRadius: 999,
-    zIndex: 100,
-  },
 });
 
 export default Leagues;

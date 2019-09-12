@@ -40,7 +40,7 @@ const TeamModal = ({
           <View
             style={{
               width: 300,
-              height: 300,
+              height: 350,
               backgroundColor: '#fff',
               borderRadius: 4,
               borderColor: 'rgba(0, 0, 0, 0.1)',
