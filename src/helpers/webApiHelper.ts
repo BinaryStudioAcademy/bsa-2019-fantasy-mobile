@@ -1,6 +1,8 @@
 import queryString from 'query-string';
 import AsyncStorage from '@react-native-community/async-storage';
 
+export const API_URL = 'https://fantasy-football.tk';
+
 type FetchArgs = {
   endpoint: string;
   type: 'GET' | 'POST' | 'PUT' | 'DELETE';
@@ -13,9 +15,7 @@ type FetchArgs = {
 
 function getFetchUrl(args: FetchArgs) {
   return (
-    'https://fantasy-football.tk' +
-    args.endpoint +
-    (args.query ? `?${queryString.stringify(args.query)}` : '')
+    API_URL + args.endpoint + (args.query ? `?${queryString.stringify(args.query)}` : '')
   );
 }
 

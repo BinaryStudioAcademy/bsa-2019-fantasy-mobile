@@ -15,6 +15,7 @@ import Live from '../../containers/LiveContainer/index';
 import MyTeam from '../../containers/MyTeam';
 
 import Sidebar from '../../components/Sidebar';
+import PlayersContainer from '../PlayersContainer';
 
 export const MatchStats = createStackNavigator({
   Fixtures: {
@@ -44,6 +45,7 @@ const screens = {
   Fixtures: MatchStats,
   Live,
   'My Team': MyTeam,
+  Players: PlayersContainer,
 };
 
 const contentComponent = {

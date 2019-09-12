@@ -1,4 +1,4 @@
-import {createStore, applyMiddleware, combineReducers} from 'redux';
+import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 
 import profileReducer from '../containers/Auth/reducer';
@@ -9,6 +9,7 @@ import clubReducer from '../containers/Routing/fetchClubs/reducer';
 import leagueReducer from '../containers/LeaguesContainer/reducer';
 import notificationsReducer from '../components/Notifications/reducer';
 import liveReducer from '../containers/LiveContainer/reducer';
+import playersReducer from 'src/containers/PlayersContainer/reducer';
 
 const initialState = {};
 
@@ -25,6 +26,7 @@ const reducers = {
   league: leagueReducer,
   notifications: notificationsReducer,
   live: liveReducer,
+  players: playersReducer,
 };
 
 const rootReducer = combineReducers({

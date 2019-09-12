@@ -4,8 +4,10 @@ module.exports = {
     '@react-native-community',
     'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
+    'prettier',
+    'prettier/react',
   ],
-  plugins: ['@typescript-eslint', 'react', 'react-hooks'],
+  plugins: ['@typescript-eslint', 'react', 'react-hooks', 'prettier'],
   parserOptions: {
     project: __dirname + '/tsconfig.json',
     ecmaVersion: 2018,
