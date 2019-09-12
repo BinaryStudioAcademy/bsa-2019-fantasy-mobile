@@ -42,8 +42,7 @@ const LeagueDetails = ({ navigation }: any) => {
             color='#fff'
             underlayColor='rgba(0, 0, 0, 0.2)'
             onPress={() => {
-              navigation.navigate('Home');
-              dispatch(deleteLeagueDetails());
+              navigation.navigate('HomeContainer');
             }}
           />
         }

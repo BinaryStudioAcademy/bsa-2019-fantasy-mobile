@@ -31,14 +31,17 @@ export const MatchStats = createStackNavigator({
       header: null,
     },
   },
-  LeagueDetails: {
-    screen: LeagueDetails,
+});
+
+export const HomeLeagueOverview = createStackNavigator({
+  HomeContainer: {
+    screen: HomeContainer,
     navigationOptions: {
       header: null,
     },
   },
-  Home: {
-    screen: HomeContainer,
+  LeagueDetails: {
+    screen: LeagueDetails,
     navigationOptions: {
       header: null,
     },
@@ -46,7 +49,7 @@ export const MatchStats = createStackNavigator({
 });
 
 const screens = {
-  Home: HomeContainer,
+  Home: HomeLeagueOverview,
   Profile,
   Fixtures: MatchStats,
   Live,

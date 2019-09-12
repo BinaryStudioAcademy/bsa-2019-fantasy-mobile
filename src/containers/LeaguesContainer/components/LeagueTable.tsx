@@ -2,11 +2,11 @@ import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { Text as CustomText } from 'react-native-elements';
 import { Table, Row } from 'react-native-table-component';
-import { useDispatch, useSelector } from 'react-redux';
-import { loadLeagueDetails, deleteLeagueDetails } from '../actions';
-import { RootState } from '../../../store/types';
+import { useDispatch,  } from 'react-redux';
+import { deleteLeagueDetails } from '../actions';
 
 const LeagueTable = ({ columns, data, title, navigation }: any) => {
+  const dispatch = useDispatch();
   const tableData: any = [];
 
   if (data && data.length) {
@@ -33,6 +33,7 @@ const LeagueTable = ({ columns, data, title, navigation }: any) => {
             <TouchableOpacity
               key={leagueData[1]}
               onPress={() => {
+                dispatch(deleteLeagueDetails());
                 navigation.navigate('LeagueDetails', { leagueName: leagueData[1] });
               }}
             >
