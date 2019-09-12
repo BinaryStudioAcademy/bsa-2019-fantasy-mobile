@@ -60,9 +60,9 @@ const HomeContainer = ({
   }
 
   const horizontalMargin = 0;
-  const slideWidth = 280;
+  const slideWidth = 260;
 
-  const sliderWidth = Dimensions.get('window').width;
+  const sliderWidth = Dimensions.get('window').width - 40;
   const itemWidth = slideWidth - horizontalMargin * 2;
   const itemHeight = 200;
 
