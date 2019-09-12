@@ -28,6 +28,8 @@ const LiveContainer = (props: any) => {
     score: live.score,
   };
 
+  console.log(commentsFilteredEvents);
+
   const isMatchExist =
     commentsLiveStats.homeClub && commentsLiveStats.awayClub && commentsLiveStats.score;
 
@@ -46,7 +48,7 @@ const LiveContainer = (props: any) => {
         centerComponent={{ text: 'Live', style: { color: '#fff', fontSize: 20 } }}
         backgroundColor={primaryColor}
       />
-      <View style={{ flex: 1, padding: 20 }}>
+      <View style={{ flex: 1, padding: 20, backgroundColor: '#efefef' }}>
         <View style={{ marginBottom: 30 }}>
           <CustomText h3>Live Page</CustomText>
           <CustomText h4 h4Style={{ fontSize: 15 }}>
@@ -87,11 +89,11 @@ const LiveContainer = (props: any) => {
             ['startGame', 'endGame', 'stopGame', 'startTime', 'endTime', 'goal'].includes(
               event.name,
             ) ? (
-              <Text key={event.text} style={{ fontWeight: 'bold' }}>
+              <Text key={event.text} style={{ fontWeight: 'bold', marginBottom: 5 }}>
                 <SingleComent text={createComment(event, commentsLiveStats)} />
               </Text>
             ) : (
-              <Text key={event.text}>
+              <Text key={event.text} style={{ marginBottom: 5 }}>
                 <SingleComent text={createComment(event, commentsLiveStats)} />
               </Text>
             ),
