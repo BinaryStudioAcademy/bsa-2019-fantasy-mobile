@@ -31,7 +31,7 @@
     "socket.io-client": "^2.2.0",
     "styled-components": "^4.3.2",
     "uuidv4": "^5.0.0",
-    "validator": "^11.1.0"
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
